@@ -25,7 +25,7 @@ const Login = () => {
   return (
     <View style={styles.container}>
       <View style={styles.primaryDisplay}>
-        <Text style={styles.title}>
+        <Text style={styles.label}>
           Email or username
         </Text>
         <TextInput
@@ -34,7 +34,7 @@ const Login = () => {
           onChangeText={(text) => setTextUsename(text)}
           defaultValue={username}
         />
-        <Text style={styles.title}>Password</Text>
+        <Text style={styles.label}>Password</Text>
         <TextInput
           style={styles.textInput}
           secureTextEntry
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
   },
-  title: {
+  label: {
     color: '#bdbdbd',
     alignSelf: 'flex-start',
     fontSize: 18,
