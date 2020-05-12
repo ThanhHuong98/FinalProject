@@ -44,13 +44,9 @@ const secondaryColor = '#2c3038';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: primaryColorBackground,
-    marginLeft: 15,
-    marginRight: 15,
   },
   displayTop: {
     flexDirection: 'row',
-    padding: 5,
-    marginLeft: 10,
     marginRight: 10,
     justifyContent: 'space-between',
   },
