@@ -1,7 +1,8 @@
 import React, { } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, View } from 'react-native';
 import SectionAuthors from './SectionAuthors/section-authors';
 import SectionPopularSkills from './SectionPopularSkills/section-popular-skills';
+import ImageButton from '../../common/ImageButton/image-button';
 
 const Browse = () => {
   const authors = [
@@ -55,18 +56,34 @@ const Browse = () => {
     },
 
   ];
+  const onClick = () => {
+    //
+  };
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.groupButton}>
+        <ImageButton
+          style={styles.imageButton}
+          title="NEW RELEASE"
+          onChooseOption={onClick}
+          image=""
+        />
+        <ImageButton
+          style={styles.imageButton}
+          title="RECOMMENDED FOR YOU"
+          onChooseOption={onClick}
+          image=""
+        />
+      </View>
       <SectionPopularSkills
         title="Popular Skills"
         data={popularSkills}
-     />
+      />
       <SectionAuthors
         title="Top Authors"
         data={authors}
       />
     </ScrollView>
-
   );
 };
 const primaryColorBackground = '#000a12';
@@ -77,6 +94,11 @@ const styles = StyleSheet.create({
     backgroundColor: primaryColorBackground,
     marginLeft: 15,
     marginRight: 15,
+    marginTop: 50,
+  },
+  groupButton: {
+    height: 220,
+    justifyContent: 'space-around'
   }
 });
 export default Browse;
