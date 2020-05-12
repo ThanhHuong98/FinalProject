@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     padding: 5,
     textAlign: 'center'
-
   },
   buttonMore: {
     backgroundColor: secondaryColor,

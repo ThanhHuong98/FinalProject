@@ -1,8 +1,8 @@
 import React, { } from 'react';
 import { StyleSheet, Text, FlatList, SafeAreaView } from 'react-native';
-import SectionAuthorsItem from '../SectionAuthorsItem/aection-authors-item';
+import SectionPopularSkillsItem from '../SectionPopularSkillsItem/section-popular-skills-item';
 
-const SectionAuthors = ({ title, data }) => {
+const SectionPopularSkills = ({ title, data }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>{title}</Text>
@@ -10,15 +10,13 @@ const SectionAuthors = ({ title, data }) => {
         horizontal
         data={data}
         renderItem={({ item }) => (
-          <SectionAuthorsItem
+          <SectionPopularSkillsItem
             title={item.name}
-            source={item.image}
           />
         )}
         keyExtractor={(item) => item.id}
       />
     </SafeAreaView>
-
   );
 };
 const primaryColorBackground = '#000a12';
@@ -34,4 +32,4 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
 });
-export default SectionAuthors;
+export default SectionPopularSkills;
