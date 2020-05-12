@@ -4,11 +4,10 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
   CheckBox,
 } from 'react-native';
-import SolidButton from '../../common/SolidButton/SolidButton';
-import CustomInput from '../../common/CustomInput/CustomInput';
+import SolidButton from '../../common/SolidButton/solid-button';
+import CustomInput from '../../common/CustomInput/custom-input';
 
 const Register = () => {
   const [email, setTextEmail] = useState('');

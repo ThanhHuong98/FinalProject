@@ -9,10 +9,13 @@
     "lint": "eslint *.js **/*.js"
   },
   "dependencies": {
+    "beauty-stars": "^1.1.0",
     "expo": "~37.0.3",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
+    "react-native-ratings": "^7.2.0",
+    "react-native-star-rating": "^1.1.0",
     "react-native-web": "~0.11.7"
   },
   "devDependencies": {
