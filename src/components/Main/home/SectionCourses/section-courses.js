@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
   },
   displayTop: {
     flexDirection: 'row',
-    marginRight: 10,
     justifyContent: 'space-between',
   },
   titileButton: {

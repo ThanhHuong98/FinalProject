@@ -5,11 +5,12 @@ import Login from './src/components/Authentications/Login/login';
 import ForgotPassword from './src/components/Authentications/ForgotPassword/forgot-password';
 import Register from './src/components/Authentications/Register/register';
 import Home from './src/components/Main/home/home';
+import Browse from './src/components/Main/browse/browse';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Home />
+      <Browse />
     </View>
   );
 }
