@@ -1,0 +1,77 @@
+import React from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  SafeAreaView
+  } from 'react-native';
+import SectionCoursesItem from '../SectionCoursesItem/section-courses-item';
+
+const SectionCourses = ({ title, data }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.displayTop}>
+        <Text style={styles.title}>{title}</Text>
+        <TouchableOpacity style={styles.buttonMore}>
+          <Text style={styles.titileButton}>See all &gt;</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        horizontal
+        data={data}
+        renderItem={({ item }) => (
+          <SectionCoursesItem
+            srcImage={item.srcImage}
+            nameCourse={item.nameCourse}
+            author={item.author}
+            level={item.level}
+            dateTime={item.dateTime}
+            interval={item.interval}
+            rating={item.rating}
+          />
+        )}
+        keyExtractor={(item) => item.id}
+      />
+    </SafeAreaView>
+  );
+};
+
+const primaryColorBackground = '#000a12';
+const secondaryColor = '#2c3038';
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: primaryColorBackground,
+    marginLeft: 15,
+    marginRight: 15,
+  },
+  displayTop: {
+    flexDirection: 'row',
+    padding: 5,
+    marginLeft: 10,
+    marginRight: 10,
+    justifyContent: 'space-between',
+  },
+  titileButton: {
+    color: 'white',
+    fontSize: 12,
+    padding: 5,
+    textAlign: 'center'
+
+  },
+  buttonMore: {
+    backgroundColor: secondaryColor,
+    borderRadius: 25,
+    width: '18%',
+    alignSelf: 'flex-end'
+  },
+  title: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
+
+export default SectionCourses;
