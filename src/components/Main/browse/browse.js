@@ -4,6 +4,7 @@ import SectionAuthors from './SectionAuthors/section-authors';
 import SectionPopularSkills from './SectionPopularSkills/section-popular-skills';
 import ImageButton from '../../common/ImageButton/image-button';
 import SectionPaths from './SectionPaths/section-paths';
+import { Colors, Dimension } from '../../../Constant/Constant';
 
 const Browse = () => {
   const authors = [
@@ -123,19 +124,17 @@ const Browse = () => {
     </ScrollView>
   );
 };
-const primaryColorBackground = '#000a12';
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: primaryColorBackground,
-    marginLeft: 15,
-    marginRight: 15,
-    marginTop: 50,
+    backgroundColor: Colors.backgroundColor,
+    marginLeft: Dimension.marginMedium,
+    marginRight: Dimension.marginMedium,
+    marginTop: Dimension.marginLarge,
     justifyContent: 'space-between',
   },
   groupButton: {
-    height: 220,
+    height: Dimension.xheight,
     justifyContent: 'space-around'
   }
 });

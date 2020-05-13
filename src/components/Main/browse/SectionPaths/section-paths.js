@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, FlatList, SafeAreaView } from 'react-native';
+import { StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import SectionPathsItem from '../SectionPathsItems/section-paths-item';
 import SectionTitle from '../../../common/SectionTitle/section-title';
+import { Colors, FontSize, Dimension } from '../../../../Constant/Constant';
 
 const SectionPaths = ({ title, data }) => {
   return (
@@ -26,17 +27,15 @@ const SectionPaths = ({ title, data }) => {
   );
 };
 
-const primaryColorBackground = '#000a12';
-
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: primaryColorBackground,
+    backgroundColor: Colors.backgroundColor,
   },
   title: {
-    color: 'white',
-    fontSize: 18,
+    color: Colors.white,
+    fontSize: FontSize.xmedium,
     fontWeight: 'bold',
-    marginLeft: 15,
+    marginLeft: Dimension.medium,
   },
 });
 

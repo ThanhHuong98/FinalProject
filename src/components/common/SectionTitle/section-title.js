@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Colors, FontSize, Dimension } from '../../../Constant/Constant';
 
 const SectionTitle = ({ title, onChooseOption }) => {
   return (
@@ -14,7 +15,6 @@ const SectionTitle = ({ title, onChooseOption }) => {
     </View>
   );
 };
-const secondaryColor = '#2c3038';
 
 const styles = StyleSheet.create({
   display: {
@@ -23,18 +23,18 @@ const styles = StyleSheet.create({
   },
   titleButton: {
     color: 'white',
-    fontSize: 12,
-    padding: 5,
+    fontSize: FontSize.small,
+    padding: Dimension.paddingSmall,
     textAlign: 'center'
   },
   touch: {
-    backgroundColor: secondaryColor,
+    backgroundColor: Colors.secondaryColor,
     borderRadius: 25,
     width: '18%',
   },
   title: {
-    color: 'white',
-    fontSize: 18,
+    color: Colors.white,
+    fontSize: FontSize.xmedium,
     fontWeight: 'bold',
   },
 
