@@ -1,7 +1,7 @@
 import { SearchBar } from 'react-native-elements';
 import React, { useState } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { Colors, FontSize, Dimension } from '../../../Constant/Constant'
+import { Colors, FontSize, Dimension } from '../../../Constant/Constant';
 
 const Search = () => {
   const [search, updateSearch] = useState('');
@@ -26,10 +26,9 @@ const Search = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    marginTop: Dimension.marginLarge,
     flex: 1
   },
   search: {

@@ -9,12 +9,13 @@ import Home from './src/components/Main/home/home';
 import ListCourses from './src/components/Courses/list-courses'
 import CourseItem from './src/components/Courses/CourseItem/course-item'
 import Search from './src/components/Main/search/Search';
+import Downloads from './src/components/Main/downloads/downloads';
 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Search />
+      <Downloads />
 
     </View>
   );
