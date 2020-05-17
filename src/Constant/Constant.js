@@ -3,6 +3,7 @@ export const Colors = {
   secondaryColor: '#2c3038',
   white: '#FFFF',
   greyWhite: '#bdbdbd',
+  yellow: 'yellow',
   transparent: 'transparent',
 
 };
