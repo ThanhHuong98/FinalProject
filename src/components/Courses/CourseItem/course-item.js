@@ -50,7 +50,6 @@ const CoursesItem = ({
   );
 };
 
-
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',

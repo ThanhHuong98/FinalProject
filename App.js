@@ -8,12 +8,14 @@ import Browse from './src/components/Main/browse/browse';
 import Home from './src/components/Main/home/home';
 import ListCourses from './src/components/Courses/list-courses'
 import CourseItem from './src/components/Courses/CourseItem/course-item'
+import Search from './src/components/Main/search/Search';
 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <ListCourses />
+      <Search />
+
     </View>
   );
 }
