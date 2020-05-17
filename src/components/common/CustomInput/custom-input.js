@@ -7,18 +7,18 @@ import {
 } from 'react-native';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import propTypes from 'prop-types';
+import { Dimension } from '../../../Constant/Constant';
 
 const CustomInput = ({
   label,
   value,
   onChangeValue,
-  width
 }) => {
   return (
     <View style={styles.textInputContainer}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
-        style={{ ...styles.textInput, width }}
+        style={styles.textInput}
         // onChangeText={(text) => setValue(text)}
         onChangeText={onChangeValue}
         defaultValue={value}
@@ -49,18 +49,17 @@ const styles = StyleSheet.create({
     color: textPrimaryColor,
     alignSelf: 'flex-start',
     fontSize: 18,
+    marginBottom: Dimension.marginSmall,
   },
 });
 
 CustomInput.propTypes = {
   label: propTypes.string,
-  width: propTypes.string,
   value: propTypes.string,
   onChangeValue: propTypes.func,
 };
 CustomInput.defaultProps = {
   label: '',
-  width: '100%',
   value: '',
   onChangeValue: (f) => f,
 };

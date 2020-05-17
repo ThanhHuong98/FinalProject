@@ -10,12 +10,13 @@ import ListCourses from './src/components/Courses/list-courses'
 import CourseItem from './src/components/Courses/CourseItem/course-item'
 import Search from './src/components/Main/search/Search';
 import Downloads from './src/components/Main/downloads/downloads';
+import Register from './src/components/Authentications/Register/Register';
 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Downloads />
+      <Register />
 
     </View>
   );
