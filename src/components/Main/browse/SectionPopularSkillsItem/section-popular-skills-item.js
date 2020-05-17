@@ -1,5 +1,7 @@
 import React, { } from 'react';
 import { StyleSheet, Text, View, } from 'react-native';
+import { Colors, FontSize, Dimension } from '../../../../Constant/Constant';
+
 
 const SectionPopularSkillsItem = ({ title }) => {
   return (
@@ -10,21 +12,19 @@ const SectionPopularSkillsItem = ({ title }) => {
   );
 };
 
-const secondaryColor = '#2c3038';
-
 const styles = StyleSheet.create({
   themeItem: {
-    backgroundColor: secondaryColor,
+    backgroundColor: Colors.secondaryColor,
     borderRadius: 25,
     alignSelf: 'flex-end',
-    marginTop: 15,
-    marginLeft: 15,
-    paddingRight: 3,
-    paddingLeft: 3,
+    paddingRight: 5,
+    paddingLeft: 5,
+    paddingTop: 2,
+    paddingBottom: 2,
   },
   title: {
     color: 'white',
-    fontSize: 12,
+    fontSize: FontSize.small,
     padding: 5,
     textAlign: 'center'
   },

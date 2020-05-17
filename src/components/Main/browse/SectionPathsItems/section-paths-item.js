@@ -5,6 +5,7 @@ import {
   Text,
   Image,
 } from 'react-native';
+import { Colors, FontSize, Dimension } from '../../../../Constant/Constant';
 
 const SectionPathsItem = ({ nameCourse, numberOfCourse, srcImage }) => {
   return (
@@ -20,33 +21,28 @@ const SectionPathsItem = ({ nameCourse, numberOfCourse, srcImage }) => {
     </View>
   );
 };
-const primaryBackgroundColor = '#2c3038';
-const textColorSubTitile = '#bdbdbd';
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'column',
     width: 200,
     height: 180,
-    backgroundColor: primaryBackgroundColor,
-    marginRight: 15,
-    marginTop: 15,
-    marginBottom: 15,
+    backgroundColor: Colors.secondaryColor,
   },
   image: {
     width: 200,
     height: 90,
-    backgroundColor: 'white'
+    backgroundColor: Colors.white,
   },
   content: {
-    padding: 10,
+    padding: Dimension.paddingXMedium,
   },
   title: {
-    color: 'white',
-    fontSize: 14,
+    color: Colors.white,
+    fontSize: FontSize.xxsmall,
   },
   subtitile: {
-    color: textColorSubTitile,
-    fontSize: 11,
+    color: Colors.greyWhite,
+    fontSize: FontSize.small,
   },
 });
 export default SectionPathsItem;

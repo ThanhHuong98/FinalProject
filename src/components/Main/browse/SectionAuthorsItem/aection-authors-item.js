@@ -1,5 +1,6 @@
 import React, { } from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
+import { Colors, FontSize, Dimension } from '../../../../Constant/Constant';
 
 const SectionAuthorsItem = ({ title, source }) => {
   return (
@@ -12,14 +13,11 @@ const SectionAuthorsItem = ({ title, source }) => {
     </View>
   );
 };
-const primaryColorBackground = 'transparent';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: primaryColorBackground,
+    backgroundColor: Colors.transparent,
     flexDirection: 'column',
-    paddingTop: 15,
-    paddingLeft: 15,
   },
   imageCricle: {
     width: 80,
@@ -28,8 +26,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
-    fontSize: 13,
-    marginTop: 10,
+    fontSize: FontSize.xsmall,
+    marginTop: Dimension.marginXSmall,
     textAlign: 'center',
   },
 });

@@ -1,31 +1,20 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { FlatGrid } from 'react-native-super-grid';
+import { StyleSheet, FlatList, View } from 'react-native';
 import ImageButton from '../../../common/ImageButton/image-button';
-import { Colors } from '../../../../Constant/Constant';
-
-// renderItem={({ item }) => (
-//     <SectionPathsItem
-//       nameCourse={item.nameCourse}
-//       srcImage={item.srcImage}
-//       numberOfCourse={item.numberOfCourse}
-//     />
-//   )}
+import { Colors, Dimension } from '../../../../Constant/Constant';
 
 const SectionCategories = ({ data }) => {
+  const separator = () => {
+    return (
+      <View
+        style={{ marginRight: Dimension.paddingMedium }}
+    />
+    );
+  };
   return (
-    // <FlatGrid
-    //   itemDimension={130}
-    //   items={data}
-    //   renderItem={({ item }) => (
-    //     <ImageButton
-
-    //       />
-    //   )}
-    <FlatGrid
+    <FlatList
       style={styles.container}
-      itemDimension={130}
-      items={data}
+      data={data}
       horizontal
       renderItem={({ item }) => (
         <ImageButton
@@ -33,16 +22,15 @@ const SectionCategories = ({ data }) => {
           width={200}
           srcImage={item.srcImage}
         />
-
       )}
+      keyExtractor={(item) => item.id}
+      ItemSeparatorComponent={separator}
     />
-   );
+  );
 };
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: Colors.backgroundColor,
-    },
+  container: {
+  },
 
 
 });

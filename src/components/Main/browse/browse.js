@@ -12,6 +12,7 @@ const Browse = () => {
   const onClick = () => {
     //
   };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.groupButton}>
@@ -32,10 +33,12 @@ const Browse = () => {
         title="Popular Skills"
         data={popularSkills.data}
       />
-      <SectionCategories
-        // title='Top categories'
-        data={categories.data}
-      />
+      <View style={{ marginTop: 15, marginBottom: 20 }}>
+        <SectionCategories
+          // title='Top categories'
+          data={categories.data}
+        />
+      </View>
       <SectionPaths
         title="Paths"
         data={paths.data}
@@ -58,7 +61,9 @@ const styles = StyleSheet.create({
   },
   groupButton: {
     height: Dimension.xheight,
-    justifyContent: 'space-around'
-  }
+    justifyContent: 'space-around',
+    marginBottom: 15,
+  },
+
 });
 export default Browse;

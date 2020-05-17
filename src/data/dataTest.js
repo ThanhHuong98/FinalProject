@@ -104,7 +104,19 @@ export const popularSkills = {
         },
         {
           id: 5,
-          name: 'python',
+          name: 'Python',
+        },
+        {
+          id: 6,
+          name: 'Javascript',
+        },
+        {
+          id: 7,
+          name: 'Swift',
+        },
+        {
+          id: 8,
+          name: 'Html-css-js',
         },
       ]
 };
