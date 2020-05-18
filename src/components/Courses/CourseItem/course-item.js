@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image } from 'react-native';
 import { Rating } from 'react-native-ratings';
-import { Colors, FontSize, Dimension } from '../../../Constant/Constant'
+import { Colors, FontSize, } from '../../../Constant/Constant'
 import PopupMenu from '../../../components/common/PopupMenu/PopupMenu'
 
 const CoursesItem = ({

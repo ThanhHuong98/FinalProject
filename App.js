@@ -11,12 +11,15 @@ import CourseItem from './src/components/Courses/CourseItem/course-item'
 import Search from './src/components/Main/search/Search';
 import Downloads from './src/components/Main/downloads/downloads';
 import Register from './src/components/Authentications/Register/Register';
+import DetailCourse from './src/components/DetailCourse/detail-course';
+
+import { course } from './src/data/dataTest'
 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Register />
+      <DetailCourse course={course} />
 
     </View>
   );
