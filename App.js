@@ -101,20 +101,20 @@ export default function App() {
 
             if (route.name === ScreenKey.Home) {
               iconName = focused
-                ? 'ios-information-circle'
-                : 'ios-information-circle-outline';
+                ? 'ios-home'
+                : 'ios-home';
             } else if (route.name === ScreenKey.Downloads) {
               iconName = focused
                 ? 'ios-download'
-                : 'ios-download-outline';
+                : 'ios-download';
             } else if (route.name === ScreenKey.Browse) {
               iconName = focused
-                ? 'ios-browsers'
-                : 'ios-browsers-outline';
+                ? 'ios-apps'
+                : 'ios-apps';
             } else if (route.name === ScreenKey.Search) {
               iconName = focused
                 ? 'ios-search'
-                : 'ios-search-outline';
+                : 'ios-search';
             }
 
             // You can return any component that you like here!
