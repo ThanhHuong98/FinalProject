@@ -4,8 +4,10 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image } from 'react-native';
+  Image
+} from 'react-native';
 import { Rating } from 'react-native-ratings';
+import { ScreenKey } from '../../../../Constant/Constant';
 
 const SectionCoursesItem = ({
   nameCourse,
@@ -15,9 +17,13 @@ const SectionCoursesItem = ({
   interval,
   rating,
   srcImage,
+  navigation,
 }) => {
   return (
-    <View style={styles.itemContainer}>
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={() => navigation.navigate(ScreenKey.DetailCourse)}
+    >
       <Image
         style={styles.image}
         source={{ uri: srcImage }}
@@ -37,7 +43,7 @@ const SectionCoursesItem = ({
           rankingColor="yellow"
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

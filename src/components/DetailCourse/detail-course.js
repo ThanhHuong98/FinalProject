@@ -5,9 +5,10 @@ import { Colors, FontSize } from '../../Constant/Constant';
 import IConButton from '../common/IconButton/icon-button';
 import Icon from '../common/Icon/icon';
 import Separator from '../common/Separator/separator';
+import { course } from '../../data/dataTest';
 
 
-const DetailCourse = ({ course }) => {
+const DetailCourse = () => {
   const GroupOptions = () => {
     return (
       <View style={styles.optionWrapper}>
@@ -68,7 +69,6 @@ const styles = StyleSheet.create({
   video: {
     width: '100%',
     height: 300,
-    backgroundColor: 'red',
   },
   body: {
     marginLeft: 15,

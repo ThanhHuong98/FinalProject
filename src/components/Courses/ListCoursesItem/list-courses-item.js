@@ -1,30 +1,19 @@
 import React from 'react';
 import {
   StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
   FlatList,
   SafeAreaView
-  } from 'react-native';
+} from 'react-native';
 import CoursesItem from '../CourseItem/course-item';
+// import { separator } from '../../common/Separator/separator';
+import { Colors } from '../../../Constant/Constant';
+import { courses } from '../../../data/dataTest';
 
-const ListCoursesItems = ({ data }) => {
-    const separator = () => {
-        return (
-            <View
-            style={{
-              height: 0.5,
-              width: "100%",
-              backgroundColor: "#CED0CE",
-            }}
-          />
-        );
-    };
+const ListCoursesItems = () => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={data}
+        data={courses.data}
         renderItem={({ item }) => (
           <CoursesItem
             srcImage={item.srcImage}
@@ -37,18 +26,16 @@ const ListCoursesItems = ({ data }) => {
           />
         )}
         keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={separator}
+        // ItemSeparatorComponent={separator}
       />
     </SafeAreaView>
   );
 };
 
-const primaryColorBackground = '#000a12';
-const secondaryColor = '#2c3038';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: primaryColorBackground,
+    backgroundColor: Colors.backgroundColor,
   },
 
   title: {

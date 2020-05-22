@@ -34,3 +34,15 @@ export const Dimension = {
 
   xheight: 220,
 };
+
+export const ScreenKey = {
+  Home: 'Home',
+  ListCourse: 'List Courses',
+  DetailCourse: 'Detail Course',
+
+  Downloads: 'Downloads',
+  Search: 'Search',
+
+  Browse: 'Browse'
+
+};

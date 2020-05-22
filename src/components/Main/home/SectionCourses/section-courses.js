@@ -6,15 +6,18 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView
-  } from 'react-native';
+} from 'react-native';
 import SectionCoursesItem from '../SectionCoursesItem/section-courses-item';
+import { ScreenKey } from '../../../../Constant/Constant';
 
-const SectionCourses = ({ title, data }) => {
+const SectionCourses = ({ title, data, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.displayTop}>
         <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity style={styles.buttonMore}>
+        <TouchableOpacity
+          style={styles.buttonMore}
+          onPress={() => navigation.navigate(ScreenKey.ListCourse)}>
           <Text style={styles.titileButton}>See all &gt;</Text>
         </TouchableOpacity>
       </View>
@@ -30,6 +33,7 @@ const SectionCourses = ({ title, data }) => {
             dateTime={item.dateTime}
             interval={item.interval}
             rating={item.rating}
+            navigation={navigation}
           />
         )}
         keyExtractor={(item) => item.id}

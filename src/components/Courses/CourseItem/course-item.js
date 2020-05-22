@@ -18,9 +18,9 @@ const CoursesItem = ({
   rating,
   srcImage,
 }) => {
-    const onPopupEvent = () => {
+   const onPopupEvent = () => {
         //
-    };
+    ;
   return (
     <View style={styles.itemContainer}>
       <Image
