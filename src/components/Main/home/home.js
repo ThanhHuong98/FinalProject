@@ -16,7 +16,7 @@ const Home = ({ navigation }) => {
       <ScrollView>
         <ImageBackground
           style={styles.background}
-        //   source={require('../../../../assets/bg_home.jpg')}
+          source={require('../../../../assets/bg-splash.png')}
         />
         <SectionCourses
           title="Software Development"
@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
   background: {
     width: '100%',
     height: 100,
-    color: 'red',
   }
 
 });

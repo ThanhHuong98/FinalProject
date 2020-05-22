@@ -13,6 +13,7 @@ const CustomInput = ({
   label,
   value,
   onChangeValue,
+  isSecure,
 }) => {
   return (
     <View style={styles.textInputContainer}>
@@ -22,6 +23,7 @@ const CustomInput = ({
         // onChangeText={(text) => setValue(text)}
         onChangeText={onChangeValue}
         defaultValue={value}
+        secureTextEntry={isSecure}
       />
     </View>
   );
@@ -56,11 +58,13 @@ const styles = StyleSheet.create({
 CustomInput.propTypes = {
   label: propTypes.string,
   value: propTypes.string,
+  isSecure: propTypes.bool,
   onChangeValue: propTypes.func,
 };
 CustomInput.defaultProps = {
   label: '',
   value: '',
+  isSecure: false,
   onChangeValue: (f) => f,
 };
 

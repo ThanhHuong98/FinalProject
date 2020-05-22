@@ -6,6 +6,7 @@ export const Colors = {
   yellow: 'yellow',
   transparent: 'transparent',
   blue: '#0084bc',
+  dblue: '#58b3ef',
 
 };
 
@@ -36,6 +37,11 @@ export const Dimension = {
 };
 
 export const ScreenKey = {
+  Login: 'Sign in',
+  Register: 'Register',
+  SplashScreen: 'Splash Screen',
+
+  Main: 'Main',
   Home: 'Home',
   ListCourse: 'List Courses',
   DetailCourse: 'Detail Course',

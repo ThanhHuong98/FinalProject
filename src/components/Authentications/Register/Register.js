@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import SolidButton from '../../common/SolidButton/solid-button';
 import CustomInput from '../../common/CustomInput/custom-input';
-import { Colors, Dimension } from '../../../Constant/Constant';
+import { Colors, Dimension, FontSize } from '../../../Constant/Constant';
 
 const Register = () => {
   const [email, setTextEmail] = useState('');
@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     marginTop: Dimension.marginMedium,
   },
   textSecondary: {
-    color: 'white',
-    fontSize: 13,
+    color: Colors.white,
+    fontSize: FontSize.xsmall,
     textAlign: 'left',
   },
   checkBoxContainer: {

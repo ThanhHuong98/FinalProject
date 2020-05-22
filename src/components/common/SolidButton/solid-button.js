@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import propTypes from 'prop-types';
+import { Colors, FontSize } from '../../../Constant/Constant';
 
 const SolidButton = ({ title, backgroundColor, onChooseOption }) => {
   return (
@@ -20,21 +21,17 @@ const SolidButton = ({ title, backgroundColor, onChooseOption }) => {
   );
 };
 
-const white = 'white';
-const transparent = 'transparent';
 
 const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     height: 50,
     borderRadius: 5,
-    borderWidth: 0,
-    backgroundColor: transparent,
     justifyContent: 'center',
   },
   textTitle: {
-    color: white,
-    fontSize: 18,
+    color: Colors.white,
+    fontSize: FontSize.large,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -46,7 +43,7 @@ SolidButton.propTypes = {
 };
 SolidButton.defaultProps = {
   title: '',
-  backgroundColor: transparent,
+  backgroundColor: Colors.transparent,
   onChooseOption: (f) => f,
 };
 
