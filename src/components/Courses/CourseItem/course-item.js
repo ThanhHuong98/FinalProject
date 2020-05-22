@@ -4,12 +4,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image } from 'react-native';
+  Image
+} from 'react-native';
 import { Rating } from 'react-native-ratings';
-import { Colors, FontSize, } from '../../../Constant/Constant'
-import PopupMenu from '../../../components/common/PopupMenu/PopupMenu'
+import { Colors, FontSize, ScreenKey } from '../../../Constant/Constant';
+import PopupMenu from '../../common/PopupMenu/PopupMenu';
 
-const CoursesItem = ({
+const CourseItem = ({
   nameCourse,
   author,
   level,
@@ -17,12 +18,17 @@ const CoursesItem = ({
   interval,
   rating,
   srcImage,
+  navigation,
 }) => {
-   const onPopupEvent = () => {
-        //
-    ;
+  const onPopupEvent = () => {
+    //
+  };
+
   return (
-    <View style={styles.itemContainer}>
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={() => navigation.navigate(ScreenKey.DetailCourse)}
+    >
       <Image
         style={styles.image}
         source={{ uri: srcImage }}
@@ -45,11 +51,9 @@ const CoursesItem = ({
       <View style={styles.popupmenu}>
         <PopupMenu actions={['Edit', 'Remove']} onPress={onPopupEvent} />
       </View>
-
-    </View>
+    </TouchableOpacity>
   );
 };
-
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
@@ -75,8 +79,8 @@ const styles = StyleSheet.create({
   starRating: {
     alignSelf: 'flex-start',
   },
-  popupmenu:{
+  popupmenu: {
     width: '10%'
   }
 });
-export default CoursesItem;
+export default CourseItem;

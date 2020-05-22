@@ -4,12 +4,21 @@ import {
   View,
   Text,
   Image,
+  TouchableOpacity,
 } from 'react-native';
-import { Colors, FontSize, Dimension } from '../../../../Constant/Constant';
+import { Colors, FontSize, Dimension } from '../../../../../Constant/Constant';
 
-const SectionPathsItem = ({ nameCourse, numberOfCourse, srcImage }) => {
+const SectionPathsItem = ({
+  nameCourse,
+  numberOfCourse,
+  srcImage,
+  onSeeDetail
+}) => {
   return (
-    <View style={styles.itemContainer}>
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={onSeeDetail}
+      >
       <Image
         style={styles.image}
         source={{ uri: srcImage }}
@@ -18,7 +27,7 @@ const SectionPathsItem = ({ nameCourse, numberOfCourse, srcImage }) => {
         <Text style={{ ...styles.title, marginBottom: 6 }}>{nameCourse}</Text>
         <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${numberOfCourse} courses` }</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

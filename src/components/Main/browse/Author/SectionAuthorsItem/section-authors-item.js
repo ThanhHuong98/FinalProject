@@ -1,16 +1,24 @@
 import React, { } from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
-import { Colors, FontSize, Dimension } from '../../../../Constant/Constant';
+import {
+  StyleSheet,
+  Image,
+  Text,
+  TouchableOpacity
+} from 'react-native';
+import { Colors, FontSize, Dimension } from '../../../../../Constant/Constant';
 
-const SectionAuthorsItem = ({ title, source }) => {
+const SectionAuthorsItem = ({ title, source, onChooseOption }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onChooseOption}
+    >
       <Image
         style={styles.imageCricle}
         source={{ uri: source }}
       />
       <Text style={styles.title}>{title}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

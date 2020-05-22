@@ -2,14 +2,14 @@ import React from 'react';
 import {
   StyleSheet,
   FlatList,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
-import CoursesItem from '../CourseItem/course-item';
-// import { separator } from '../../common/Separator/separator';
 import { Colors } from '../../../Constant/Constant';
 import { courses } from '../../../data/dataTest';
+import CoursesItem from '../CourseItem/course-item';
+import separator from '../../common/Separator/separator-bottom';
 
-const ListCoursesItems = () => {
+const ListCoursesItems = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -23,10 +23,11 @@ const ListCoursesItems = () => {
             dateTime={item.dateTime}
             interval={item.interval}
             rating={item.rating}
+            navigation={navigation}
           />
         )}
         keyExtractor={(item) => item.id}
-        // ItemSeparatorComponent={separator}
+        ItemSeparatorComponent={separator}
       />
     </SafeAreaView>
   );

@@ -43,6 +43,14 @@ export const ScreenKey = {
   Downloads: 'Downloads',
   Search: 'Search',
 
-  Browse: 'Browse'
+  Browse: 'Browse',
+  Paths: 'Paths',
+  NewRelease: 'New Release',
+  Recommened: 'Recommened for you',
+
+  DetailAuthor: 'Detail Author',
+  DetailPopularSkill: 'Detail Popular Skill',
+  DetailPath: 'Detail Path'
+
 
 };

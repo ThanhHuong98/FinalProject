@@ -4,7 +4,7 @@ import { Video } from 'expo-av';
 import { Colors, FontSize } from '../../Constant/Constant';
 import IConButton from '../common/IconButton/icon-button';
 import Icon from '../common/Icon/icon';
-import Separator from '../common/Separator/separator';
+import Separator from '../common/Separator/separator-bottom';
 import { course } from '../../data/dataTest';
 
 

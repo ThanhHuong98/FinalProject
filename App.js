@@ -12,12 +12,12 @@ import { Colors, ScreenKey } from './src/Constant/Constant';
 import Browse from './src/components/Main/browse/browse';
 import Home from './src/components/Main/home/home';
 import ListCourses from './src/components/Courses/ListCoursesItem/list-courses-item';
-import CourseItem from './src/components/Courses/CourseItem/course-item';
 import Search from './src/components/Main/search/Search';
 import Downloads from './src/components/Main/downloads/downloads';
-import Register from './src/components/Authentications/Register/Register';
 import DetailCourse from './src/components/DetailCourse/detail-course';
-
+import DetailAuthor from './src/components/Main/browse/Author/DetailAuthor/detail-author';
+import DetailPopularSkill from './src/components/Main/browse/PopularSkill/DetailPopularSkill/detail-popular-skill';
+import DetailPath from './src/components/Main/browse/Paths/DetailPath/detail-path';
 
 const HomeStack = createStackNavigator();
 function HomeStackScreen() {
@@ -43,8 +43,38 @@ const BrowseStack = createStackNavigator();
 function BrowseStackScreen() {
   return (
     <BrowseStack.Navigator>
-      <BrowseStack.Screen name={ScreenKey.Browse} component={Browse} />
-      <BrowseStack.Screen name={ScreenKey.DetailCourse} component={DetailCourse} />
+      <BrowseStack.Screen
+        name={ScreenKey.Browse}
+        component={Browse}
+      />
+      <BrowseStack.Screen
+        name={ScreenKey.DetailCourse}
+        component={DetailCourse}
+      />
+      <BrowseStack.Screen
+        name={ScreenKey.NewRelease}
+        component={ListCourses}
+      />
+      <BrowseStack.Screen
+        name={ScreenKey.DetailPopularSkill}
+        component={DetailPopularSkill}
+      />
+      <BrowseStack.Screen
+        name={ScreenKey.Recommened}
+        component={ListCourses}
+      />
+      <BrowseStack.Screen
+        name={ScreenKey.Paths}
+        component={ListCourses}
+      />
+      <BrowseStack.Screen
+        name={ScreenKey.DetailPath}
+        component={DetailPath}
+      />
+      <BrowseStack.Screen
+        name={ScreenKey.DetailAuthor}
+        component={DetailAuthor}
+      />
     </BrowseStack.Navigator>
   );
 }

@@ -1,22 +1,25 @@
 import React from 'react';
-import { StyleSheet, FlatList, SafeAreaView, View } from 'react-native';
+import { StyleSheet, FlatList, SafeAreaView, } from 'react-native';
 import SectionPathsItem from '../SectionPathsItems/section-paths-item';
-import SectionTitle from '../../../common/SectionTitle/section-title';
-import { Colors, FontSize, Dimension } from '../../../../Constant/Constant';
+import SectionTitle from '../../../../common/SectionTitle/section-title';
+import { Colors, FontSize, Dimension, ScreenKey } from '../../../../../Constant/Constant';
+import separator from '../../../../common/Separator/separator-side';
 
-const SectionPaths = ({ title, data }) => {
-  const separator = () => {
-    return (
-      <View
-        style={{ marginRight: Dimension.marginMedium }}
-    />
-    );
+const SectionPaths = ({ title, data, navigation }) => {
+
+  const onSeeMorePaths = () => {
+    navigation.navigate(ScreenKey.Paths);
+  };
+
+  const onSeeDetailPath = () => {
+    navigation.navigate(ScreenKey.DetailPath);
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <SectionTitle
         title={title}
+        onChooseOption={onSeeMorePaths}
       />
       <FlatList
         style={styles.items}
@@ -27,6 +30,7 @@ const SectionPaths = ({ title, data }) => {
             nameCourse={item.nameCourse}
             srcImage={item.srcImage}
             numberOfCourse={item.numberOfCourse}
+            onSeeDetail={onSeeDetailPath}
           />
         )}
         keyExtractor={(item) => item.id}

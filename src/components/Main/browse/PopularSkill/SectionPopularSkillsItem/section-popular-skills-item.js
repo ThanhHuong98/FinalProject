@@ -1,13 +1,19 @@
 import React, { } from 'react';
-import { StyleSheet, Text, View, } from 'react-native';
-import { Colors, FontSize, Dimension } from '../../../../Constant/Constant';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  Colors,
+  FontSize
+} from '../../../../../Constant/Constant';
 
 
-const SectionPopularSkillsItem = ({ title }) => {
+const SectionPopularSkillsItem = ({ title, onChooseOption }) => {
   return (
-    <View style={styles.themeItem}>
+    <TouchableOpacity
+      style={styles.themeItem}
+      onPress={onChooseOption}
+    >
       <Text style={styles.title}>{title}</Text>
-    </View>
+    </TouchableOpacity>
 
   );
 };

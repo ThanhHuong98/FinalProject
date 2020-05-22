@@ -1,15 +1,30 @@
 import React, { } from 'react';
-import { StyleSheet, Text, FlatList, SafeAreaView, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  FlatList,
+  SafeAreaView,
+  View
+} from 'react-native';
 import SectionPopularSkillsItem from '../SectionPopularSkillsItem/section-popular-skills-item';
-import { Colors, FontSize, Dimension } from '../../../../Constant/Constant';
+import {
+  Colors,
+  FontSize,
+  Dimension,
+  ScreenKey
+} from '../../../../../Constant/Constant';
 
-const SectionPopularSkills = ({ title, data }) => {
+const SectionPopularSkills = ({ title, data, navigation }) => {
   const separator = () => {
     return (
       <View
         style={{ marginRight: 5 }}
-    />
+      />
     );
+  };
+  const onDetailSkill = () => {
+    navigation.navigate(ScreenKey.DetailPopularSkill);
+    console.log("Nhana nahndhbd");
   };
 
   return (
@@ -22,6 +37,7 @@ const SectionPopularSkills = ({ title, data }) => {
         renderItem={({ item }) => (
           <SectionPopularSkillsItem
             title={item.name}
+            onChooseOption={onDetailSkill}
           />
         )}
         keyExtractor={(item) => item.id}
