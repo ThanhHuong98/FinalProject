@@ -215,8 +215,12 @@ export const courses = {
 export const course = {
   name: 'Architecting for Reliability or AWS',
   authors: [
-    'Jonh',
-    'Mikle'
+    'Austin Mahone',
+    'Austin Mahone',
   ],
-  decription: 'JAVA was developed by Sun Microsystems Inc in 1991, later acquired by Oracle Corporation. It was developed by James Gosling and Patrick Naughton. It is a simple programming language.  Writing, compiling and debugging a program is easy in java.  It helps to create modular programs and reusable code.',
+  level: 'Beginner',
+  dateTime: 'Mar 2020',
+  interval: 15,
+  rating: 4,
+  decription: 'JAVA was developed by Sun Microsystems Inc in 1991, later acquired by Oracle Corporation. It was developed by James Gosling and Patrick Naughton. It is a simple programming language.  Writing, compiling and debugging a program is easy in java.  It helps to create modular programs and reusable code.Java is a programming language created by James Gosling from Sun Microsystems (Sun) in 1991. The target of Java is to write a program once and then run this program on multiple operating systems. The first publicly available version of Java (Java 1.0) was released in 1995. Sun Microsystems was acquired by',
 };

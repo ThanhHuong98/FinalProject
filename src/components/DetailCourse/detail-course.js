@@ -1,11 +1,19 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  FlatList
+} from 'react-native';
 import { Video } from 'expo-av';
-import { Colors, FontSize } from '../../Constant/Constant';
+import { Colors, FontSize, Dimension } from '../../Constant/Constant';
 import IConButton from '../common/IconButton/icon-button';
 import Icon from '../common/Icon/icon';
-import Separator from '../common/Separator/separator-bottom';
 import { course } from '../../data/dataTest';
+import Panel from '../common/Pannel/pannel';
+import AuthorItem from './item-athor';
+import separator from '../common/Separator/separator-side';
 
 
 const DetailCourse = () => {
@@ -14,50 +22,85 @@ const DetailCourse = () => {
       <View style={styles.optionWrapper}>
         <Icon
           title="Bookmark"
-          icon=""
+          icon="ios-bookmark"
         />
         <Icon
           title="Add to channel"
-          icon=""
+          icon="ios-code"
         />
         <Icon
           title="Downloads"
-          icon=""
+          icon="ios-download"
         />
       </View>
     );
   };
-  const Decriptions = () => {
+  const AuthorsList = ({ data }) => {
     return (
-    <Text style={styles.decription}>{course.decription}</Text>
+      <FlatList
+        horizontal
+        data={data}
+        renderItem={({ item }) => (
+          <AuthorItem
+            title={item}
+            // onChooseOption={()}
+          />
+        )}
+        ItemSeparatorComponent={separator}
+      />
+    );
+  };
+  const Separator = () => {
+    return (
+      <View
+        style={{
+          height: 0.5,
+          width: '100%',
+          backgroundColor: '#CED0CE',
+          marginBottom: Dimension.marginMedium,
+        }}
+      />
+    );
+  };
+  const ExtendAction = () => {
+    return (
+      <View style={styles.extendAction}>
+        <IConButton
+          title="Related paths and courses"
+          iconName="ios-albums"
+        />
+        <IConButton
+          title="Take a learning checks"
+          iconName="ios-disc"
+        />
+      </View>
     );
   };
   return (
     <View style={styles.container}>
-      <Video
-        source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-        rate={1.0}
-        volume={1.0}
-        isMuted={false}
-        resizeMode="cover"
-        shouldPlay
-        isLooping
-        style={styles.video}
-      />
-      <View style={styles.body}>
-        <Text style={styles.title}>{course.name}</Text>
-        <Text style={styles.subtitile}>{ `${course.level} . ${course.dateTime} . ${course.interval}h`}</Text>
-        <GroupOptions />
-        <Separator />
-        <Decriptions />
-        <IConButton
-          title="Related paths and courses"
-        />
-        <View style={{marginBottom: 15}}></View>
-        <IConButton
-          title="Take a learning checks"
-        />
-      </View>
+      <ScrollView>
+        <Video
+          source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+          rate={1.0}
+          volume={1.0}
+          isMuted={false}
+          resizeMode="cover"
+          shouldPlay
+          isLooping
+          style={styles.video}
+       />
+        <View style={styles.body}>
+          <Text style={{ ...styles.title, marginBottom: 10 }}>{course.name}</Text>
+          <AuthorsList data={course.authors} />
+          <Text style={{ ...styles.subtitile, marginBottom: 10, marginTop: 10}}>{ `${course.level} . ${course.dateTime} . ${course.interval}h`}</Text>
+          <GroupOptions />
+          <Separator />
+          <Panel
+            content={course.decription}
+          />
+          <ExtendAction />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -71,8 +114,9 @@ const styles = StyleSheet.create({
     height: 300,
   },
   body: {
-    marginLeft: 15,
-    marginRight: 15,
+    marginLeft: Dimension.marginMedium,
+    marginRight: Dimension.marginMedium,
+    marginTop: Dimension.marginMedium,
   },
   title: {
     color: Colors.white,
@@ -83,10 +127,10 @@ const styles = StyleSheet.create({
     color: Colors.greyWhite,
     fontSize: FontSize.xsmall,
   },
-  decription: {
-    width: '100%',
-    color: Colors.greyWhite,
-    fontSize: FontSize.medium,
+  extendAction: {
+    marginTop: Dimension.marginMedium,
+    height: 120,
+    justifyContent: 'space-around'
   },
   optionWrapper: {
     flexDirection: 'row',

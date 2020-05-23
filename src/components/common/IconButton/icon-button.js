@@ -1,20 +1,23 @@
 import React from 'react';
-import { StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors, FontSize, Dimension } from '../../../Constant/Constant';
 
-const IConButton = ({ icon, title, onChoose }) => {
+const IConButton = ({ iconName, title, onChoose }) => {
   return (
     <TouchableOpacity
       style={styles.btnWrapper}
-      onPress={onChoose}>
-      <Image
-        style={styles.icon}
-        source={{}}
+      onPress={onChoose}
+    >
+      <Ionicons
+        name={iconName}
+        size={20}
+        color={Colors.white}
       />
       <Text style={styles.title}>{title}</Text>
 
     </TouchableOpacity>
-    );
+  );
 };
 
 const styles = StyleSheet.create({
@@ -27,15 +30,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  icon: {
-    width: 20,
-    height: 15,
-    backgroundColor: 'red',
-    marginRight: 10,
-  },
   title: {
     color: Colors.white,
     fontSize: FontSize.medium,
+    marginLeft: Dimension.marginSmall,
   }
 });
 export default IConButton;

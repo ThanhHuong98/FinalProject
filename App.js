@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import 'react-native-gesture-handler';
@@ -150,7 +149,12 @@ function MainTabNavigator() {
 const MainStack = createStackNavigator();
 function MainNavigation() {
   return (
-    <MainStack.Navigator initialRouteName={ScreenKey.SplashScreen}>
+    <MainStack.Navigator initialRouteName={ScreenKey.DetailCourse}>
+      <MainStack.Screen
+        name={ScreenKey.DetailCourse}
+        component={DetailCourse}
+        options={{ headerShown: true }}
+      />
       <MainStack.Screen
         name={ScreenKey.SplashScreen}
         component={SplashScreen}

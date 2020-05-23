@@ -1,16 +1,25 @@
 import React from 'react';
-import { StyleSheet, Image, TouchableOpacity, Text, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { Colors, FontSize, Dimension } from '../../../Constant/Constant';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Icon = ( { icon, title, onChooseOption } ) => {
+const Icon = ({ icon, title, onChooseOption }) => {
+  const SIZE_ICON = 20;
   return (
     <TouchableOpacity
       onPress={onChooseOption}
       style={styles.container}
     >
-      <View style={styles.icon}>
+      {/* <View style={styles.icon}>
         <Image
           source={require('../../../../assets/ic_bookmark.png')}
+        />
+      </View> */}
+      <View style={styles.icon}>
+        <Ionicons
+          name={icon}
+          size={SIZE_ICON}
+          color={Colors.white}
         />
       </View>
       <Text style={styles.title}>{title}</Text>

@@ -16,6 +16,7 @@ const Home = ({ navigation }) => {
       <ScrollView>
         <ImageBackground
           style={styles.background}
+          // eslint-disable-next-line global-require
           source={require('../../../../assets/bg-splash.png')}
         />
         <SectionCourses
