@@ -149,12 +149,7 @@ function MainTabNavigator() {
 const MainStack = createStackNavigator();
 function MainNavigation() {
   return (
-    <MainStack.Navigator initialRouteName={ScreenKey.DetailCourse}>
-      <MainStack.Screen
-        name={ScreenKey.DetailCourse}
-        component={DetailCourse}
-        options={{ headerShown: true }}
-      />
+    <MainStack.Navigator initialRouteName={ScreenKey.SplashScreen}>
       <MainStack.Screen
         name={ScreenKey.SplashScreen}
         component={SplashScreen}

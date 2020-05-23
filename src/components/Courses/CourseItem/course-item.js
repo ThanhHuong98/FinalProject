@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { Rating } from 'react-native-ratings';
+import Star from 'react-native-star-view';
 import { Colors, FontSize, ScreenKey } from '../../../Constant/Constant';
 import PopupMenu from '../../common/PopupMenu/PopupMenu';
 
@@ -37,16 +37,7 @@ const CourseItem = ({
         <Text style={{ ...styles.title, marginBottom: 6 }}>{nameCourse}</Text>
         <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{author}</Text>
         <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${dateTime} . ${interval}h`}</Text>
-        <Rating
-          style={styles.starRating}
-          type="custom"
-          ratingCount={5}
-          startingValue={rating}
-          imageSize={15}
-          showRating={false}
-          readonly
-          rankingColor={Colors.yellow}
-        />
+        <Star score={rating} style={styles.starStyle} />
       </View>
       <View style={styles.popupmenu}>
         <PopupMenu actions={['Edit', 'Remove']} onPress={onPopupEvent} />
@@ -81,6 +72,11 @@ const styles = StyleSheet.create({
   },
   popupmenu: {
     width: '10%'
-  }
+  },
+  starStyle: {
+    width: 100,
+    height: 20,
+    marginBottom: 20,
+  },
 });
 export default CourseItem;

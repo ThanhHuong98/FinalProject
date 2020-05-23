@@ -17,7 +17,7 @@ const Home = ({ navigation }) => {
         <ImageBackground
           style={styles.background}
           // eslint-disable-next-line global-require
-          source={require('../../../../assets/bg-splash.png')}
+          source={require('../../../../assets/bg_home.gif')}
         />
         <SectionCourses
           title="Software Development"

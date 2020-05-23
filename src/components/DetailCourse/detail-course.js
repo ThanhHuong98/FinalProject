@@ -7,6 +7,7 @@ import {
   FlatList
 } from 'react-native';
 import { Video } from 'expo-av';
+import Star from 'react-native-star-view';
 import { Colors, FontSize, Dimension } from '../../Constant/Constant';
 import IConButton from '../common/IconButton/icon-button';
 import Icon from '../common/Icon/icon';
@@ -94,6 +95,7 @@ const DetailCourse = () => {
           <Text style={{ ...styles.title, marginBottom: 10 }}>{course.name}</Text>
           <AuthorsList data={course.authors} />
           <Text style={{ ...styles.subtitile, marginBottom: 10, marginTop: 10}}>{ `${course.level} . ${course.dateTime} . ${course.interval}h`}</Text>
+          <Star score={course.rating} style={styles.starStyle} />
           <GroupOptions />
           <Separator />
           <Panel
@@ -138,7 +140,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 15,
-
-  }
+  },
+  starStyle: {
+    width: 100,
+    height: 20,
+  },
 });
 export default DetailCourse;

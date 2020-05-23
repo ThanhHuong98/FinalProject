@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { Rating } from 'react-native-ratings';
+import Star from 'react-native-star-view';
 
 const SectionCoursesItem = ({
   nameCourse,
@@ -31,16 +31,7 @@ const SectionCoursesItem = ({
         <Text style={{ ...styles.title, marginBottom: 6 }}>{nameCourse}</Text>
         <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{author}</Text>
         <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${dateTime} . ${interval}h`}</Text>
-        <Rating
-          style={styles.starRating}
-          type="custom"
-          ratingCount={5}
-          startingValue={rating}
-          imageSize={15}
-          showRating={false}
-          readonly
-          rankingColor="yellow"
-        />
+        <Star score={rating} style={styles.starStyle} />
       </View>
     </TouchableOpacity>
   );
@@ -50,6 +41,11 @@ const primaryBackgroundColor = '#2c3038';
 const textColorSubTitile = '#bdbdbd';
 
 const styles = StyleSheet.create({
+  starStyle: {
+    width: 100,
+    height: 20,
+    marginBottom: 20,
+  },
   itemContainer: {
     flexDirection: 'column',
     width: 200,
