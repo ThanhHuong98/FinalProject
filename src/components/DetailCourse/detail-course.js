@@ -14,6 +14,7 @@ import { course } from '../../data/dataTest';
 import Panel from '../common/Pannel/pannel';
 import AuthorItem from './item-athor';
 import separator from '../common/Separator/separator-side';
+import Content from './Content';
 
 
 const DetailCourse = () => {
@@ -99,6 +100,7 @@ const DetailCourse = () => {
             content={course.decription}
           />
           <ExtendAction />
+          <Content />
         </View>
       </ScrollView>
     </View>

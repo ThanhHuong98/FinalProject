@@ -53,8 +53,10 @@ const styles = StyleSheet.create({
   content: {
     width: '85%',
     color: Colors.greyWhite,
-    fontSize: FontSize.xxsmall,
+    fontSize: FontSize.medium,
     textAlign: 'left',
+    lineHeight: 20,
+    paddingRight: 5,
   },
   separator: {
     width: '7%',
