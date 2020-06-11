@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: Colors.backgroundColor,
     justifyContent: 'center',
-    marginLeft: Dimension.marginMedium,
-    marginRight: Dimension.marginMedium,
+    // marginLeft: Dimension.marginMedium,
+    // marginRight: Dimension.marginMedium,
   },
   primaryDisplay: {
   },

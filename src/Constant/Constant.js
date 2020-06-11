@@ -56,7 +56,20 @@ export const ScreenKey = {
 
   DetailAuthor: 'Detail Author',
   DetailPopularSkill: 'Detail Popular Skill',
-  DetailPath: 'Detail Path'
+  DetailPath: 'Detail Path',
+
+  Setting: 'Setting'
 
 
+};
+
+export const themes = {
+  light: {
+    background: '#FFF',
+    textColor: '#000'
+  },
+  dark: {
+    background: '#000a12',
+    textColor: '#FFFF',
+  }
 };

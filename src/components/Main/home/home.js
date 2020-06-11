@@ -11,7 +11,6 @@ import { Colors } from '../../../Constant/Constant';
 import CustomIcon from '../../../../assets/dog-food.svg';
 
 const Home = ({ navigation }) => {
-
   return (
     <View style={styles.container}>
       <ScrollView>

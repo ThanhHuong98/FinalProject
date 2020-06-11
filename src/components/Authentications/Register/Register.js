@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.backgroundColor,
     marginTop: 50,
-    marginLeft: Dimension.marginMedium,
-    marginRight: Dimension.marginMedium,
+    // marginLeft: Dimension.marginMedium,
+    // marginRight: Dimension.marginMedium,
   },
   topDisplay: {
     flexDirection: 'row',

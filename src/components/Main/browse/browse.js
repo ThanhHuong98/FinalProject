@@ -60,14 +60,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.backgroundColor,
-    marginLeft: Dimension.marginMedium,
-    marginRight: Dimension.marginMedium,
     justifyContent: 'space-between',
   },
   groupButton: {
     height: Dimension.xheight,
     justifyContent: 'space-around',
-    marginBottom: Dimension.marginMedium,
   },
 
 });

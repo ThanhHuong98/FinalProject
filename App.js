@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import 'react-native-gesture-handler';
-import { NavigationContainer, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Colors, ScreenKey } from './src/Constant/Constant';
+import { Colors, ScreenKey, themes } from './src/Constant/Constant';
 
 import Login from './src/components/Authentications/login/login';
 import Register from './src/components/Authentications/Register/Register';
@@ -19,14 +20,25 @@ import DetailCourse from './src/components/DetailCourse/detail-course';
 import DetailAuthor from './src/components/Main/browse/Author/DetailAuthor/detail-author';
 import DetailPopularSkill from './src/components/Main/browse/PopularSkill/DetailPopularSkill/detail-popular-skill';
 import DetailPath from './src/components/Main/browse/Paths/DetailPath/detail-path';
+// eslint-disable-next-line import/no-cycle
+import SettingScreen from './src/components/Setting/setting-screen';
 
 const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator initialRouteName={ScreenKey.Home}>
+    <HomeStack.Navigator initialRouteName={ScreenKey.Setting}>
       <HomeStack.Screen
         name={ScreenKey.Home}
         component={Home}
+        // options={{
+        //   headerRight: () => (
+        //     <TouchableOpacity
+        //     // onPress={() => navigate('NewScreen')}
+        //     >
+        //       <Text style={styles.title}>Setting</Text>
+        //     </TouchableOpacity>
+        //   ),
+        // }}
       />
       <HomeStack.Screen
         name={ScreenKey.DetailCourse}
@@ -35,6 +47,10 @@ function HomeStackScreen() {
       <HomeStack.Screen
         name={ScreenKey.ListCourse}
         component={ListCourses}
+      />
+      <HomeStack.Screen
+        name={ScreenKey.Setting}
+        component={SettingScreen}
       />
     </HomeStack.Navigator>
   );
@@ -137,14 +153,15 @@ function MainTabNavigator() {
         inactiveTintColor: 'gray',
       }}
     >
-      <Tab.Screen name={ScreenKey.Home} component={HomeStackScreen} />
+      <Tab.Screen
+        name={ScreenKey.Home}
+        component={HomeStackScreen} />
       <Tab.Screen name={ScreenKey.Browse} component={BrowseStackScreen} />
       <Tab.Screen name={ScreenKey.Downloads} component={DownloadStackScreen} />
       <Tab.Screen name={ScreenKey.Search} component={SearchStackScreen} />
     </Tab.Navigator>
   );
 }
-
 const MainStack = createStackNavigator();
 function MainNavigation() {
   return (
@@ -173,23 +190,13 @@ function MainNavigation() {
   );
 }
 
-export const themes = {
-  light: {
-    foreground: '#000000',
-    background: '#eeeeee'
-  },
-  dark: {
-    foreground: '#ffffff',
-    background: '#222222'
-  }
-};
 export const ThemeContext = React.createContext();
 export default function App() {
-  const [theme, setTheme] = useState(themes.light);
+  const [theme, setTheme] = useState(themes.dark);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <NavigationContainer theme={DarkTheme}>
+      <NavigationContainer>
         <MainNavigation />
       </NavigationContainer>
     </ThemeContext.Provider>
