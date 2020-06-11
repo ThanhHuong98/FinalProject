@@ -8,17 +8,19 @@ import {
 import SectionCourses from './SectionCourses/section-courses';
 import { courses } from '../../../data/dataTest';
 import { Colors } from '../../../Constant/Constant';
+import CustomIcon from '../../../../assets/dog-food.svg';
 
 const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        <ImageBackground
+        {/* <ImageBackground
           style={styles.background}
           // eslint-disable-next-line global-require
-          source={require('../../../../assets/bg_home.gif')}
-        />
+          source={require('../../../../assets/ic_downloads.svg')}
+        /> */}
+        <CustomIcon width={120} height={120} style={{ fill: "#FF0000" }} />
         <SectionCourses
           title="Software Development"
           data={courses.data}

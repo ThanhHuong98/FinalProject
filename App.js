@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import 'react-native-gesture-handler';
@@ -6,7 +6,6 @@ import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Colors, ScreenKey } from './src/Constant/Constant';
-
 
 import Login from './src/components/Authentications/login/login';
 import Register from './src/components/Authentications/Register/Register';
@@ -174,11 +173,25 @@ function MainNavigation() {
   );
 }
 
-
+export const themes = {
+  light: {
+    foreground: '#000000',
+    background: '#eeeeee'
+  },
+  dark: {
+    foreground: '#ffffff',
+    background: '#222222'
+  }
+};
+export const ThemeContext = React.createContext();
 export default function App() {
+  const [theme, setTheme] = useState(themes.light);
+
   return (
-    <NavigationContainer theme={DarkTheme}>
-      <MainNavigation />
-    </NavigationContainer>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <NavigationContainer theme={DarkTheme}>
+        <MainNavigation />
+      </NavigationContainer>
+    </ThemeContext.Provider>
   );
 }
