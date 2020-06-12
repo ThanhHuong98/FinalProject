@@ -7,6 +7,8 @@ import {
   Image
 } from 'react-native';
 import Star from 'react-native-star-view';
+// eslint-disable-next-line import/no-cycle
+import { ThemeContext } from '../../../../../App';
 
 const SectionCoursesItem = ({
   nameCourse,
@@ -19,21 +21,29 @@ const SectionCoursesItem = ({
   onChooseOption,
 }) => {
   return (
-    <TouchableOpacity
-      style={styles.itemContainer}
-      onPress={onChooseOption}
-    >
-      <Image
-        style={styles.image}
-        source={{ uri: srcImage }}
-      />
-      <View style={styles.content}>
-        <Text style={{ ...styles.title, marginBottom: 6 }}>{nameCourse}</Text>
-        <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{author}</Text>
-        <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${dateTime} . ${interval}h`}</Text>
-        <Star score={rating} style={styles.starStyle} />
-      </View>
-    </TouchableOpacity>
+    <ThemeContext.Consumer>
+      {
+        ({ theme }) => {
+          return (
+            <TouchableOpacity
+              style={{ ...styles.itemContainer, backgroundColor: theme.itemColor }}
+              onPress={onChooseOption}
+            >
+              <Image
+                style={styles.image}
+                source={{ uri: srcImage }}
+              />
+              <View style={styles.content}>
+                <Text style={{ ...styles.title, marginBottom: 6 }}>{nameCourse}</Text>
+                <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{author}</Text>
+                <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${dateTime} . ${interval}h`}</Text>
+                <Star score={rating} style={styles.starStyle} />
+              </View>
+            </TouchableOpacity>
+          );
+        }
+      }
+    </ThemeContext.Consumer>
   );
 };
 

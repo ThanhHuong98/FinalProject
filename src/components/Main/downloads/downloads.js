@@ -1,16 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Colors, FontSize, Dimension } from '../../../Constant/Constant';
+import DownloadIcon from '../../../../assets/ic_download.svg';
 
 const Downloads = () => {
   return (
     <View style={styles.container}>
       <View style={styles.center}>
-        <Image
-          style={styles.img}
-          source={require('../../../../assets/ic_downloads.png')}
-        //  source={require('../../../../assets/bg_home.jpg')}
-        />
+        <DownloadIcon width={100} height={100} style={{ marginBottom: 10 }}/>
         <Text style={styles.decription}>
           No downloads
         </Text>
@@ -32,15 +29,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1
   },
-  img: {
-    width: 100,
-    height: 100,
-    marginBottom: Dimension.marginMedium,
-  },
   decription: {
     color: Colors.greyWhite,
     fontSize: FontSize.large,
-    padding: Dimension.paddingMedium,
   }
 });
 

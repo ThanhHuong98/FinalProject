@@ -1,14 +1,13 @@
 import React from 'react';
 import {
   StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
   FlatList,
   SafeAreaView
 } from 'react-native';
 import SectionCoursesItem from '../SectionCoursesItem/section-courses-item';
-import { ScreenKey } from '../../../../Constant/Constant';
+import { ScreenKey, Colors } from '../../../../Constant/Constant';
+// eslint-disable-next-line import/no-cycle
+import SectionTitle from '../../../common/SectionTitle/section-title';
 
 const SectionCourses = ({ title, data, navigation }) => {
   const onSeeMore = () => {
@@ -21,14 +20,18 @@ const SectionCourses = ({ title, data, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.displayTop}>
+      {/* <View style={styles.displayTop}>
         <Text style={styles.title}>{title}</Text>
         <TouchableOpacity
           style={styles.buttonMore}
           onPress={onSeeMore}>
           <Text style={styles.titileButton}>See all &gt;</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
+      <SectionTitle
+        title={title}
+        onChooseOption={onSeeMore}
+      />
       <FlatList
         horizontal
         data={data}
@@ -50,28 +53,13 @@ const SectionCourses = ({ title, data, navigation }) => {
   );
 };
 
-const primaryColorBackground = '#000a12';
-const secondaryColor = '#2c3038';
-
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: primaryColorBackground,
+    backgroundColor: Colors.transparent,
   },
   displayTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  titileButton: {
-    color: 'white',
-    fontSize: 12,
-    padding: 5,
-    textAlign: 'center'
-  },
-  buttonMore: {
-    backgroundColor: secondaryColor,
-    borderRadius: 25,
-    width: '18%',
-    alignSelf: 'flex-end'
   },
   title: {
     color: 'white',

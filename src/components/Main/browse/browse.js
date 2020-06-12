@@ -1,12 +1,22 @@
 import React, { } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
+// eslint-disable-next-line import/no-cycle
 import SectionAuthors from './Author/SectionAuthors/section-authors';
+// eslint-disable-next-line import/no-cycle
 import SectionPopularSkills from './PopularSkill/SectionPopularSkills/section-popular-skills';
 import ImageButton from '../../common/ImageButton/image-button';
+// eslint-disable-next-line import/no-cycle
 import SectionPaths from './Paths/SectionPaths/section-paths';
 import SectionCategories from './SectionCategories/section-categoties';
-import { Colors, Dimension, ScreenKey } from '../../../Constant/Constant';
-import { categories, authors, popularSkills, paths } from '../../../data/dataTest';
+import { Dimension, ScreenKey } from '../../../Constant/Constant';
+import {
+  categories,
+  authors,
+  popularSkills,
+  paths
+} from '../../../data/dataTest';
+// eslint-disable-next-line import/no-cycle
+import { ThemeContext } from '../../../../App';
 
 const Browse = ({ navigation }) => {
   const onRelease = () => {
@@ -17,54 +27,64 @@ const Browse = ({ navigation }) => {
     navigation.navigate(ScreenKey.Recommened);
   };
   return (
-    <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.groupButton}>
-          <ImageButton
-            style={styles.imageButton}
-            title="NEW RELEASE"
-            onChooseOption={onRelease}
-            srcImage={categories.data[0].srcImage}
-          />
-          <ImageButton
-            style={styles.imageButton}
-            title="RECOMMENDED FOR YOU"
-            onChooseOption={onRecommened}
-            srcImage={categories.data[1].srcImage}
-          />
-        </View>
-        <SectionPopularSkills
-          title="Popular Skills"
-          data={popularSkills.data}
-          navigation={navigation}
-        />
-        <SectionCategories
-          title="Top categories"
-          data={categories.data}
-        />
-        <SectionPaths
-          title="Paths"
-          data={paths.data}
-          navigation={navigation}
-        />
-        <SectionAuthors
-          title="Top Authors"
-          data={authors.data}
-          navigation={navigation}
-        />
-      </ScrollView>
-    </View>
+    <ThemeContext.Consumer>
+      {
+         ({ theme }) => {
+           return (
+             <View style={{ ...styles.container, backgroundColor: theme.background }}>
+               <ScrollView>
+                 <View style={styles.groupButton}>
+                   <ImageButton
+                     style={styles.imageButton}
+                     title="NEW RELEASE"
+                     onChooseOption={onRelease}
+                     srcImage={categories.data[0].srcImage}
+                   />
+                   <ImageButton
+                     style={styles.imageButton}
+                     title="RECOMMENDED FOR YOU"
+                     onChooseOption={onRecommened}
+                     srcImage={categories.data[1].srcImage}
+                   />
+                 </View>
+                 <SectionPopularSkills
+                   title="Popular Skills"
+                   data={popularSkills.data}
+                   navigation={navigation}
+                 />
+                 <SectionCategories
+                   title="Top categories"
+                   data={categories.data}
+                 />
+                 <SectionPaths
+                   title="Paths"
+                   data={paths.data}
+                   navigation={navigation}
+                 />
+                 <SectionAuthors
+                   title="Top Authors"
+                   data={authors.data}
+                   navigation={navigation}
+                 />
+               </ScrollView>
+             </View>
+           );
+         }
+      }
+    </ThemeContext.Consumer>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: 'red',
     justifyContent: 'space-between',
+    padding: Dimension.paddingMedium,
   },
   groupButton: {
     height: Dimension.xheight,
     justifyContent: 'space-around',
+    marginBottom: Dimension.marginMedium,
   },
 
 });

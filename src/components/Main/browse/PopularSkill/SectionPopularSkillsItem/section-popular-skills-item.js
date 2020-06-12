@@ -1,8 +1,7 @@
 import React, { } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import {
-  Colors,
-  FontSize
+  FontSize, Colors
 } from '../../../../../Constant/Constant';
 
 
@@ -14,7 +13,6 @@ const SectionPopularSkillsItem = ({ title, onChooseOption }) => {
     >
       <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
-
   );
 };
 

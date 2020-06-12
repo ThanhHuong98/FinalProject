@@ -36,7 +36,7 @@ const ListCoursesItems = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.transparent,
   },
 
   title: {

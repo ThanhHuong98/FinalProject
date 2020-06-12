@@ -11,8 +11,10 @@ import {
   Colors,
   FontSize,
   Dimension,
-  ScreenKey
+  ScreenKey,
 } from '../../../../../Constant/Constant';
+// eslint-disable-next-line import/no-cycle
+import { ThemeContext } from '../../../../../../App';
 
 const SectionPopularSkills = ({ title, data, navigation }) => {
   const separator = () => {
@@ -24,32 +26,39 @@ const SectionPopularSkills = ({ title, data, navigation }) => {
   };
   const onDetailSkill = () => {
     navigation.navigate(ScreenKey.DetailPopularSkill);
-    console.log("Nhana nahndhbd");
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <FlatList
-        style={styles.items}
-        horizontal
-        data={data}
-        renderItem={({ item }) => (
-          <SectionPopularSkillsItem
-            title={item.name}
-            onChooseOption={onDetailSkill}
-          />
-        )}
-        keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={separator}
-      />
-    </SafeAreaView>
+    <ThemeContext.Consumer>
+      {
+      ({ theme }) => {
+        return (
+          <SafeAreaView style={styles.container}>
+            <Text style={{...styles.title, color: theme.textColor }}>{title}</Text>
+            <FlatList
+              style={styles.items}
+              horizontal
+              data={data}
+              renderItem={({ item }) => (
+                <SectionPopularSkillsItem
+                  title={item.name}
+                  onChooseOption={onDetailSkill}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+              ItemSeparatorComponent={separator}
+            />
+          </SafeAreaView>
+        );
+      }
+    }
+    </ThemeContext.Consumer>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.transparent,
   },
   items: {
     paddingTop: Dimension.paddingXMedium,

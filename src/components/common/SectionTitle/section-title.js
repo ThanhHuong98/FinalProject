@@ -1,18 +1,28 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Colors, FontSize, Dimension } from '../../../Constant/Constant';
+// eslint-disable-next-line import/no-cycle
+import { ThemeContext } from '../../../../App';
 
 const SectionTitle = ({ title, onChooseOption }) => {
   return (
-    <View style={styles.display}>
-      <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity
-        onPress={onChooseOption}
-        style={styles.touch}
-      >
-        <Text style={styles.titleButton}>See all &gt;</Text>
-      </TouchableOpacity>
-    </View>
+    <ThemeContext.Consumer>
+      {
+        ({ theme }) => {
+          return (
+            <View style={styles.display}>
+              <Text style={{ ...styles.title, color: theme.textColor }}>{title}</Text>
+              <TouchableOpacity
+                onPress={onChooseOption}
+                style={styles.touch}
+              >
+                <Text style={styles.titleButton}>See all &gt;</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }
+      }
+    </ThemeContext.Consumer>
   );
 };
 

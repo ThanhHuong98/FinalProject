@@ -65,11 +65,15 @@ export const ScreenKey = {
 
 export const themes = {
   light: {
-    background: '#FFF',
-    textColor: '#000'
+    background: '#f5f5f5',
+    textColor: '#000a12',
+    subTextColor: '#bdbdbd',
+    itemColor: '#e0e0e0'
   },
   dark: {
     background: '#000a12',
     textColor: '#FFFF',
+    subTextColor: '#aeaeae',
+    itemColor: '#2c3038'
   }
 };

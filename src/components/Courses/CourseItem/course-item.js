@@ -9,6 +9,8 @@ import {
 import Star from 'react-native-star-view';
 import { Colors, FontSize, ScreenKey } from '../../../Constant/Constant';
 import PopupMenu from '../../common/PopupMenu/PopupMenu';
+// eslint-disable-next-line import/no-cycle
+import { ThemeContext } from '../../../../App';
 
 const CourseItem = ({
   nameCourse,
@@ -25,30 +27,39 @@ const CourseItem = ({
   };
 
   return (
-    <TouchableOpacity
-      style={styles.itemContainer}
-      onPress={() => navigation.navigate(ScreenKey.DetailCourse)}
-    >
-      <Image
-        style={styles.image}
-        source={{ uri: srcImage }}
-      />
-      <View style={styles.content}>
-        <Text style={{ ...styles.title, marginBottom: 6 }}>{nameCourse}</Text>
-        <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{author}</Text>
-        <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${dateTime} . ${interval}h`}</Text>
-        <Star score={rating} style={styles.starStyle} />
-      </View>
-      <View style={styles.popupmenu}>
-        <PopupMenu actions={['Edit', 'Remove']} onPress={onPopupEvent} />
-      </View>
-    </TouchableOpacity>
+    <ThemeContext.Consumer>
+      {
+        ({ theme }) => {
+          return (
+            <TouchableOpacity
+              style={{ ...styles.itemContainer, backgroundColor: theme.background }}
+              onPress={() => navigation.navigate(ScreenKey.DetailCourse)}
+            >
+              <Image
+                style={styles.image}
+                source={{ uri: srcImage }}
+              />
+              <View style={styles.content}>
+                <Text style={{ ...styles.title, marginBottom: 6, color: theme.textColor }}>{nameCourse}</Text>
+                <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{author}</Text>
+                <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${dateTime} . ${interval}h`}</Text>
+                <Star score={rating} style={styles.starStyle} />
+              </View>
+              <View style={styles.popupmenu}>
+                <PopupMenu actions={['Edit', 'Remove']} onPress={onPopupEvent} />
+              </View>
+            </TouchableOpacity>
+          );
+        }
+      }
+
+    </ThemeContext.Consumer>
   );
 };
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.transparent,
     padding: 15,
   },
   image: {

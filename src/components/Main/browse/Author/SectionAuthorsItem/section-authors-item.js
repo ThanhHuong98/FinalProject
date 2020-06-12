@@ -6,19 +6,29 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { Colors, FontSize, Dimension } from '../../../../../Constant/Constant';
+// eslint-disable-next-line import/no-cycle
+import { ThemeContext } from '../../../../../../App';
 
 const SectionAuthorsItem = ({ title, source, onChooseOption }) => {
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={onChooseOption}
-    >
-      <Image
-        style={styles.imageCricle}
-        source={{ uri: source }}
-      />
-      <Text style={styles.title}>{title}</Text>
-    </TouchableOpacity>
+    <ThemeContext.Consumer>
+      {
+        ({ theme }) => {
+          return (
+            <TouchableOpacity
+              style={styles.container}
+              onPress={onChooseOption}
+            >
+              <Image
+                style={styles.imageCricle}
+                source={{ uri: source }}
+              />
+              <Text style={{ ...styles.title, color: theme.textColor }}>{title}</Text>
+            </TouchableOpacity>
+          );
+        }
+    }
+    </ThemeContext.Consumer>
   );
 };
 

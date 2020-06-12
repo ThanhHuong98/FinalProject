@@ -11,6 +11,7 @@ import { Colors, ScreenKey, themes } from './src/Constant/Constant';
 import Login from './src/components/Authentications/login/login';
 import Register from './src/components/Authentications/Register/Register';
 import SplashScreen from './src/components/SplashScreen/splash-screen';
+// eslint-disable-next-line import/no-cycle
 import Browse from './src/components/Main/browse/browse';
 import Home from './src/components/Main/home/home';
 import ListCourses from './src/components/Courses/ListCoursesItem/list-courses-item';
@@ -26,19 +27,10 @@ import SettingScreen from './src/components/Setting/setting-screen';
 const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator initialRouteName={ScreenKey.Setting}>
+    <HomeStack.Navigator initialRouteName={ScreenKey.Home}>
       <HomeStack.Screen
         name={ScreenKey.Home}
         component={Home}
-        // options={{
-        //   headerRight: () => (
-        //     <TouchableOpacity
-        //     // onPress={() => navigate('NewScreen')}
-        //     >
-        //       <Text style={styles.title}>Setting</Text>
-        //     </TouchableOpacity>
-        //   ),
-        // }}
       />
       <HomeStack.Screen
         name={ScreenKey.DetailCourse}
