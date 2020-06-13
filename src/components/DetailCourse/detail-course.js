@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
@@ -13,13 +14,14 @@ import ItemAuthorHorizontal from './item-athor';
 import Content from './Content';
 import CollapsableDescription from '../common/Pannel/CollapsableDescription';
 import { ScreenKey } from '../../Constant/Constant';
+import { ThemeContext } from '../../../App';
 
-const ItemFunction = ({ name, icon }) => (
+const ItemFunction = ({ name, icon, nameColor }) => (
   <View style={styles.itemFunctionContainer}>
     <TouchableOpacity style={styles.iconFunctionContainer}>
       <Image source={icon} style={styles.iconFunction}/>
     </TouchableOpacity>
-    <Text style={styles.nameFunction}>{name}</Text>
+    <Text style={{ ...styles.nameFunction, color: nameColor}}>{name}</Text>
   </View>
 );
 
@@ -31,7 +33,7 @@ const ButtonFunction = ({ name, icon }) => (
 );
 
 const authorSeparator = () => (
-  <View style={styles.authorSeparator}/>
+  <View style={styles.authorSeparator} />
 );
 
 const DetailCourse = ({
@@ -39,53 +41,63 @@ const DetailCourse = ({
 }) => {
   const iconBookmarked = isBookmarked ? require('../../temp/assets/course-detail/bookmark-icon.png') : require('../../temp/assets/course-detail/bookmark-icon.png');
   return (
-    <View style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
-           <Image source={require('../../temp/assets/course-detail/down-arrow-icon.png')} style={styles.backIcon}/>
-        </TouchableOpacity>
-        <Video source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-        shouldPlay
-        resizeMode={Video.RESIZE_MODE_CONTAIN}
-        useNativeControls={true}
-        usePoster={true}
-        volume={1.0}
-        rate={1.0}
-        style={styles.video}
-        />
+    <ThemeContext.Consumer>
+      {
+        ({ theme }) => {
+          console.log("Theme Detail", theme);
+          return (
+            <View style={{...styles.container, backgroundColor: theme.background }}>
+              <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
+                <Image source={require('../../temp/assets/course-detail/down-arrow-icon.png')} style={styles.backIcon}/>
+              </TouchableOpacity>
+              <Video
+                source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+                shouldPlay
+                resizeMode={Video.RESIZE_MODE_CONTAIN}
+                useNativeControls={true}
+                usePoster={true}
+                volume={1.0}
+                rate={1.0}
+                style={styles.video}
+              />
 
-        <ScrollView>
-          <View style={styles.infoCourseBlock}>
-            <Text style={styles.title}>{name}</Text>
-            <FlatList
-              data={authors}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={authorSeparator}
-              renderItem={({ item }) => <ItemAuthorHorizontal
-                                            name={item.name}
-                                            avatar={item.avatar}
-                                            onItemClick={(id) => navigation.navigate(screenName.AuthorProfile)}/>}
-            />
-            <Text style={styles.info}>{level} ∙ {formatMonthYearType(date)} ∙ {formatHourType1(duration)}</Text>
-            <View style={styles.func}>
-              <View style={styles.functionContainer}>
-                <ItemFunction name='Bookmark' icon={iconBookmarked}/>
-                <ItemFunction name='Add to Channel' icon={require('../../temp/assets/course-detail/channel-icon.png')}/>
-                <ItemFunction name='Download' icon={require('../../temp/assets/course-detail/download-icon.png')}/>
-              </View>
-            </View>
-            <View style={styles.description}>
-              <CollapsableDescription minHeight={70} description={description}/>
-            </View>
+              <ScrollView>
+                <View style={{ ...styles.infoCourseBlock, backgroundColor: theme.detailBlockColor }}>
+                  <Text style={{ ...styles.title, color: theme.textColor}}>{name}</Text>
+                  <FlatList
+                    data={authors}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    ItemSeparatorComponent={authorSeparator}
+                    renderItem={({ item }) => <ItemAuthorHorizontal
+                                                  name={item.name}
+                                                  avatar={item.avatar}
+                                                  onItemClick={(id) => navigation.navigate(ScreenKey.DetailAuthor)}/>}
+                  />
+                  <Text style={styles.info}>{level} ∙ {formatMonthYearType(date)} ∙ {formatHourType1(duration)}</Text>
+                  <View style={styles.func}>
+                    <View style={styles.functionContainer}>
+                      <ItemFunction name='Bookmark' icon={iconBookmarked} nameColor={theme.textColor}/>
+                      <ItemFunction name='Add to Channel' icon={require('../../temp/assets/course-detail/channel-icon.png')} nameColor={theme.textColor}/>
+                      <ItemFunction name='Download' icon={require('../../temp/assets/course-detail/download-icon.png')} nameColor={theme.textColor}/>
+                    </View>
+                  </View>
+                  <View style={styles.description}>
+                    <CollapsableDescription minHeight={70} description={description}/>
+                  </View>
 
-            <ButtonFunction name='Take a learning check' icon={require('../../temp/assets/course-detail/learning-check-icon.png')}/>
-            <ButtonFunction name='View related paths & courses' icon={require('../../temp/assets/course-detail/related-icon.png')}/>
-          </View>
-          <View style={{ paddingHorizontal: 15 }}>
-            <Content />
-          </View>
-        </ScrollView>
-    </View>
+                  <ButtonFunction name='Take a learning check' icon={require('../../temp/assets/course-detail/learning-check-icon.png')}/>
+                  <ButtonFunction name='View related paths & courses' icon={require('../../temp/assets/course-detail/related-icon.png')}/>
+                </View>
+                <View style={{ paddingHorizontal: 15, backgroundColor: theme.background }}>
+                  <Content />
+                </View>
+              </ScrollView>
+            </View>
+          );
+        }
+      }
+    </ThemeContext.Consumer>
   );
 };
 
@@ -145,7 +157,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   infoCourseBlock: {
-    backgroundColor: colorSource.darkGray,
+    backgroundColor: 'red',
     flexDirection: 'column',
     padding: 15,
   },

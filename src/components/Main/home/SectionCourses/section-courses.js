@@ -4,7 +4,8 @@ import {
   FlatList,
   SafeAreaView
 } from 'react-native';
-import SectionCoursesItem from '../../../../components/Main/home/SectionCoursesItem/section-courses-item';
+// eslint-disable-next-line import/no-cycle
+import SectionCoursesItem from '../SectionCoursesItem/section-courses-item';
 import { ScreenKey, Colors } from '../../../../Constant/Constant';
 // eslint-disable-next-line import/no-cycle
 import SectionTitle from '../../../common/SectionTitle/section-title';
@@ -20,14 +21,6 @@ const SectionCourses = ({ title, data, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <View style={styles.displayTop}>
-        <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity
-          style={styles.buttonMore}
-          onPress={onSeeMore}>
-          <Text style={styles.titileButton}>See all &gt;</Text>
-        </TouchableOpacity>
-      </View> */}
       <SectionTitle
         title={title}
         onChooseOption={onSeeMore}
@@ -37,12 +30,12 @@ const SectionCourses = ({ title, data, navigation }) => {
         data={data}
         renderItem={({ item }) => (
           <SectionCoursesItem
-            srcImage={item.srcImage}
-            nameCourse={item.nameCourse}
-            author={item.author}
+            thumbnail={item.thumbnail}
+            name={item.name}
+            authors={item.authors}
             level={item.level}
-            dateTime={item.dateTime}
-            interval={item.interval}
+            date={item.date}
+            duration={item.duration}
             rating={item.rating}
             onChooseOption={onDetailCourse}
           />

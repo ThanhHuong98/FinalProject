@@ -23,6 +23,7 @@ import DetailPopularSkill from './src/components/Main/browse/PopularSkill/Detail
 import DetailPath from './src/components/Main/browse/Paths/DetailPath/detail-path';
 // eslint-disable-next-line import/no-cycle
 import SettingScreen from './src/components/Setting/setting-screen';
+import { listCourses } from './src/data/listcourses';
 
 const HomeStack = createStackNavigator();
 function HomeStackScreen() {
@@ -76,10 +77,10 @@ function BrowseStackScreen() {
         name={ScreenKey.NewRelease}
         component={ListCourses}
       />
-      <BrowseStack.Screen
+      {/* <BrowseStack.Screen
         name={ScreenKey.DetailPopularSkill}
         component={DetailPopularSkill}
-      />
+      /> */}
       <BrowseStack.Screen
         name={ScreenKey.Recommened}
         component={ListCourses}
@@ -183,14 +184,20 @@ function MainNavigation() {
 }
 
 export const ThemeContext = React.createContext();
+export const CoursesContext = React.createContext();
+
 export default function App() {
   const [theme, setTheme] = useState(themes.dark);
+  const [sectionCourse, setSectionCourse] = useState(listCourses);
+  // console.log("List Course Data test ", sectionCourse);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <NavigationContainer>
-        <MainNavigation />
-      </NavigationContainer>
+      <CoursesContext.Provider value={{ sectionCourse }}>
+        <NavigationContainer>
+          <MainNavigation />
+        </NavigationContainer>
+      </CoursesContext.Provider>
     </ThemeContext.Provider>
   );
 }

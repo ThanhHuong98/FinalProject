@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
@@ -8,29 +9,37 @@ import { formatHourType2 } from '../../../../../temp/utils/DateTimeUtils';
 import CollapsableDescription from '../../../../common/Pannel/CollapsableDescription';
 import colorSource from '../../../../../temp/color';
 import ListCourses from '../../../../Courses/ListCourses/list-courses';
-import {ScreenKey, Colors} from '../../../../../Constant/Constant';
+import { ScreenKey, Colors } from '../../../../../Constant/Constant';
+import { ThemeContext } from '../../../../../../App';
 
 const DetailPath = ({
   id, name, thumbnail, numOfCourses, duration, description, courses, navigation,
 }) => (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-        <View style={styles.info}>
-            <View style={styles.titleBlock}>
+  <ThemeContext.Consumer>
+    {
+      ({ theme }) => {
+        return (
+          <ScrollView showsVerticalScrollIndicator={false} style={{ ...styles.container, backgroundColor: theme.background }}>
+            <View style={{ ...styles.info, backgroundColor: theme.background }}>
+              <View style={styles.titleBlock}>
                 <Image source={{ uri: thumbnail }} style={styles.thumbnail}/>
                 <View style={styles.infoBlock}>
-                    <Text style={styles.name}>{name}</Text>
-                    <Text style={styles.extraInfo}>{numOfCourses} courses ∙ {formatHourType2(duration)}</Text>
+                  <Text style={{ ...styles.name, color: theme.textColor}}>{name}</Text>
+                  <Text style={styles.extraInfo}>{numOfCourses} courses ∙ {formatHourType2(duration)}</Text>
                 </View>
+              </View>
+              <CollapsableDescription description={description} minHeight={100}/>
             </View>
-            <CollapsableDescription description={description} minHeight={100}/>
-        </View>
-
-        <View style={styles.listCourses}>
-            <ListCourses
+            <View style={styles.listCourses}>
+              <ListCourses
                 title={`${name} Courses`}
-                onItemClick={(id) => navigation.push(screenKey.DetailCourse)}/>
-        </View>
-    </ScrollView>
+                onItemClick={(id) => navigation.push(ScreenKey.DetailCourse)}/>
+            </View>
+          </ScrollView>
+        );
+      }
+    }
+  </ThemeContext.Consumer>
 );
 
 const styles = StyleSheet.create({

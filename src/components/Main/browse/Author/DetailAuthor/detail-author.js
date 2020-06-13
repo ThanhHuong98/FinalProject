@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable global-require */
 import React from 'react';
 import {
@@ -6,9 +7,9 @@ import {
 import PropTypes, { object } from 'prop-types';
 import colorSource from '../../../../../temp/color';
 import CollapsableDescription from '../../../../common/Pannel/CollapsableDescription';
-// eslint-disable-next-line import/no-cycle
 import ListCourses from '../../../../Courses/ListCourses/list-courses';
 import { ScreenKey, Colors } from '../../../../../Constant/Constant';
+import { ThemeContext } from '../../../../../../App';
 
 const DetailAuthor = ({
   name, avatar, isFollowing, desc, personalLink, courses, navigation,
@@ -17,30 +18,38 @@ const DetailAuthor = ({
   const buttonTextColor = isFollowing ? colorSource.blue : colorSource.white;
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <View style={styles.infoBlock}>
-          <Image source={{ uri: avatar }} style={styles.avatar} resizeMode='cover'/>
-          <Text style={styles.name}>{name}</Text>
-          <TouchableWithoutFeedback>
-            <Text style={{ ...styles.btnFollow, backgroundColor: buttonBackground, color: buttonTextColor }}>{isFollowing ? 'FOLLOWING' : 'FOLLOW'}</Text>
-          </TouchableWithoutFeedback>
-          <Text style={styles.followDesc}>You'll be notified when new courses are published</Text>
-          <CollapsableDescription minHeight={100} description={desc}/>
-          <View style={styles.socialContainer}>
-            <Image source={require('../../../../../temp/assets/author/link-icon.png')} style={styles.icon}/>
-            <Text style={styles.link}>{personalLink}</Text>
-          </View>
-          <View style={styles.socialContainer}>
-            <Image source={require('../../../../../temp/assets/author/facebook-icon.png')} style={styles.socialIcon}/>
-            <Image source={require('../../../../../temp/assets/author/linkedin-icon.png')} style={styles.socialIcon}/>
-          </View>
-        </View>
-        <View style={styles.listCourses}>
-          <ListCourses title='Courses' onItemClick={(id) => navigation.push(ScreenKey.DetailCourse)}/>
-        </View>
-      </View>
-    </ScrollView>
+    <ThemeContext.Consumer>
+      {
+        ({ theme }) => {
+          return (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={{ ...styles.container, backgroundColor: theme.background}}>
+                <View style={{ ...styles.infoBlock, backgroundColor: theme.background}}>
+                  <Image source={{ uri: avatar }} style={styles.avatar} resizeMode='cover'/>
+                  <Text style={{ ...styles.name, color: theme.textColor }}>{name}</Text>
+                  <TouchableWithoutFeedback>
+                    <Text style={{ ...styles.btnFollow, backgroundColor: buttonBackground, color: buttonTextColor }}>{isFollowing ? 'FOLLOWING' : 'FOLLOW'}</Text>
+                  </TouchableWithoutFeedback>
+                  <Text style={styles.followDesc}>You'll be notified when new courses are published</Text>
+                  <CollapsableDescription minHeight={100} description={desc}/>
+                  <View style={styles.socialContainer}>
+                    <Image source={require('../../../../../temp/assets/author/link-icon.png')} style={styles.icon}/>
+                    <Text style={{ ...styles.link, color: theme.textColor }}>{personalLink}</Text>
+                  </View>
+                  <View style={styles.socialContainer}>
+                    <Image source={require('../../../../../temp/assets/author/facebook-icon.png')} style={styles.socialIcon}/>
+                    <Image source={require('../../../../../temp/assets/author/linkedin-icon.png')} style={styles.socialIcon}/>
+                  </View>
+                </View>
+                <View style={styles.listCourses}>
+                  <ListCourses title='Courses' onItemClick={(id) => navigation.push(ScreenKey.DetailCourse)}/>
+                </View>
+              </View>
+            </ScrollView>
+          );
+        }
+      }
+    </ThemeContext.Consumer>
   );
 };
 

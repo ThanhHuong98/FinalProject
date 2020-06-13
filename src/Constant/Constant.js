@@ -1,3 +1,5 @@
+import { block } from "react-native-reanimated";
+
 export const Colors = {
   backgroundColor: '#000a12',
   secondaryColor: '#2c3038',
@@ -68,12 +70,14 @@ export const themes = {
     background: '#f5f5f5',
     textColor: '#000a12',
     subTextColor: '#bdbdbd',
-    itemColor: '#e0e0e0'
+    itemColor: '#e0e0e0',
+    detailBlockColor: '#f5f5f5',
   },
   dark: {
     background: '#000a12',
     textColor: '#FFFF',
     subTextColor: '#aeaeae',
-    itemColor: '#2c3038'
+    itemColor: '#2c3038',
+    detailBlockColor: '#404040',
   }
 };

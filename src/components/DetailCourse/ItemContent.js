@@ -9,6 +9,7 @@ import colorSource from '../../temp/color';
 import { getPercentage } from '../../temp/utils/MathUtils';
 import { formatHourType2 } from '../../temp/utils/DateTimeUtils';
 import PopupMenu from '../common/PopupMenu/PopupMenu';
+import { ThemeContext } from '../../../App';
 
 const ProgressBar = ({ progress, total }) => {
   const progressColor = progress === total ? colorSource.green : colorSource.white;
@@ -21,7 +22,7 @@ const ProgressBar = ({ progress, total }) => {
 };
 
 const ItemLesson = ({
-  name, duration, isCompleted, isPlaying,
+  name, duration, isCompleted, isPlaying, textColor
 }) => (
   <TouchableOpacity style={styles.lessonContainer}>
     {isPlaying
@@ -30,7 +31,7 @@ const ItemLesson = ({
         ? <Image source={require('../../../assets/icon.png')} style={{ ...styles.lessonStatus, backgroundColor: colorSource.black }}/>
         : <View style={{ ...styles.lessonStatus, backgroundColor: colorSource.gray }}/>
     }
-    <Text style={styles.lessonName}>{name}</Text>
+    <Text style={{ ...styles.lessonName, color: textColor}}>{name}</Text>
     <Text style={styles.lessonDuration}>{formatHourType2(duration)}</Text>
   </TouchableOpacity>
 );
@@ -42,38 +43,48 @@ const ItemSeparator = () => (
 const Module = ({
   moduleName, index, duration, progress, content,
 }) => (
-  <View style={styles.moduleContainer}>
-    <View style={styles.titleContainer}>
-      <View style={styles.thumbnail}>
-        <View style={styles.textThumbnailContainer}>
-          <Text style={styles.textThumbnail}>{index}</Text>
-        </View>
-        <View style={styles.progressBar}>
-          <ProgressBar progress={progress} total={duration}/>
-        </View>
-      </View>
-      <View style={styles.moduleInfo}>
-        <Text style={styles.moduleName}>{moduleName}</Text>
-        <Text style={styles.moduleDuration}>{formatHourType2(duration)}</Text>
-      </View>
-      <PopupMenu
-      />
-    </View>
+  <ThemeContext.Consumer>
+    {
+      ({ theme }) => {
+        return (
+          <View style={{ ...styles.moduleContainer, backgroundColor: theme.background }}>
+            <View style={styles.titleContainer}>
+              <View style={styles.thumbnail}>
+                <View style={styles.textThumbnailContainer}>
+                  <Text style={{ ...styles.textThumbnail, color: theme.textColor }}>{index}</Text>
+                </View>
+                <View style={styles.progressBar}>
+                  <ProgressBar progress={progress} total={duration}/>
+                </View>
+              </View>
+              <View style={styles.moduleInfo}>
+                <Text style={{ ...styles.moduleName, color: theme.textColor }}>{moduleName}</Text>
+                <Text style={styles.moduleDuration}>{formatHourType2(duration)}</Text>
+              </View>
+              <PopupMenu
+              />
+            </View>
 
-    <FlatList
-      data={content}
-      showsVerticalScrollIndicator={false}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => (
-        <ItemLesson
-          name={item.name}
-          duration={item.duration}
-          isCompleted={item.isCompleted}
-          isPlaying={item.isPlaying}
-        />
-      )}
-    />
-  </View>
+            <FlatList
+              data={content}
+              showsVerticalScrollIndicator={false}
+              ItemSeparatorComponent={ItemSeparator}
+              renderItem={({ item }) => (
+                <ItemLesson
+                  name={item.name}
+                  duration={item.duration}
+                  isCompleted={item.isCompleted}
+                  isPlaying={item.isPlaying}
+                  textColor={theme.textColor}
+                />
+              )}
+            />
+          </View>
+
+        );
+      }
+    }
+  </ThemeContext.Consumer>
 );
 
 const styles = StyleSheet.create({
@@ -101,7 +112,7 @@ const styles = StyleSheet.create({
     width: 10,
   },
   moduleContainer: {
-    backgroundColor: colorSource.black,
+    backgroundColor: 'red',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     paddingVertical: 20,
@@ -138,7 +149,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   textThumbnail: {
-    color: colorSource.white,
+    color: 'red',
     fontSize: 16,
     marginTop: 5,
   },

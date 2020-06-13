@@ -7,12 +7,11 @@ import {
 } from 'react-native';
 // eslint-disable-next-line import/no-cycle
 import SectionCourses from './SectionCourses/section-courses';
-import { courses } from '../../../data/dataTest';
 import { ScreenKey, Dimension } from '../../../Constant/Constant';
 // eslint-disable-next-line import/no-cycle
-import { ThemeContext } from '../../../../App';
+import { ThemeContext, CoursesContext } from '../../../../App';
 
-const Home = ({ navigation }) => {
+function Home({ navigation }) {
   const onSetting = () => {
     navigation.navigate(ScreenKey.Setting);
   };
@@ -29,41 +28,29 @@ const Home = ({ navigation }) => {
       ),
     });
   }, [navigation]);
+
   return (
     <ThemeContext.Consumer>
-      {
-        ({ theme }) => {
-          return (
+      { ({theme}) => (
+        // console.log("Theme: ", theme ),
+        <CoursesContext.Consumer>
+          {({ sectionCourse }) => (
             <View style={{ ...styles.container, backgroundColor: theme.background }}>
               <ScrollView>
-                {/* <ImageBackground
-                  style={styles.background}
-                  // eslint-disable-next-line global-require
-                  source={require('../../../../assets/ic_downloads.svg')}
-                /> */}
                 <SectionCourses
-                  title="Software Development"
-                  data={courses.data}
-                  navigation={navigation}
-                />
-                <SectionCourses
-                  title="IT Operators"
-                  data={courses.data}
-                  navigation={navigation}
-                />
-                <SectionCourses
-                  title="Data Professional"
-                  data={courses.data}
+                  title={sectionCourse.title}
+                  data={sectionCourse.courses}
                   navigation={navigation}
                 />
               </ScrollView>
             </View>
-          );
-        }
-      }
+          )}
+        </CoursesContext.Consumer>
+      )}
     </ThemeContext.Consumer>
   );
-};
+}
+
 
 const styles = StyleSheet.create({
   container: {
