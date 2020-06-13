@@ -14,7 +14,7 @@ import SplashScreen from './src/components/SplashScreen/splash-screen';
 // eslint-disable-next-line import/no-cycle
 import Browse from './src/components/Main/browse/browse';
 import Home from './src/components/Main/home/home';
-import ListCourses from './src/components/Courses/ListCoursesItem/list-courses-item';
+import ListCourses from './src/components/Courses/ListCourses/list-courses';
 import Search from './src/components/Main/search/Search';
 import Downloads from './src/components/Main/downloads/downloads';
 import DetailCourse from './src/components/DetailCourse/detail-course';

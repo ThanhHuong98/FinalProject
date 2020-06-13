@@ -1,149 +1,216 @@
-import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  FlatList
-} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
+import React, { useState } from 'react';
 import { Video } from 'expo-av';
-import Star from 'react-native-star-view';
-import { Colors, FontSize, Dimension } from '../../Constant/Constant';
-import IConButton from '../common/IconButton/icon-button';
-import Icon from '../common/Icon/icon';
-import { course } from '../../data/dataTest';
-import Panel from '../common/Pannel/pannel';
-import AuthorItem from './item-athor';
-import separator from '../common/Separator/separator-side';
+import {
+  View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ScrollView,
+} from 'react-native';
+import PropTypes, { object } from 'prop-types';
+import { formatMonthYearType, formatHourType1 } from '../../temp/utils/DateTimeUtils';
+import colorSource from '../../temp/color';
+import ItemAuthorHorizontal from './item-athor';
 import Content from './Content';
+import CollapsableDescription from '../common/Pannel/CollapsableDescription';
+import { ScreenKey } from '../../Constant/Constant';
 
+const ItemFunction = ({ name, icon }) => (
+  <View style={styles.itemFunctionContainer}>
+    <TouchableOpacity style={styles.iconFunctionContainer}>
+      <Image source={icon} style={styles.iconFunction}/>
+    </TouchableOpacity>
+    <Text style={styles.nameFunction}>{name}</Text>
+  </View>
+);
 
-const DetailCourse = () => {
-  const GroupOptions = () => {
-    return (
-      <View style={styles.optionWrapper}>
-        <Icon
-          title="Bookmark"
-          icon="ios-bookmark"
-        />
-        <Icon
-          title="Add to channel"
-          icon="ios-code"
-        />
-        <Icon
-          title="Downloads"
-          icon="ios-download"
-        />
-      </View>
-    );
-  };
-  const AuthorsList = ({ data }) => {
-    return (
-      <FlatList
-        horizontal
-        data={data}
-        renderItem={({ item }) => (
-          <AuthorItem
-            title={item}
-            // onChooseOption={()}
-          />
-        )}
-        ItemSeparatorComponent={separator}
-      />
-    );
-  };
-  const Separator = () => {
-    return (
-      <View
-        style={{
-          height: 0.5,
-          width: '100%',
-          backgroundColor: '#CED0CE',
-          marginBottom: Dimension.marginMedium,
-        }}
-      />
-    );
-  };
-  const ExtendAction = () => {
-    return (
-      <View style={styles.extendAction}>
-        <IConButton
-          title="Related paths and courses"
-          iconName="ios-albums"
-        />
-        <IConButton
-          title="Take a learning checks"
-          iconName="ios-disc"
-        />
-      </View>
-    );
-  };
+const ButtonFunction = ({ name, icon }) => (
+  <TouchableOpacity style={styles.btnContainer}>
+    <Image source={icon} style={styles.iconFunction}/>
+    <Text style={{ ...styles.nameFunction, marginLeft: 5 }}>{name}</Text>
+  </TouchableOpacity>
+);
+
+const authorSeparator = () => (
+  <View style={styles.authorSeparator}/>
+);
+
+const DetailCourse = ({
+  id, name, authors, level, date, duration, description, content, transcript, isBookmarked, navigation,
+}) => {
+  const iconBookmarked = isBookmarked ? require('../../temp/assets/course-detail/bookmark-icon.png') : require('../../temp/assets/course-detail/bookmark-icon.png');
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <Video
-          source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-          rate={1.0}
-          volume={1.0}
-          isMuted={false}
-          resizeMode="cover"
-          shouldPlay
-          isLooping
-          style={styles.video}
-       />
-        <View style={styles.body}>
-          <Text style={{ ...styles.title, marginBottom: 10 }}>{course.name}</Text>
-          <AuthorsList data={course.authors} />
-          <Text style={{ ...styles.subtitile, marginBottom: 10, marginTop: 10}}>{ `${course.level} . ${course.dateTime} . ${course.interval}h`}</Text>
-          <Star score={course.rating} style={styles.starStyle} />
-          <GroupOptions />
-          <Separator />
-          <Panel
-            content={course.decription}
-          />
-          <ExtendAction />
-          <Content />
-        </View>
-      </ScrollView>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
+           <Image source={require('../../temp/assets/course-detail/down-arrow-icon.png')} style={styles.backIcon}/>
+        </TouchableOpacity>
+        <Video source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+        shouldPlay
+        resizeMode={Video.RESIZE_MODE_CONTAIN}
+        useNativeControls={true}
+        usePoster={true}
+        volume={1.0}
+        rate={1.0}
+        style={styles.video}
+        />
+
+        <ScrollView>
+          <View style={styles.infoCourseBlock}>
+            <Text style={styles.title}>{name}</Text>
+            <FlatList
+              data={authors}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={authorSeparator}
+              renderItem={({ item }) => <ItemAuthorHorizontal
+                                            name={item.name}
+                                            avatar={item.avatar}
+                                            onItemClick={(id) => navigation.navigate(screenName.AuthorProfile)}/>}
+            />
+            <Text style={styles.info}>{level} ∙ {formatMonthYearType(date)} ∙ {formatHourType1(duration)}</Text>
+            <View style={styles.func}>
+              <View style={styles.functionContainer}>
+                <ItemFunction name='Bookmark' icon={iconBookmarked}/>
+                <ItemFunction name='Add to Channel' icon={require('../../temp/assets/course-detail/channel-icon.png')}/>
+                <ItemFunction name='Download' icon={require('../../temp/assets/course-detail/download-icon.png')}/>
+              </View>
+            </View>
+            <View style={styles.description}>
+              <CollapsableDescription minHeight={70} description={description}/>
+            </View>
+
+            <ButtonFunction name='Take a learning check' icon={require('../../temp/assets/course-detail/learning-check-icon.png')}/>
+            <ButtonFunction name='View related paths & courses' icon={require('../../temp/assets/course-detail/related-icon.png')}/>
+          </View>
+          <View style={{ paddingHorizontal: 15 }}>
+            <Content />
+          </View>
+        </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.backgroundColor,
+  authorSeparator: {
+    width: 5,
   },
-  video: {
-    width: '100%',
-    height: 300,
+  backIcon: {
+    alignItems: 'flex-start',
+    height: 25,
+    justifyContent: 'flex-start',
+    left: 5,
+    position: 'absolute',
+    top: 5,
+    width: 25,
+    zIndex: 9,
   },
-  body: {
-    marginLeft: Dimension.marginMedium,
-    marginRight: Dimension.marginMedium,
-    marginTop: Dimension.marginMedium,
-  },
-  title: {
-    color: Colors.white,
-    fontSize: FontSize.large,
-    fontWeight: 'bold'
-  },
-  subtitile: {
-    color: Colors.greyWhite,
-    fontSize: FontSize.xsmall,
-  },
-  extendAction: {
-    marginTop: Dimension.marginMedium,
-    height: 120,
-    justifyContent: 'space-around'
-  },
-  optionWrapper: {
+  btnContainer: {
+    alignItems: 'center',
+    backgroundColor: colorSource.gray,
+    borderRadius: 5,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    marginVertical: 5,
+    padding: 8,
+  },
+  container: {
+    backgroundColor: colorSource.black,
+    height: '100%',
+    width: '100%',
+  },
+  description: {
+    marginBottom: 15,
+    width: '100%',
+  },
+  functionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginVertical: 25,
+  },
+  iconFunction: {
+    height: 20,
+    width: 20,
+  },
+  iconFunctionContainer: {
+    alignItems: 'center',
+    backgroundColor: colorSource.gray,
+    borderRadius: 50,
+    height: 40,
+    justifyContent: 'center',
+    marginBottom: 7,
+    width: 40,
+  },
+  info: {
+    color: colorSource.lightGray,
+    fontSize: 12,
+    marginTop: 10,
+  },
+  infoCourseBlock: {
+    backgroundColor: colorSource.darkGray,
+    flexDirection: 'column',
     padding: 15,
   },
-  starStyle: {
-    width: 100,
-    height: 20,
+  itemFunctionContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  nameFunction: {
+    color: colorSource.white,
+    fontSize: 14,
+  },
+  title: {
+    color: colorSource.white,
+    fontSize: 25,
+    fontWeight: '500',
+    marginBottom: 10,
+  },
+  video: {
+    height: 220,
   },
 });
+
+ItemFunction.propTypes = {
+  name: PropTypes.string,
+  icon: PropTypes.number,
+};
+ButtonFunction.propTypes = {
+  name: PropTypes.string,
+  icon: PropTypes.number,
+};
+
+DetailCourse.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  authors: PropTypes.arrayOf(object),
+  level: PropTypes.string,
+  date: PropTypes.number,
+  duration: PropTypes.number,
+  description: PropTypes.string,
+  content: PropTypes.arrayOf(object),
+  transcript: PropTypes.string,
+  isBookmarked: PropTypes.bool,
+  navigation: PropTypes.object,
+};
+
+DetailCourse.defaultProps = {
+  name: 'Agular Fundamentals',
+  authors: [
+    {
+      name: 'Joe Eames',
+      avatar: 'https://pluralsight.imgix.net/author/lg/joe-eames-v1.jpg?w=200',
+    },
+    {
+      name: 'Jim Cooper',
+      avatar: 'https://pluralsight.imgix.net/author/lg/jim-cooper-v1.jpg?w=200',
+    },
+  ],
+  level: 'Intermediate',
+  date: 1589782861000,
+  duration: 2449000,
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer est tellus, malesuada at erat a, volutpat consequat dolor. Etiam commodo nisl sit amet arcu congue varius. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut est justo, sodales eu metus vel, auctor varius lorem. Proin nec feugiat nisi. Donec bibendum scelerisque sapien. Pellentesque consequat hendrerit augue ac tincidunt. Pellentesque non est eget ipsum sagittis malesuada at vitae tellus.',
+  content: [],
+  transcript: '',
+  isBookmarked: true,
+};
+
 export default DetailCourse;

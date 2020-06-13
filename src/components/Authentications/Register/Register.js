@@ -15,12 +15,12 @@ const Register = () => {
   const [isSelected, setSelection] = useState(false);
 
   const onCreateAccount = () => {
-    console.log(email);
+    // console.log(email);
   };
   const onChangeText = (emailVal) => {
     setTextEmail(emailVal);
-    console.log(`EmailVal: ${emailVal}`);
-    console.log(`Emai: ${email}`);
+    // console.log(`EmailVal: ${emailVal}`);
+    // console.log(`Emai: ${email}`);
   };
 
   return (
@@ -75,9 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: Colors.backgroundColor,
-    marginTop: 50,
-    // marginLeft: Dimension.marginMedium,
-    // marginRight: Dimension.marginMedium,
+    padding: Dimension.paddingMedium,
   },
   topDisplay: {
     flexDirection: 'row',

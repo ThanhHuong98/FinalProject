@@ -1,39 +1,43 @@
-import React, { } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
-  Colors,
-  FontSize
-} from '../../Constant/Constant';
+  Image, Text, StyleSheet, TouchableOpacity,
+} from 'react-native';
+import colorSource from '../../temp/color';
 
-
-const AuthorItem = ({ title, onChooseOption }) => {
-  return (
-    <TouchableOpacity
-      style={styles.themeItem}
-      onPress={onChooseOption}
-    >
-      <Text style={styles.title}>{title}</Text>
-    </TouchableOpacity>
-
-  );
-};
-
+const AuthorItem = ({
+  id, name, avatar, onItemClick,
+}) => (
+  <TouchableOpacity style={styles.container} onPress={() => onItemClick(id)}>
+    <Image source={{ uri: avatar }} resizeMode='cover' style={styles.avatar}/>
+    <Text style={styles.name}>{name}</Text>
+  </TouchableOpacity>
+);
 const styles = StyleSheet.create({
-  themeItem: {
-    backgroundColor: Colors.secondaryColor,
-    borderRadius: 25,
-    alignSelf: 'flex-end',
-    paddingRight: 5,
-    paddingLeft: 5,
-    paddingTop: 2,
-    paddingBottom: 2,
+  avatar: {
+    borderRadius: 20,
+    height: 25,
+    width: 25,
   },
-  title: {
-    color: 'white',
-    fontSize: FontSize.small,
-    padding: 5,
-    textAlign: 'center'
+  container: {
+    alignItems: 'center',
+    backgroundColor: colorSource.gray,
+    borderRadius: 20,
+    flexDirection: 'row',
+    height: 30,
+    padding: 3,
+  },
+  name: {
+    color: colorSource.white,
+    fontSize: 14,
+    marginHorizontal: 5,
   },
 });
+AuthorItem.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  avatar: PropTypes.string,
+  onItemClick: PropTypes.func,
+};
 
 export default AuthorItem;

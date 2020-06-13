@@ -4,13 +4,12 @@ import {
   View, Text, TouchableWithoutFeedback, Image, ScrollView, StyleSheet,
 } from 'react-native';
 import PropTypes, { object } from 'prop-types';
-import colorSource from '../../../../../temp/color';
-import CollapsableDescription from '../../../../common/Pannel/CollapsableDescription';
-// eslint-disable-next-line import/no-cycle
-import ListCourses from '../../../../Courses/ListCourses/list-courses';
-import { ScreenKey, Colors } from '../../../../../Constant/Constant';
+import colorSource from '../../constants/color';
+import CollapsableDescription from '../common/CollapsableDescription';
+import ListCourses from '../home/ListCourses';
+import screenName from '../../constants/screen-name';
 
-const DetailAuthor = ({
+const AuthorProfile = ({
   name, avatar, isFollowing, desc, personalLink, courses, navigation,
 }) => {
   const buttonBackground = isFollowing ? colorSource.transparent : colorSource.blue;
@@ -18,28 +17,28 @@ const DetailAuthor = ({
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <View style={styles.infoBlock}>
-          <Image source={{ uri: avatar }} style={styles.avatar} resizeMode='cover'/>
-          <Text style={styles.name}>{name}</Text>
-          <TouchableWithoutFeedback>
-            <Text style={{ ...styles.btnFollow, backgroundColor: buttonBackground, color: buttonTextColor }}>{isFollowing ? 'FOLLOWING' : 'FOLLOW'}</Text>
-          </TouchableWithoutFeedback>
-          <Text style={styles.followDesc}>You'll be notified when new courses are published</Text>
-          <CollapsableDescription minHeight={100} description={desc}/>
-          <View style={styles.socialContainer}>
-            <Image source={require('../../../../../temp/assets/author/link-icon.png')} style={styles.icon}/>
-            <Text style={styles.link}>{personalLink}</Text>
-          </View>
-          <View style={styles.socialContainer}>
-            <Image source={require('../../../../../temp/assets/author/facebook-icon.png')} style={styles.socialIcon}/>
-            <Image source={require('../../../../../temp/assets/author/linkedin-icon.png')} style={styles.socialIcon}/>
-          </View>
-        </View>
-        <View style={styles.listCourses}>
-          <ListCourses title='Courses' onItemClick={(id) => navigation.push(ScreenKey.DetailCourse)}/>
-        </View>
-      </View>
+        <View style={styles.container}>
+            <View style={styles.infoBlock}>
+                <Image source={{ uri: avatar }} style={styles.avatar} resizeMode='cover'/>
+                <Text style={styles.name}>{name}</Text>
+                <TouchableWithoutFeedback>
+                    <Text style={{ ...styles.btnFollow, backgroundColor: buttonBackground, color: buttonTextColor }}>{isFollowing ? 'FOLLOWING' : 'FOLLOW'}</Text>
+                </TouchableWithoutFeedback>
+                <Text style={styles.followDesc}>You'll be notified when new courses are published</Text>
+                <CollapsableDescription minHeight={100} description={desc}/>
+                <View style={styles.socialContainer}>
+                    <Image source={require('../../../assets/author/link-icon.png')} style={styles.icon}/>
+                    <Text style={styles.link}>{personalLink}</Text>
+                </View>
+                <View style={styles.socialContainer}>
+                     <Image source={require('../../../assets/author/facebook-icon.png')} style={styles.socialIcon}/>
+                    <Image source={require('../../../assets/author/linkedin-icon.png')} style={styles.socialIcon}/>
+                </View>
+            </View>
+            <View style={styles.listCourses}>
+              <ListCourses title='Courses' onItemClick={(id) => navigation.push(screenName.CourseDetails)}/>
+            </View>
+         </View>
     </ScrollView>
   );
 };
@@ -61,7 +60,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   container: {
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: colorSource.white,
+    borderRadius: 20,
     flexDirection: 'column',
     height: '100%',
     paddingTop: 20,
@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
   },
   infoBlock: {
     alignItems: 'center',
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: colorSource.darkBackground,
+    borderRadius: 20,
     flexDirection: 'column',
     marginHorizontal: 15,
     padding: 15,
@@ -91,9 +92,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   listCourses: {
-    // height: '100%',
-    // marginTop: 20,
-    // paddingHorizontal: 15,
+    height: '100%',
+    marginTop: 20,
+    paddingHorizontal: 15,
   },
   name: {
     color: colorSource.white,
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
 
 });
 
-DetailAuthor.propTypes = {
+AuthorProfile.propTypes = {
   name: PropTypes.string,
   avatar: PropTypes.string,
   isFollowing: PropTypes.bool,
@@ -125,7 +126,7 @@ DetailAuthor.propTypes = {
   navigation: PropTypes.object,
 };
 
-DetailAuthor.defaultProps = {
+AuthorProfile.defaultProps = {
   name: 'Scott Allen',
   avatar: 'https://pluralsight.imgix.net/author/lg/44cb43b3-83e4-4458-9b39-a7ded3411616.jpg',
   isFollowing: false,
@@ -134,8 +135,4 @@ DetailAuthor.defaultProps = {
   courses: [],
 };
 
-export default DetailAuthor;
-
-
-
-// DetailAuthor
+export default AuthorProfile;

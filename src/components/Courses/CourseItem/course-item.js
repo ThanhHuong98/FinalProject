@@ -32,7 +32,7 @@ const CourseItem = ({
         ({ theme }) => {
           return (
             <TouchableOpacity
-              style={{ ...styles.itemContainer, backgroundColor: theme.background }}
+              style={styles.itemContainer}
               onPress={() => navigation.navigate(ScreenKey.DetailCourse)}
             >
               <Image

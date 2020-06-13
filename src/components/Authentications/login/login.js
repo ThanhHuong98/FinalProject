@@ -19,8 +19,6 @@ const Login = ({ navigation }) => {
   const [username, setTextUsename] = useState('');
   const [password, setTextPassword] = useState('');
   const onLogin = () => {
-    // console.log(username);
-    // console.log(password);
     navigation.navigate(ScreenKey.Main);
   };
   const onSubscribe = () => {
@@ -70,8 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: Colors.backgroundColor,
     justifyContent: 'center',
-    // marginLeft: Dimension.marginMedium,
-    // marginRight: Dimension.marginMedium,
+    padding: Dimension.paddingMedium,
   },
   primaryDisplay: {
   },

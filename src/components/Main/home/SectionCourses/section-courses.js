@@ -4,7 +4,7 @@ import {
   FlatList,
   SafeAreaView
 } from 'react-native';
-import SectionCoursesItem from '../SectionCoursesItem/section-courses-item';
+import SectionCoursesItem from '../../../../components/Main/home/SectionCoursesItem/section-courses-item';
 import { ScreenKey, Colors } from '../../../../Constant/Constant';
 // eslint-disable-next-line import/no-cycle
 import SectionTitle from '../../../common/SectionTitle/section-title';

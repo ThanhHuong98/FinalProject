@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -18,6 +18,9 @@ const Home = ({ navigation }) => {
   };
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      // headerStyle: {
+      //   backgroundColor: themHeader,
+      // },
       headerRight: () => (
         <Button
           onPress={onSetting}

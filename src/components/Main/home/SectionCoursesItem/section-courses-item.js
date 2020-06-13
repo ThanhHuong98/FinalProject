@@ -34,7 +34,7 @@ const SectionCoursesItem = ({
                 source={{ uri: srcImage }}
               />
               <View style={styles.content}>
-                <Text style={{ ...styles.title, marginBottom: 6 }}>{nameCourse}</Text>
+                <Text style={{ ...styles.title, marginBottom: 6, color: theme.textColor }}>{nameCourse}</Text>
                 <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{author}</Text>
                 <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${dateTime} . ${interval}h`}</Text>
                 <Star score={rating} style={styles.starStyle} />
@@ -48,7 +48,6 @@ const SectionCoursesItem = ({
 };
 
 const primaryBackgroundColor = '#2c3038';
-const textColorSubTitile = '#bdbdbd';
 
 const styles = StyleSheet.create({
   starStyle: {
@@ -78,7 +77,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   subtitile: {
-    color: textColorSubTitile,
+    //color: textColorSubTitile,
+    color: '#9e9e9e',
     fontSize: 11,
   },
   starRating: {

@@ -58,8 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: Colors.backgroundColor,
     justifyContent: 'center',
-    // marginLeft: Dimension.marginMedium,
-    // marginRight: Dimension.marginMedium,
+    padding: Dimension.paddingMedium,
   },
   bgSplash: {
     width: '100%',
