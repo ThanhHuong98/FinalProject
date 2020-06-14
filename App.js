@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import React, { useState } from 'react';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -77,10 +78,10 @@ function BrowseStackScreen() {
         name={ScreenKey.NewRelease}
         component={ListCourses}
       />
-      {/* <BrowseStack.Screen
+      <BrowseStack.Screen
         name={ScreenKey.DetailPopularSkill}
         component={DetailPopularSkill}
-      /> */}
+      />
       <BrowseStack.Screen
         name={ScreenKey.Recommened}
         component={ListCourses}

@@ -16,7 +16,6 @@ const ListCoursesItems = ({ navigation }) => {
     <ThemeContext.Consumer>
       {
         ({ theme }) => {
-          console.log("Theme in list course: ", theme.background);
           return (
             <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
               <FlatList

@@ -6,7 +6,6 @@ const DetailPopularSkill = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Detail Popular Skill page
       </Text>
     </View>
   );

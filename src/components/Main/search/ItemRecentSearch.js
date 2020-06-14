@@ -6,13 +6,13 @@ import {
 } from 'react-native';
 import colorSource from '../../../temp/color';
 
-const ItemRecentSearch = ({ searchKey }) => (
-    <TouchableWithoutFeedback>
-        <View style={styles.container}>
-        <Image source={require('../../../temp/assets/search/recent-icon.png')} style={styles.icon}/>
-            <Text styles={styles.text}>{searchKey}</Text>
-        </View>
-    </TouchableWithoutFeedback>
+const ItemRecentSearch = ({ searchKey, textColor }) => (
+  <TouchableWithoutFeedback>
+    <View style={styles.container}>
+      <Image source={require('../../../temp/assets/search/recent-icon.png')} style={styles.icon}/>
+      <Text styles={{ ...styles.text, color: 'red' }}>{searchKey}</Text>
+    </View>
+  </TouchableWithoutFeedback>
 );
 
 const styles = StyleSheet.create({
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     width: 20,
   },
   text: {
-    color: colorSource.white,
+    color: 'red',
     fontSize: 14,
   },
 });

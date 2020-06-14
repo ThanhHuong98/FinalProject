@@ -9,7 +9,7 @@ import { formatHourType2 } from '../../../../../temp/utils/DateTimeUtils';
 import CollapsableDescription from '../../../../common/Pannel/CollapsableDescription';
 import colorSource from '../../../../../temp/color';
 import ListCourses from '../../../../Courses/ListCourses/list-courses';
-import { ScreenKey, Colors } from '../../../../../Constant/Constant';
+import { Colors } from '../../../../../Constant/Constant';
 import { ThemeContext } from '../../../../../../App';
 
 const DetailPath = ({
@@ -32,8 +32,8 @@ const DetailPath = ({
             </View>
             <View style={styles.listCourses}>
               <ListCourses
-                title={`${name} Courses`}
-                onItemClick={(id) => navigation.push(ScreenKey.DetailCourse)}/>
+                navigation={navigation}
+                title={`${name} Courses`} />
             </View>
           </ScrollView>
         );
