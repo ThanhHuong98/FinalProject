@@ -42,6 +42,16 @@ function Home({ navigation }) {
                   data={sectionCourse.courses}
                   navigation={navigation}
                 />
+                <SectionCourses
+                  title={sectionCourse.title}
+                  data={sectionCourse.courses}
+                  navigation={navigation}
+                />
+                <SectionCourses
+                  title={sectionCourse.title}
+                  data={sectionCourse.courses}
+                  navigation={navigation}
+              />
               </ScrollView>
             </View>
           )}

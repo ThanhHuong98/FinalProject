@@ -5,7 +5,7 @@ import {
   SafeAreaView
 } from 'react-native';
 // eslint-disable-next-line import/no-cycle
-import SectionCoursesItem from '../SectionCoursesItem/section-courses-item';
+import SectionCoursesItem from '../CoursesItem/courses-item';
 import { ScreenKey, Colors } from '../../../../Constant/Constant';
 // eslint-disable-next-line import/no-cycle
 import SectionTitle from '../../../common/SectionTitle/section-title';

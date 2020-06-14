@@ -188,7 +188,7 @@ export const ThemeContext = React.createContext();
 export const CoursesContext = React.createContext();
 
 export default function App() {
-  const [theme, setTheme] = useState(themes.dark);
+  const [theme, setTheme] = useState(themes.light);
   const [sectionCourse, setSectionCourse] = useState(listCourses);
   // console.log("List Course Data test ", sectionCourse);
 

@@ -5,11 +5,12 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { Colors, FontSize, Dimension } from '../../../../../Constant/Constant';
 // eslint-disable-next-line import/no-cycle
 import { ThemeContext } from '../../../../../../App';
 
-const SectionAuthorsItem = ({ title, source, onChooseOption }) => {
+const AuthorsItem = ({ id, name, avatar, onChooseOption }) => {
   return (
     <ThemeContext.Consumer>
       {
@@ -21,15 +22,28 @@ const SectionAuthorsItem = ({ title, source, onChooseOption }) => {
             >
               <Image
                 style={styles.imageCricle}
-                source={{ uri: source }}
+                source={{ uri: avatar }}
               />
-              <Text style={{ ...styles.title, color: theme.textColor }}>{title}</Text>
+              <Text style={{ ...styles.title, color: theme.textColor }}>{name}</Text>
             </TouchableOpacity>
           );
         }
     }
     </ThemeContext.Consumer>
   );
+};
+
+AuthorsItem.propTypes = {
+  id: PropTypes.string,
+  avatar: PropTypes.string,
+  name: PropTypes.string,
+  onChooseOption: PropTypes.func,
+};
+
+AuthorsItem.defaultProps = {
+  avatar: 'https://pluralsight.imgix.net/author/lg/44cb43b3-83e4-4458-9b39-a7ded3411616.jpg',
+  name: 'Scottn Allen',
+  onChooseOption: (f) => f,
 };
 
 const styles = StyleSheet.create({
@@ -49,4 +63,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default SectionAuthorsItem;
+export default AuthorsItem;

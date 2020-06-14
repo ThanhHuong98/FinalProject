@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable global-require */
 import React from 'react';
 import PropTypes, { object } from 'prop-types';
@@ -12,9 +13,9 @@ const verticalSeparator = () => (
   <View style={styles.verticalSeparator}/>
 );
 
-const ItemInterest = ({ name }) => (
+const ItemInterest = ({ name, textColor }) => (
   <TouchableOpacity style={styles.itemInterestContainer}>
-    <Text style={styles.itemInterestText}>{name}</Text>
+    <Text style={{...styles.itemInterestText, color: textColor }}>{name}</Text>
   </TouchableOpacity>
 );
 
@@ -22,40 +23,41 @@ const Search = ({ recentSearches, interests }) => (
   <ThemeContext.Consumer>
     { 
      ({ theme }) => {
+      //  console.log("Text Color Searcj: ", theme.textColor);
        return (
-              <View style={{ ...styles.container, backgroundColor: theme.background }}>
-              <View style={styles.searchBar}>
-                <Image source={require('../../../temp/assets/search/search-icon.png')} style={styles.iconSearch}/>
-                <TextInput style={styles.textInput} placeholder="Search..." placeholderTextColor={colorSource.lightGray} returnKeyType='search' autoFocus={true}/>
-              </View>
-                <ScrollView style={styles.content}>
-                  {recentSearches && recentSearches.length > 0
-                    ? (
-                      <View style={styles.block}>
-                        <View style={styles.blockTitle}>
-                          <Text style={{ ...styles.blockTitleText, color: theme.textColor }}>Recent searches</Text>
-                          <TouchableOpacity>
-                            <Image source={require('../../../temp/assets/search/clear-icon.png')} style={styles.icon}/>
-                          </TouchableOpacity>
-                        </View>
-                        <FlatList
-                          data={recentSearches}
-                          showsVerticalScrollIndicator={false}
-                          ItemSeparatorComponent={verticalSeparator}
-                          renderItem={({ item }) => <ItemRecentSearch searchKey={item.name} textColor={theme.textColor} />}
-                        />
-                      </View>
-                    )
-                    : null
-                  }
-                  <View style={styles.block}>
-                    <Text style={{ ...styles.blockTitle, color: theme.textColor }}>Your interests</Text>
-                    <View style={styles.interestsBlock}>
-                      {interests.map((item, index) => <ItemInterest key={index} name={item.name}/>)}
-                    </View>
-                  </View>
-                </ScrollView>
-              </View>
+         <View style={{ ...styles.container, backgroundColor: theme.background }}>
+           <View style={styles.searchBar}>
+             <Image source={require('../../../temp/assets/search/search-icon.png')} style={styles.iconSearch}/>
+             <TextInput style={styles.textInput} placeholder="Search..." placeholderTextColor={colorSource.lightGray} returnKeyType='search' autoFocus={true}/>
+           </View>
+           <ScrollView style={styles.content}>
+             {recentSearches && recentSearches.length > 0
+               ? (
+                 <View style={styles.block}>
+                   <View style={styles.blockTitle}>
+                     <Text style={{ ...styles.blockTitleText, color: theme.textColor }}>Recent searches</Text>
+                     <TouchableOpacity>
+                       <Image source={require('../../../temp/assets/search/clear-icon.png')} style={styles.icon}/>
+                     </TouchableOpacity>
+                   </View>
+                   <FlatList
+                     data={recentSearches}
+                     showsVerticalScrollIndicator={false}
+                     ItemSeparatorComponent={verticalSeparator}
+                     renderItem={({ item }) => <ItemRecentSearch searchKey={item.name} textColor={theme.textColor} />}
+                   />
+                 </View>
+               )
+               : null
+            }
+             <View style={styles.block}>
+               <Text style={{ ...styles.blockTitle, color: theme.textColor }}>Your interests</Text>
+               <View style={styles.interestsBlock}>
+                 {interests.map((item, index) => <ItemInterest key={index} name={item.name} textColor={theme.textColor}/>)}
+               </View>
+             </View>
+           </ScrollView>
+         </View>
        );
      }
     }

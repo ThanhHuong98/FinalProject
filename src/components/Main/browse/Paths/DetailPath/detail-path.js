@@ -104,7 +104,3 @@ DetailPath.defaultProps = {
 };
 
 export default DetailPath;
-
-
-
-// DetailPath

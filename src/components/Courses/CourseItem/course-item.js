@@ -7,19 +7,22 @@ import {
   Image
 } from 'react-native';
 import Star from 'react-native-star-view';
+import PropTypes from 'prop-types';
 import { Colors, FontSize, ScreenKey } from '../../../Constant/Constant';
 import PopupMenu from '../../common/PopupMenu/PopupMenu';
 // eslint-disable-next-line import/no-cycle
 import { ThemeContext } from '../../../../App';
 
 const CourseItem = ({
-  nameCourse,
-  author,
+  id,
+  name,
+  thumbnail,
+  authors,
   level,
-  dateTime,
-  interval,
+  date,
+  duration,
   rating,
-  srcImage,
+  numOfJudgement,
   navigation,
 }) => {
   const onPopupEvent = () => {
@@ -30,6 +33,7 @@ const CourseItem = ({
     <ThemeContext.Consumer>
       {
         ({ theme }) => {
+          console.log("Test Item Course: ", name);
           return (
             <TouchableOpacity
               style={styles.itemContainer}
@@ -37,12 +41,12 @@ const CourseItem = ({
             >
               <Image
                 style={styles.image}
-                source={{ uri: srcImage }}
+                source={{ uri: thumbnail }}
               />
               <View style={styles.content}>
-                <Text style={{ ...styles.title, marginBottom: 6, color: theme.textColor }}>{nameCourse}</Text>
-                <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{author}</Text>
-                <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${dateTime} . ${interval}h`}</Text>
+                <Text style={{ ...styles.title, marginBottom: 6, color: theme.textColor }}>{name}</Text>
+                <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{authors[0]}{ authors.length > 1 ? `, +${authors.length - 1}` : ''}</Text>
+                <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${date} . ${duration}h`}</Text>
                 <Star score={rating} style={styles.starStyle} />
               </View>
               <View style={styles.popupmenu}>
@@ -52,9 +56,33 @@ const CourseItem = ({
           );
         }
       }
-
     </ThemeContext.Consumer>
   );
+};
+CourseItem.propsType = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  thumbnail: PropTypes.number,
+  authors: PropTypes.arrayOf(PropTypes.string),
+  level: PropTypes.string,
+  date: PropTypes.number,
+  duration: PropTypes.number,
+  rating: PropTypes.number,
+  numOfJudgement: PropTypes.number,
+};
+
+CourseItem.defaultTypes = {
+  name: 'Java Programming',
+  thumbnail: 'https://pluralsight.imgix.net/course-images/java-fundamentals-language-v1.jpg',
+  authors: [
+    'Ben Piper',
+    'Scott Allen',
+  ],
+  level: 'Beginner',
+  date: 1589250813000,
+  duration: 600000,
+  rating: 4.5,
+  numOfJudgement: 326,
 };
 const styles = StyleSheet.create({
   itemContainer: {

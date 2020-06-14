@@ -1,13 +1,13 @@
 import React, { } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
 // eslint-disable-next-line import/no-cycle
-import SectionAuthors from './Author/SectionAuthors/section-authors';
+import SectionAuthors from './Author/ListAuthors/list-authors';
 // eslint-disable-next-line import/no-cycle
 import SectionPopularSkills from './PopularSkill/SectionPopularSkills/section-popular-skills';
 import ImageButton from '../../common/ImageButton/image-button';
 // eslint-disable-next-line import/no-cycle
-import SectionPaths from './Paths/SectionPaths/section-paths';
-import SectionCategories from './SectionCategories/section-categoties';
+import SectionPaths from './Paths/ListPaths/list-paths';
+import SectionCategories from './Categories/section-categoties';
 import { Dimension, ScreenKey } from '../../../Constant/Constant';
 import {
   categories,
@@ -62,8 +62,8 @@ const Browse = ({ navigation }) => {
                    navigation={navigation}
                  />
                  <SectionAuthors
-                   title="Top Authors"
-                   data={authors.data}
+                  //  title={null}
+                  //  authors={null}
                    navigation={navigation}
                  />
                </ScrollView>
