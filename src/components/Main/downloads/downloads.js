@@ -1,27 +1,36 @@
+/* eslint-disable import/no-cycle */
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Colors, FontSize, Dimension } from '../../../Constant/Constant';
 import DownloadIcon from '../../../../assets/ic_download.svg';
+import { ThemeContext } from '../../../../App';
 
 const Downloads = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.center}>
-        <DownloadIcon width={100} height={100} style={{ marginBottom: 10 }}/>
-        <Text style={styles.decription}>
-          No downloads
-        </Text>
-        <Text style={styles.decription}>
-          Courses you downloads will appear here
-        </Text>
-      </View>
-    </View>
+    <ThemeContext.Consumer>
+      {
+      ({ theme }) => {
+        return (
+          <View style={{ ...styles.container, backgroundColor: theme.background }}>
+            <View style={styles.center}>
+              <DownloadIcon width={100} height={100} style={{ marginBottom: 10 }}/>
+              <Text style={{ ...styles.decription, color: theme.textColor }}>
+                No downloads
+              </Text>
+              <Text style={styles.decription}>
+                Courses you downloads will appear here
+              </Text>
+            </View>
+          </View>
+        );
+      }
+    }
+    </ThemeContext.Consumer>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Dimension.marginLarge,
     flex: 1,
   },
   center: {
