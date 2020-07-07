@@ -1,8 +1,9 @@
+/* eslint-disable import/no-cycle */
 import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import PropTypes, { object } from 'prop-types';
 import Module from './ItemContent';
-import colorSource from '../../temp/color';
+import { Colors } from '../../Constant/Constant';
 
 const ItemSeperator = () => (
   <View
@@ -29,7 +30,7 @@ const Content = ({ modules }) => (
 
 const styles = StyleSheet.create({
   separator: {
-    backgroundColor: colorSource.darkGray,
+    backgroundColor: Colors.darkGray,
     height: 1,
     width: '100%',
   },

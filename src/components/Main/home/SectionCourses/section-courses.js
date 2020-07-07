@@ -8,7 +8,7 @@ import {
 import SectionCoursesItem from '../CoursesItem/courses-item';
 import { ScreenKey, Colors } from '../../../../Constant/Constant';
 // eslint-disable-next-line import/no-cycle
-import SectionTitle from '../../../common/SectionTitle/section-title';
+import SectionTitle from '../../../Common/SectionTitle/section-title';
 
 const SectionCourses = ({ title, data, navigation }) => {
   const onSeeMore = () => {

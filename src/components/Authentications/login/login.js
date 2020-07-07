@@ -5,15 +5,15 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import CustomInput from '../../common/CustomInput/custom-input';
-import ButtonSolid from '../../common/SolidButton/solid-button';
+import CustomInput from '../../Common/CustomInput/custom-input';
+import ButtonSolid from '../../Common/SolidButton/solid-button';
 import {
   Colors,
   FontSize,
   Dimension,
   ScreenKey
 } from '../../../Constant/Constant';
-import OutLineButton from '../../common/OutLineButton/outLine-button';
+import OutLineButton from '../../Common/OutLineButton/outLine-button';
 
 const Login = ({ navigation }) => {
   const [username, setTextUsename] = useState('');

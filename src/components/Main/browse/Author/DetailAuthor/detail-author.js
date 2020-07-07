@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable import/no-cycle */
 /* eslint-disable global-require */
 import React from 'react';
@@ -5,8 +6,7 @@ import {
   View, Text, TouchableWithoutFeedback, Image, ScrollView, StyleSheet,
 } from 'react-native';
 import PropTypes, { object } from 'prop-types';
-import colorSource from '../../../../../temp/color';
-import CollapsableDescription from '../../../../common/Pannel/CollapsableDescription';
+import CollapsableDescription from '../../../../Common/Pannel/collapsable-description';
 import ListCourses from '../../../../Courses/ListCourses/list-courses';
 import { ScreenKey, Colors } from '../../../../../Constant/Constant';
 import { ThemeContext } from '../../../../../../App';
@@ -14,8 +14,8 @@ import { ThemeContext } from '../../../../../../App';
 const DetailAuthor = ({
   name, avatar, isFollowing, desc, personalLink, courses, navigation,
 }) => {
-  const buttonBackground = isFollowing ? colorSource.transparent : colorSource.blue;
-  const buttonTextColor = isFollowing ? colorSource.blue : colorSource.white;
+  const buttonBackground = isFollowing ? Colors.transparent : Colors.mblue;
+  const buttonTextColor = isFollowing ? Colors.mblue : Colors.white;
 
   return (
     <ThemeContext.Consumer>
@@ -23,9 +23,9 @@ const DetailAuthor = ({
         ({ theme }) => {
           return (
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={{ ...styles.container, backgroundColor: theme.background}}>
-                <View style={{ ...styles.infoBlock, backgroundColor: theme.background}}>
-                  <Image source={{ uri: avatar }} style={styles.avatar} resizeMode='cover'/>
+              <View style={{ ...styles.container, backgroundColor: theme.background }}>
+                <View style={{ ...styles.infoBlock, backgroundColor: theme.background }}>
+                  <Image source={{ uri: avatar }} style={styles.avatar} resizeMode="cover"/>
                   <Text style={{ ...styles.name, color: theme.textColor }}>{name}</Text>
                   <TouchableWithoutFeedback>
                     <Text style={{ ...styles.btnFollow, backgroundColor: buttonBackground, color: buttonTextColor }}>{isFollowing ? 'FOLLOWING' : 'FOLLOW'}</Text>
@@ -33,16 +33,16 @@ const DetailAuthor = ({
                   <Text style={styles.followDesc}>You'll be notified when new courses are published</Text>
                   <CollapsableDescription minHeight={100} description={desc}/>
                   <View style={styles.socialContainer}>
-                    <Image source={require('../../../../../temp/assets/author/link-icon.png')} style={styles.icon}/>
+                    <Image source={require('../../../../../../assets/author/link-icon.png')} style={styles.icon}/>
                     <Text style={{ ...styles.link, color: theme.textColor }}>{personalLink}</Text>
                   </View>
                   <View style={styles.socialContainer}>
-                    <Image source={require('../../../../../temp/assets/author/facebook-icon.png')} style={styles.socialIcon}/>
-                    <Image source={require('../../../../../temp/assets/author/linkedin-icon.png')} style={styles.socialIcon}/>
+                    <Image source={require('../../../../../../assets/author/facebook-icon.png')} style={styles.socialIcon}/>
+                    <Image source={require('../../../../../../assets/author/linkedin-icon.png')} style={styles.socialIcon}/>
                   </View>
                 </View>
                 <View style={styles.listCourses}>
-                  <ListCourses title='Courses' onItemClick={(id) => navigation.push(ScreenKey.DetailCourse)}/>
+                  <ListCourses title="Courses" onItemClick={(id) => navigation.push(ScreenKey.DetailCourse)}/>
                 </View>
               </View>
             </ScrollView>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     width: 60,
   },
   btnFollow: {
-    borderColor: colorSource.blue,
+    borderColor: Colors.blue,
     borderRadius: 3,
     borderWidth: 2,
     fontSize: 13,
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   followDesc: {
-    color: colorSource.gray,
+    color: Colors.gray,
     fontSize: 12,
     fontWeight: '500',
     marginVertical: 15,
@@ -95,17 +95,14 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   link: {
-    color: colorSource.white,
+    color: Colors.white,
     fontSize: 15,
     fontWeight: '500',
   },
   listCourses: {
-    // height: '100%',
-    // marginTop: 20,
-    // paddingHorizontal: 15,
   },
   name: {
-    color: colorSource.white,
+    color: Colors.white,
     fontSize: 20,
     fontWeight: '500',
     marginVertical: 10,
@@ -144,7 +141,3 @@ DetailAuthor.defaultProps = {
 };
 
 export default DetailAuthor;
-
-
-
-// DetailAuthor

@@ -6,7 +6,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { themes } from '../../Constant/Constant';
-import Separator from '../common/Separator/separator-bottom';
+import Separator from '../Common/Separator/separator-bottom';
 // eslint-disable-next-line import/no-cycle
 import { ThemeContext } from '../../../App';
 

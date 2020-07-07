@@ -7,40 +7,36 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import CoursesItem from '../CourseItem/course-item';
-import separator from '../../common/Separator/separator-bottom';
+import separator from '../../Common/Separator/separator-bottom';
 import { ThemeContext } from '../../../../App';
 
-const ListCourses = ({ navigation, courses }) => {
-  return (
-    <ThemeContext.Consumer>
-      {
-        ({ theme }) => {
-          return (
-            <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
-              <FlatList
-                data={courses}
-                renderItem={({ item }) => (
-                  <CoursesItem
-                    thumbnail={item.thumbnail}
-                    name={item.name}
-                    authors={item.authors}
-                    level={item.level}
-                    date={item.date}
-                    duration={item.duration}
-                    rating={item.rating}
-                    navigation={navigation}
-                  />
-                )}
-                keyExtractor={(item) => item.id}
-                ItemSeparatorComponent={separator}
-              />
-            </SafeAreaView>
-          );
-        }
+const ListCourses = ({ navigation, courses }) => (
+  <ThemeContext.Consumer>
+    {
+        ({ theme }) => (
+          <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
+            <FlatList
+              data={courses}
+              renderItem={({ item }) => (
+                <CoursesItem
+                  thumbnail={item.thumbnail}
+                  name={item.name}
+                  authors={item.authors}
+                  level={item.level}
+                  date={item.date}
+                  duration={item.duration}
+                  rating={item.rating}
+                  navigation={navigation}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+              ItemSeparatorComponent={separator}
+            />
+          </SafeAreaView>
+        )
       }
-    </ThemeContext.Consumer>
-  );
-};
+  </ThemeContext.Consumer>
+);
 ListCourses.propTypes = {
   navigation: PropTypes.object,
   courses: PropTypes.arrayOf(PropTypes.object),

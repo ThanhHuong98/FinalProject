@@ -9,17 +9,15 @@ import {
 import propTypes from 'prop-types';
 import { Colors, FontSize } from '../../../Constant/Constant';
 
-const OutLineButton = ({ title, onChooseOption }) => {
-  return (
-    <View style={styles.buttonContainer}>
-      <TouchableOpacity
-        onPress={onChooseOption}
-      >
-        <Text style={styles.textTitle}>{title}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+const OutLineButton = ({ title, onChooseOption }) => (
+  <View style={styles.buttonContainer}>
+    <TouchableOpacity
+      onPress={onChooseOption}
+    >
+      <Text style={styles.textTitle}>{title}</Text>
+    </TouchableOpacity>
+  </View>
+);
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -39,12 +37,7 @@ const styles = StyleSheet.create({
   },
 });
 OutLineButton.propTypes = {
-  title: propTypes.string,
-  onChooseOption: propTypes.func
+  title: propTypes.string.isRequired,
+  onChooseOption: propTypes.func.isRequired
 };
-OutLineButton.defaultProps = {
-  title: '',
-  onChooseOption: (f) => f,
-};
-
 export default OutLineButton;

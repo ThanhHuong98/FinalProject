@@ -1,13 +1,13 @@
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/require-default-props */
 /* eslint-disable import/no-cycle */
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View, ScrollView, Image, Text, StyleSheet,
 } from 'react-native';
 import PropTypes, { object } from 'prop-types';
-import { formatHourType2 } from '../../../../../temp/utils/DateTimeUtils';
-import CollapsableDescription from '../../../../common/Pannel/CollapsableDescription';
-import colorSource from '../../../../../temp/color';
+import { formatHourType2 } from '../../../../../utils/DateTimeUtils';
+import CollapsableDescription from '../../../../Common/Pannel/collapsable-description';
 import ListCourses from '../../../../Courses/ListCourses/list-courses';
 import { Colors } from '../../../../../Constant/Constant';
 import { ThemeContext } from '../../../../../../App';
@@ -17,27 +17,32 @@ const DetailPath = ({
 }) => (
   <ThemeContext.Consumer>
     {
-      ({ theme }) => {
-        return (
-          <ScrollView showsVerticalScrollIndicator={false} style={{ ...styles.container, backgroundColor: theme.background }}>
-            <View style={{ ...styles.info, backgroundColor: theme.background }}>
-              <View style={styles.titleBlock}>
-                <Image source={{ uri: thumbnail }} style={styles.thumbnail}/>
-                <View style={styles.infoBlock}>
-                  <Text style={{ ...styles.name, color: theme.textColor}}>{name}</Text>
-                  <Text style={styles.extraInfo}>{numOfCourses} courses ∙ {formatHourType2(duration)}</Text>
-                </View>
+      ({ theme }) => (
+        <ScrollView showsVerticalScrollIndicator={false} style={{ ...styles.container, backgroundColor: theme.background }}>
+          <View style={{ ...styles.info, backgroundColor: theme.background }}>
+            <View style={styles.titleBlock}>
+              <Image source={{ uri: thumbnail }} style={styles.thumbnail} />
+              <View style={styles.infoBlock}>
+                <Text style={{ ...styles.name, color: theme.textColor }}>{name}</Text>
+                <Text style={styles.extraInfo}>
+                  {numOfCourses}
+                  {' '}
+                  courses ∙
+                  {' '}
+                  {formatHourType2(duration)}
+                </Text>
               </View>
-              <CollapsableDescription description={description} minHeight={100}/>
             </View>
-            <View style={styles.listCourses}>
-              <ListCourses
-                navigation={navigation}
-                title={`${name} Courses`} />
-            </View>
-          </ScrollView>
-        );
-      }
+            <CollapsableDescription description={description} minHeight={100} />
+          </View>
+          <View style={styles.listCourses}>
+            <ListCourses
+              navigation={navigation}
+              title={`${name} Courses`}
+            />
+          </View>
+        </ScrollView>
+      )
     }
   </ThemeContext.Consumer>
 );
@@ -49,7 +54,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   extraInfo: {
-    color: colorSource.lightGray,
+    color: Colors.lightGray,
     fontSize: 14,
     marginTop: 3,
   },
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   name: {
-    color: colorSource.white,
+    color: Colors.white,
     fontSize: 20,
     fontWeight: '600',
   },

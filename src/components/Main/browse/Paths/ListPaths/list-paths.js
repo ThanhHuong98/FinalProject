@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, FlatList, SafeAreaView, } from 'react-native';
 import SectionPathsItem from '../PathsItems/paths-item';
 // eslint-disable-next-line import/no-cycle
-import SectionTitle from '../../../../common/SectionTitle/section-title';
+import SectionTitle from '../../../../Common/SectionTitle/section-title';
 import { Colors, FontSize, Dimension, ScreenKey } from '../../../../../Constant/Constant';
-import separator from '../../../../common/Separator/separator-side';
+import separator from '../../../../Common/Separator/separator-side';
 import { ThemeContext } from '../../../../../../App';
 
 const SectionPaths = ({ title, data, navigation }) => {

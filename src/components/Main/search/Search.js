@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable import/no-cycle */
 /* eslint-disable global-require */
 import React from 'react';
@@ -6,29 +7,29 @@ import {
   View, StyleSheet, TextInput, ScrollView, FlatList, TouchableOpacity, Text, Image,
 } from 'react-native';
 import ItemRecentSearch from './ItemRecentSearch';
-import colorSource from '../../../temp/color';
+import { Colors } from '../../../Constant/Constant';
 import { ThemeContext } from '../../../../App';
 
 const verticalSeparator = () => (
-  <View style={styles.verticalSeparator}/>
+  <View style={styles.verticalSeparator} />
 );
 
 const ItemInterest = ({ name, textColor }) => (
   <TouchableOpacity style={styles.itemInterestContainer}>
-    <Text style={{...styles.itemInterestText, color: textColor }}>{name}</Text>
+    <Text style={{ ...styles.itemInterestText, color: textColor }}>{name}</Text>
   </TouchableOpacity>
 );
 
 const Search = ({ recentSearches, interests }) => (
   <ThemeContext.Consumer>
-    { 
-     ({ theme }) => {
-      //  console.log("Text Color Searcj: ", theme.textColor);
-       return (
+    {
+     ({ theme }) =>
+     //  console.log("Text Color Searcj: ", theme.textColor);
+       (
          <View style={{ ...styles.container, backgroundColor: theme.background }}>
            <View style={styles.searchBar}>
-             <Image source={require('../../../temp/assets/search/search-icon.png')} style={styles.iconSearch}/>
-             <TextInput style={styles.textInput} placeholder="Search..." placeholderTextColor={colorSource.lightGray} returnKeyType='search' autoFocus={true}/>
+             <Image source={require('../../../../assets/search/search-icon.png')} style={styles.iconSearch} />
+             <TextInput style={styles.textInput} placeholder="Search..." placeholderTextColor={Colors.lightGray} returnKeyType="search" autoFocus />
            </View>
            <ScrollView style={styles.content}>
              {recentSearches && recentSearches.length > 0
@@ -37,7 +38,7 @@ const Search = ({ recentSearches, interests }) => (
                    <View style={styles.blockTitle}>
                      <Text style={{ ...styles.blockTitleText, color: theme.textColor }}>Recent searches</Text>
                      <TouchableOpacity>
-                       <Image source={require('../../../temp/assets/search/clear-icon.png')} style={styles.icon}/>
+                       <Image source={require('../../../../assets/search/clear-icon.png')} style={styles.icon} />
                      </TouchableOpacity>
                    </View>
                    <FlatList
@@ -48,18 +49,17 @@ const Search = ({ recentSearches, interests }) => (
                    />
                  </View>
                )
-               : null
-            }
+               : null}
              <View style={styles.block}>
                <Text style={{ ...styles.blockTitle, color: theme.textColor }}>Your interests</Text>
                <View style={styles.interestsBlock}>
-                 {interests.map((item, index) => <ItemInterest key={index} name={item.name} textColor={theme.textColor}/>)}
+                 {interests.map((item, index) => <ItemInterest key={index} name={item.name} textColor={theme.textColor} />)}
                </View>
              </View>
            </ScrollView>
          </View>
-       );
-     }
+       )
+
     }
   </ThemeContext.Consumer>
 );
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   blockTitle: {
     alignItems: 'center',
-    color: colorSource.black,
+    color: Colors.black,
     flexDirection: 'row',
     fontSize: 16,
     fontWeight: '500',
@@ -78,12 +78,12 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   blockTitleText: {
-    color: colorSource.black,
+    color: Colors.black,
     fontSize: 16,
     fontWeight: '500',
   },
   container: {
-    backgroundColor: colorSource.white,
+    backgroundColor: Colors.white,
     flexDirection: 'column',
     height: '100%',
     width: '100%',
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   itemInterestContainer: {
     alignItems: 'center',
-    backgroundColor: colorSource.gray,
+    backgroundColor: Colors.gray,
     borderRadius: 20,
     justifyContent: 'center',
     marginRight: 5,
@@ -115,12 +115,12 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
   },
   itemInterestText: {
-    color: colorSource.white,
+    color: Colors.white,
     fontSize: 12,
   },
   searchBar: {
     alignItems: 'center',
-    backgroundColor: colorSource.gray,
+    backgroundColor: Colors.gray,
     borderRadius: 20,
     flexDirection: 'row',
     marginHorizontal: 10,
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   textInput: {
-    color: colorSource.white,
+    color: Colors.white,
     fontSize: 17,
     marginLeft: 10,
     width: '100%',
@@ -145,7 +145,7 @@ Search.propTypes = {
 };
 
 ItemInterest.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
 };
 
 Search.defaultProps = {

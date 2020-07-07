@@ -6,8 +6,8 @@ import {
   Text,
   CheckBox,
 } from 'react-native';
-import SolidButton from '../../common/SolidButton/solid-button';
-import CustomInput from '../../common/CustomInput/custom-input';
+import SolidButton from '../../Common/SolidButton/solid-button';
+import CustomInput from '../../Common/CustomInput/custom-input';
 import { Colors, Dimension, FontSize } from '../../../Constant/Constant';
 
 const Register = () => {

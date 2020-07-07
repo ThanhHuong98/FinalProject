@@ -4,7 +4,7 @@ import { StyleSheet, ScrollView, View } from 'react-native';
 import SectionAuthors from './Author/ListAuthors/list-authors';
 // eslint-disable-next-line import/no-cycle
 import SectionPopularSkills from './PopularSkill/SectionPopularSkills/section-popular-skills';
-import ImageButton from '../../common/ImageButton/image-button';
+import ImageButton from '../../Common/ImageButton/image-button';
 // eslint-disable-next-line import/no-cycle
 import SectionPaths from './Paths/ListPaths/list-paths';
 import SectionCategories from './Categories/section-categoties';

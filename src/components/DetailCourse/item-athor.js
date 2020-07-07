@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Image, Text, StyleSheet, TouchableOpacity,
 } from 'react-native';
-import colorSource from '../../temp/color';
+import { Colors } from '../../Constant/Constant';
 
 const AuthorItem = ({
   id, name, avatar, onItemClick,
@@ -21,14 +21,14 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: colorSource.gray,
+    backgroundColor: Colors.gray,
     borderRadius: 20,
     flexDirection: 'row',
     height: 30,
     padding: 3,
   },
   name: {
-    color: colorSource.white,
+    color: Colors.white,
     fontSize: 14,
     marginHorizontal: 5,
   },

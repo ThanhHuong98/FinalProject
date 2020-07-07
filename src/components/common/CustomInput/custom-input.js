@@ -34,7 +34,6 @@ const borderColor = '#37474f';
 
 const styles = StyleSheet.create({
   textInputContainer: {
-    // flexDirection: 'column',
   },
   textInput: {
     height: 50,

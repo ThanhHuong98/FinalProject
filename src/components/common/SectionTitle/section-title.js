@@ -1,30 +1,29 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+import {
+  StyleSheet, View, Text, TouchableOpacity
+} from 'react-native';
 import { Colors, FontSize, Dimension } from '../../../Constant/Constant';
 // eslint-disable-next-line import/no-cycle
 import { ThemeContext } from '../../../../App';
 
-const SectionTitle = ({ title, onChooseOption }) => {
-  return (
-    <ThemeContext.Consumer>
-      {
-        ({ theme }) => {
-          return (
-            <View style={styles.display}>
-              <Text style={{ ...styles.title, color: theme.textColor }}>{title}</Text>
-              <TouchableOpacity
-                onPress={onChooseOption}
-                style={styles.touch}
-              >
-                <Text style={styles.titleButton}>See all &gt;</Text>
-              </TouchableOpacity>
-            </View>
-          );
-        }
+const SectionTitle = ({ title, onChooseOption }) => (
+  <ThemeContext.Consumer>
+    {
+        ({ theme }) => (
+          <View style={styles.display}>
+            <Text style={{ ...styles.title, color: theme.textColor }}>{title}</Text>
+            <TouchableOpacity
+              onPress={onChooseOption}
+              style={styles.touch}
+            >
+              <Text style={styles.titleButton}>See all &gt;</Text>
+            </TouchableOpacity>
+          </View>
+        )
       }
-    </ThemeContext.Consumer>
-  );
-};
+  </ThemeContext.Consumer>
+);
 
 const styles = StyleSheet.create({
   display: {
@@ -49,5 +48,10 @@ const styles = StyleSheet.create({
   },
 
 });
+
+SectionTitle.propTypes = {
+  title: PropTypes.string.isRequired,
+  onChooseOption: PropTypes.func.isRequired,
+};
 
 export default SectionTitle;

@@ -37,14 +37,12 @@ const styles = StyleSheet.create({
   },
 });
 SolidButton.propTypes = {
-  title: propTypes.string,
+  title: propTypes.string.isRequired,
   backgroundColor: propTypes.string,
-  onChooseOption: propTypes.func
+  onChooseOption: propTypes.func.isRequired
 };
 SolidButton.defaultProps = {
-  title: '',
   backgroundColor: Colors.transparent,
-  onChooseOption: (f) => f,
 };
 
 export default SolidButton;

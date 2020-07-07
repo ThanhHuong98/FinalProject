@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable global-require */
 import React from 'react';
@@ -5,14 +6,14 @@ import {
   View, Text, StyleSheet, Image, FlatList, TouchableOpacity,
 } from 'react-native';
 import PropTypes, { object } from 'prop-types';
-import colorSource from '../../temp/color';
-import { getPercentage } from '../../temp/utils/MathUtils';
-import { formatHourType2 } from '../../temp/utils/DateTimeUtils';
-import PopupMenu from '../common/PopupMenu/PopupMenu';
+import { Colors } from '../../Constant/Constant';
+import { getPercentage } from '../../utils/MathUtils';
+import { formatHourType2 } from '../../utils/DateTimeUtils';
+import PopupMenu from '../Common/PopupMenu/popup-menu';
 import { ThemeContext } from '../../../App';
 
 const ProgressBar = ({ progress, total }) => {
-  const progressColor = progress === total ? colorSource.green : colorSource.white;
+  const progressColor = progress === total ? Colors.green : Colors.white;
   const progressWidth = `${getPercentage(progress, total)}%`;
   return (
     <View style={styles.progressContainer}>
@@ -26,10 +27,10 @@ const ItemLesson = ({
 }) => (
   <TouchableOpacity style={styles.lessonContainer}>
     {isPlaying
-      ? <Image source={require('../../../assets/icon.png')} style={{ ...styles.lessonStatus, backgroundColor: colorSource.black }}/>
+      ? <Image source={require('../../../assets/icon.png')} style={{ ...styles.lessonStatus, backgroundColor: Colors.black }}/>
       : isCompleted
-        ? <Image source={require('../../../assets/icon.png')} style={{ ...styles.lessonStatus, backgroundColor: colorSource.black }}/>
-        : <View style={{ ...styles.lessonStatus, backgroundColor: colorSource.gray }}/>
+        ? <Image source={require('../../../assets/icon.png')} style={{ ...styles.lessonStatus, backgroundColor: Colors.black }}/>
+        : <View style={{ ...styles.lessonStatus, backgroundColor: Colors.gray }}/>
     }
     <Text style={{ ...styles.lessonName, color: textColor}}>{name}</Text>
     <Text style={styles.lessonDuration}>{formatHourType2(duration)}</Text>
@@ -97,11 +98,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   lessonDuration: {
-    color: colorSource.lightGray,
+    color: Colors.lightGray,
     fontSize: 13,
   },
   lessonName: {
-    color: colorSource.white,
+    color: Colors.white,
     flex: 1,
     fontSize: 14,
     marginHorizontal: 5,
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   moduleDuration: {
-    color: colorSource.lightGray,
+    color: Colors.lightGray,
     fontSize: 13,
   },
   moduleInfo: {
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   moduleName: {
-    color: colorSource.white,
+    color: Colors.white,
     fontSize: 16,
     marginBottom: 5,
   },
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   progressContainer: {
-    backgroundColor: colorSource.lightGray,
+    backgroundColor: Colors.lightGray,
     height: '100%',
     width: '100%',
   },
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
   },
   thumbnail: {
     alignItems: 'center',
-    backgroundColor: colorSource.darkGray,
+    backgroundColor: Colors.darkGray,
     flexDirection: 'column',
     height: 45,
     justifyContent: 'center',

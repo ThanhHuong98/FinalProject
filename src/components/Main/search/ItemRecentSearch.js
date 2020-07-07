@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -5,10 +6,11 @@ import {
   View, TouchableWithoutFeedback, Image, StyleSheet, Text,
 } from 'react-native';
 
-const ItemRecentSearch = ({ searchKey, textColor }) => (
+const ItemRecentSearch = ({ searchKey }) => (
   <TouchableWithoutFeedback>
     <View style={styles.container}>
-      <Image source={require('../../../temp/assets/search/recent-icon.png')} style={styles.icon}/>
+      {/* // ../../assets/search/recent-icon.png */}
+      <Image source={require('../../../../assets/search/recent-icon.png')} style={styles.icon}/>
       <Text styles={styles.text}>{searchKey}</Text>
     </View>
   </TouchableWithoutFeedback>
@@ -34,6 +36,10 @@ const styles = StyleSheet.create({
 
 ItemRecentSearch.propTypes = {
   searchKey: PropTypes.string,
+};
+
+ItemRecentSearch.defaultProps = {
+  searchKey: '',
 };
 
 export default ItemRecentSearch;

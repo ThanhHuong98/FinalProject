@@ -1,24 +1,23 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import PropTypes from 'prop-types';
 import { Colors, FontSize, Dimension } from '../../../Constant/Constant';
 
-const IConButton = ({ iconName, title, onChoose }) => {
-  return (
-    <TouchableOpacity
-      style={styles.btnWrapper}
-      onPress={onChoose}
-    >
-      <Ionicons
-        name={iconName}
-        size={20}
-        color={Colors.white}
-      />
-      <Text style={styles.title}>{title}</Text>
+const IConButton = ({ iconName, title, onChoose }) => (
+  <TouchableOpacity
+    style={styles.btnWrapper}
+    onPress={onChoose}
+  >
+    <Ionicons
+      name={iconName}
+      size={20}
+      color={Colors.white}
+    />
+    <Text style={styles.title}>{title}</Text>
 
-    </TouchableOpacity>
-  );
-};
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   btnWrapper: {
@@ -36,4 +35,9 @@ const styles = StyleSheet.create({
     marginLeft: Dimension.marginSmall,
   }
 });
+IConButton.propTypes = {
+  title: PropTypes.string.isRequired,
+  iconName: PropTypes.string.isRequired,
+  onChoose: PropTypes.func.isRequired
+};
 export default IConButton;

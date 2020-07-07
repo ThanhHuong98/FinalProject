@@ -9,20 +9,8 @@ import {
 import Star from 'react-native-star-view';
 // eslint-disable-next-line import/no-cycle
 import { ThemeContext } from '../../../../../App';
-import { formatMonthYearType, formatHourType1 } from '../../../../temp/utils/DateTimeUtils';
+import { formatMonthYearType, formatHourType1 } from '../../../../utils/DateTimeUtils';
 
-// id: 1,
-//       name: 'Java Programming - Build your first project',
-//       thumbnail: 'https://pluralsight.imgix.net/course-images/java-fundamentals-language-v1.jpg',
-//       authors: [
-//         'Ben Piper',
-//         'Scott Allen',
-//       ],
-//       level: 'Beginner',
-//       date: 1589250813000,
-//       duration: 600,
-//       rating: 4.5,
-//       numOfJudgement: 326,
 const SectionCoursesItem = ({
   name,
   authors,
@@ -32,33 +20,32 @@ const SectionCoursesItem = ({
   rating,
   thumbnail,
   onChooseOption,
-}) => {
-  return (
-    <ThemeContext.Consumer>
-      {
-        ({ theme }) => {
-          return (
-            <TouchableOpacity
-              style={{ ...styles.itemContainer, backgroundColor: theme.itemColor }}
-              onPress={onChooseOption}
-            >
-              <Image
-                style={styles.image}
-                source={{ uri: thumbnail }}
-              />
-              <View style={styles.content}>
-                <Text style={{ ...styles.title, marginBottom: 6, color: theme.textColor }}>{name}</Text>
-                <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{authors[0]}{ authors.length > 1 ? `, +${authors.length - 1}` : ''}</Text>
-                <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${formatMonthYearType(date)} . ${formatHourType1(duration)}`}</Text>
-                <Star score={rating} style={styles.starStyle} />
-              </View>
-            </TouchableOpacity>
-          );
-        }
+}) => (
+  <ThemeContext.Consumer>
+    {
+        ({ theme }) => (
+          <TouchableOpacity
+            style={{ ...styles.itemContainer, backgroundColor: theme.itemColor }}
+            onPress={onChooseOption}
+          >
+            <Image
+              style={styles.image}
+              source={{ uri: thumbnail }}
+            />
+            <View style={styles.content}>
+              <Text style={{ ...styles.title, marginBottom: 6, color: theme.textColor }}>{name}</Text>
+              <Text style={{ ...styles.subtitile, marginBottom: 4 }}>
+                {authors[0]}
+                { authors.length > 1 ? `, +${authors.length - 1}` : ''}
+              </Text>
+              <Text style={{ ...styles.subtitile, marginBottom: 4 }}>{ `${level} . ${formatMonthYearType(date)} . ${formatHourType1(duration)}`}</Text>
+              <Star score={rating} style={styles.starStyle} />
+            </View>
+          </TouchableOpacity>
+        )
       }
-    </ThemeContext.Consumer>
-  );
-};
+  </ThemeContext.Consumer>
+);
 
 const primaryBackgroundColor = '#2c3038';
 

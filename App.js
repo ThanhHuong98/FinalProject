@@ -10,7 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Colors, ScreenKey, themes } from './src/Constant/Constant';
 
 import Login from './src/components/Authentications/login/login';
-import Register from './src/components/Authentications/Register/Register';
+import Register from './src/components/Authentications/Register/register';
 import SplashScreen from './src/components/SplashScreen/splash-screen';
 // eslint-disable-next-line import/no-cycle
 import Browse from './src/components/Main/browse/browse';

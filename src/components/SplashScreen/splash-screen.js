@@ -4,13 +4,13 @@ import {
   View,
   Image
 } from 'react-native';
-import ButtonSolid from '../common/SolidButton/solid-button';
+import ButtonSolid from '../Common/SolidButton/solid-button';
 import {
   Colors,
   Dimension,
   ScreenKey
 } from '../../Constant/Constant';
-import OutLineButton from '../common/OutLineButton/outLine-button';
+import OutLineButton from '../Common/OutLineButton/outLine-button';
 
 const SplashScreen = ({ navigation }) => {
   const onLogin = () => {

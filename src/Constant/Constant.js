@@ -1,21 +1,26 @@
-import { block } from "react-native-reanimated";
-
+// Colors define
 export const Colors = {
+  transparent: '#ffffff00',
   backgroundColor: '#000a12',
   secondaryColor: '#2c3038',
+  black: '#000',
   white: '#FFFF',
+  gray: '#808080',
   greyWhite: '#bdbdbd',
   yellow: 'yellow',
-  transparent: 'transparent',
   blue: '#0084bc',
   dblue: '#58b3ef',
-
+  lightGray: '#c0c0c0',
+  darkGray: '#404040',
+  mblue: 'rgba(35,121,255,0.98)',
+  green: '#00cc1f',
 };
 
+// String define
 export const String = {
 
 };
-
+// FontSize define
 export const FontSize = {
   small: 12,
   xsmall: 13,
@@ -24,7 +29,7 @@ export const FontSize = {
   xmedium: 18,
   large: 20,
 };
-
+// Dimension define
 export const Dimension = {
   marginSmall: 5,
   marginXSmall: 10,
@@ -37,7 +42,7 @@ export const Dimension = {
 
   xheight: 220,
 };
-
+// ScreenKey define for navigation
 export const ScreenKey = {
   Login: 'Sign in',
   Register: 'Register',
@@ -64,7 +69,7 @@ export const ScreenKey = {
 
 
 };
-
+// Theme define
 export const themes = {
   light: {
     background: '#f5f5f5',

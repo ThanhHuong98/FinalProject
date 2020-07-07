@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, FlatList, View } from 'react-native';
-import ImageButton from '../../../common/ImageButton/image-button';
+import ImageButton from '../../../Common/ImageButton/image-button';
 import { Dimension } from '../../../../Constant/Constant';
 
 const SectionCategories = ({ title, data }) => {
