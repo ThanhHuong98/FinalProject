@@ -77,6 +77,7 @@ export const themes = {
     subTextColor: '#bdbdbd',
     itemColor: '#e0e0e0',
     detailBlockColor: '#f5f5f5',
+    textHeader: 'blue'
   },
   dark: {
     background: '#000a12',
@@ -84,5 +85,6 @@ export const themes = {
     subTextColor: '#aeaeae',
     itemColor: '#2c3038',
     detailBlockColor: '#404040',
+    textHeader: 'blue'
   }
 };

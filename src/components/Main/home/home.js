@@ -17,9 +17,6 @@ function Home({ navigation }) {
   };
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      // headerStyle: {
-      //   backgroundColor: themHeader,
-      // },
       headerRight: () => (
         <Button
           onPress={onSetting}
@@ -31,7 +28,7 @@ function Home({ navigation }) {
 
   return (
     <ThemeContext.Consumer>
-      { ({theme}) => (
+      { ({ theme }) => (
         // console.log("Theme: ", theme ),
         <CoursesContext.Consumer>
           {({ sectionCourse }) => (

@@ -1,7 +1,9 @@
 /* eslint-disable import/no-cycle */
-import React, { useState } from 'react';
-
 // eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line import/no-cycle
+// eslint-disable-next-line import/no-cycle
+import { registerRootComponent } from 'expo';
+import React, { useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,7 +14,6 @@ import { Colors, ScreenKey, themes } from './src/Constant/Constant';
 import Login from './src/components/Authentications/login/login';
 import Register from './src/components/Authentications/Register/register';
 import SplashScreen from './src/components/SplashScreen/splash-screen';
-// eslint-disable-next-line import/no-cycle
 import Browse from './src/components/Main/browse/browse';
 import Home from './src/components/Main/home/home';
 import ListCourses from './src/components/Courses/ListCourses/list-courses';
@@ -22,45 +23,81 @@ import DetailCourse from './src/components/DetailCourse/detail-course';
 import DetailAuthor from './src/components/Main/browse/Author/DetailAuthor/detail-author';
 import DetailPopularSkill from './src/components/Main/browse/PopularSkill/DetailPopularSkill/detail-popular-skill';
 import DetailPath from './src/components/Main/browse/Paths/DetailPath/detail-path';
-// eslint-disable-next-line import/no-cycle
 import SettingScreen from './src/components/Setting/setting-screen';
 import { listCourses } from './src/data/listcourses';
 
 const HomeStack = createStackNavigator();
-function HomeStackScreen() {
-  return (
-    <HomeStack.Navigator initialRouteName={ScreenKey.Home}>
-      <HomeStack.Screen
-        name={ScreenKey.Home}
-        component={Home}
-      />
-      <HomeStack.Screen
-        name={ScreenKey.DetailCourse}
-        component={DetailCourse}
-      />
-      <HomeStack.Screen
-        name={ScreenKey.ListCourse}
-        component={ListCourses}
-      />
-      <HomeStack.Screen
-        name={ScreenKey.Setting}
-        component={SettingScreen}
-      />
-    </HomeStack.Navigator>
-  );
-}
+const HomeStackScreen = () => (
+  <ThemeContext.Consumer>
+    {
+      ({ theme }) => (
+        <HomeStack.Navigator
+          initialRouteName={ScreenKey.Home}
+          screenOptions={
+      {
+        headerTitleStyle: {
+          fontSize: 20,
+          fontWeight: '500',
+        },
+        headerStyle: {
+          backgroundColor: theme.background,
+        },
+        headerTintColor: theme.textColor,
+      }
+    }
+        >
+          <HomeStack.Screen
+            name={ScreenKey.Home}
+            component={Home}
+          />
+          <HomeStack.Screen
+            name={ScreenKey.DetailCourse}
+            component={DetailCourse}
+          />
+          <HomeStack.Screen
+            name={ScreenKey.ListCourse}
+            component={ListCourses}
+          />
+          <HomeStack.Screen
+            name={ScreenKey.Setting}
+            component={SettingScreen}
+          />
+        </HomeStack.Navigator>
+      )
+    }
+  </ThemeContext.Consumer>
+);
 
 const DownloadStack = createStackNavigator();
-function DownloadStackScreen() {
-  return (
-    <DownloadStack.Navigator initialRouteName={ScreenKey.Downloads}>
-      <DownloadStack.Screen
-        name={ScreenKey.Downloads}
-        component={Downloads}
-      />
-    </DownloadStack.Navigator>
-  );
-}
+const DownloadStackScreen = () => (
+  <ThemeContext.Consumer>
+    {
+      ({ theme }) => (
+        <DownloadStack.Navigator
+          initialRouteName={ScreenKey.Downloads}
+          creenOptions={
+          {
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: '500',
+            },
+            headerStyle: {
+              backgroundColor: theme.background,
+            },
+            headerTintColor: theme.textColor,
+          }
+        }
+        >
+          <DownloadStack.Screen
+            name={ScreenKey.Downloads}
+            component={Downloads}
+          />
+        </DownloadStack.Navigator>
+
+      )
+    }
+  </ThemeContext.Consumer>
+);
 
 const BrowseStack = createStackNavigator();
 function BrowseStackScreen() {
@@ -115,47 +152,58 @@ function SearchStackScreen() {
 }
 
 const Tab = createBottomTabNavigator();
-function MainTabNavigator() {
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+const MainTabNavigator = () => (
+  <ThemeContext>
+    {
+      ({ theme }) => (
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
 
-          if (route.name === ScreenKey.Home) {
-            iconName = focused
-              ? 'ios-home'
-              : 'ios-home';
-          } else if (route.name === ScreenKey.Downloads) {
-            iconName = focused
-              ? 'ios-download'
-              : 'ios-download';
-          } else if (route.name === ScreenKey.Browse) {
-            iconName = focused
-              ? 'ios-apps'
-              : 'ios-apps';
-          } else if (route.name === ScreenKey.Search) {
-            iconName = focused
-              ? 'ios-search'
-              : 'ios-search';
-          }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: Colors.blue,
-        inactiveTintColor: 'gray',
-      }}
-    >
-      <Tab.Screen
-        name={ScreenKey.Home}
-        component={HomeStackScreen} />
-      <Tab.Screen name={ScreenKey.Browse} component={BrowseStackScreen} />
-      <Tab.Screen name={ScreenKey.Downloads} component={DownloadStackScreen} />
-      <Tab.Screen name={ScreenKey.Search} component={SearchStackScreen} />
-    </Tab.Navigator>
-  );
-}
+              if (route.name === ScreenKey.Home) {
+                iconName = focused
+                  ? 'ios-home'
+                  : 'ios-home';
+              } else if (route.name === ScreenKey.Downloads) {
+                iconName = focused
+                  ? 'ios-download'
+                  : 'ios-download';
+              } else if (route.name === ScreenKey.Browse) {
+                iconName = focused
+                  ? 'ios-apps'
+                  : 'ios-apps';
+              } else if (route.name === ScreenKey.Search) {
+                iconName = focused
+                  ? 'ios-search'
+                  : 'ios-search';
+              }
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: Colors.blue,
+            inactiveTintColor: 'gray',
+            style: {
+              backgroundColor: theme.background,
+              borderTopWidth: 0,
+            },
+          }}
+        >
+          <Tab.Screen
+            name={ScreenKey.Home}
+            component={HomeStackScreen}
+          />
+          <Tab.Screen name={ScreenKey.Browse} component={BrowseStackScreen} />
+          <Tab.Screen name={ScreenKey.Downloads} component={DownloadStackScreen} />
+          <Tab.Screen name={ScreenKey.Search} component={SearchStackScreen} />
+        </Tab.Navigator>
+
+      )
+    }
+  </ThemeContext>
+);
+
 const MainStack = createStackNavigator();
 function MainNavigation() {
   return (
@@ -202,3 +250,4 @@ export default function App() {
     </ThemeContext.Provider>
   );
 }
+registerRootComponent(App);
