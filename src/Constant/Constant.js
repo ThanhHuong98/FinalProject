@@ -52,6 +52,7 @@ export const ScreenKey = {
   Main: 'Main',
   Home: 'Home',
   ListCourse: 'List Courses',
+  AllCourses: 'All Courses',
   DetailCourse: 'Detail Course',
 
   Downloads: 'Downloads',

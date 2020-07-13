@@ -1,3 +1,5 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   StyleSheet,
@@ -10,42 +12,35 @@ import { ScreenKey, Colors } from '../../../../Constant/Constant';
 // eslint-disable-next-line import/no-cycle
 import SectionTitle from '../../../Common/SectionTitle/section-title';
 
-const SectionCourses = ({ title, data, navigation }) => {
-  const onSeeMore = () => {
-    navigation.navigate(ScreenKey.ListCourse);
-  };
-
-  const onDetailCourse = () => {
-    navigation.navigate(ScreenKey.DetailCourse);
-  };
-
-  return (
+const SectionCourses = ({
+  id, title, courses, onSeeAll, onClickCourse,
+}) =>
+  (
     <SafeAreaView style={styles.container}>
       <SectionTitle
         title={title}
-        onChooseOption={onSeeMore}
+        onChooseOption={() => onSeeAll()}
       />
       <FlatList
         horizontal
-        data={data}
+        data={courses}
         renderItem={({ item }) => (
           <SectionCoursesItem
-            thumbnail={item.thumbnail}
-            name={item.name}
-            authors={item.authors}
-            level={item.level}
+            name={item.title}
+            thumbnail={item.imageUrl}
+            author={item['instructor.user.name']}
+            numOfVideos={item.videoNumber}
             date={item.date}
-            duration={item.duration}
-            rating={item.rating}
-            onChooseOption={onDetailCourse}
+            duration={item.totalHours}
+            rating={item.ratedNumber}
+            price={item.price}
+            onClickItem={() => onClickCourse(item)}
           />
         )}
         keyExtractor={(item) => item.id}
       />
     </SafeAreaView>
   );
-};
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.transparent,

@@ -2,8 +2,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import React, { useReducer } from 'react';
-import AuthenReducer from '../reducers/authen';
-import { requestLogin, requestRegister } from '../actions/authen';
+import AuthenReducer from '../../reducers/authen';
+import { requestLogin, requestRegister } from '../../actions/authen';
 
 const AuthenContext = React.createContext();
 const initialState = {

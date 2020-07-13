@@ -16,8 +16,7 @@ import {
   ScreenKey
 } from '../../../Constant/Constant';
 import OutLineButton from '../../Common/OutLineButton/outLine-button';
-import { AuthenContext } from '../../../providers/authen';
-import { reduce } from 'lodash';
+import { AuthenContext } from '../../providers/authen';
 
 const Login = ({ navigation }) => {
   const [loginInfo, setLoginInfo] = useState({

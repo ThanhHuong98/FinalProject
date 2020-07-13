@@ -16,7 +16,7 @@ import Register from './src/components/Authentications/Register/register';
 import SplashScreen from './src/components/SplashScreen/splash-screen';
 import Browse from './src/components/Main/browse/browse';
 import Home from './src/components/Main/home/home';
-import ListCourses from './src/components/Courses/ListCourses/list-courses';
+import AllCourses from './src/components/Courses/allCourses';
 import Search from './src/components/Main/search/Search';
 import Downloads from './src/components/Main/downloads/downloads';
 import DetailCourse from './src/components/DetailCourse/detail-course';
@@ -25,7 +25,8 @@ import DetailPopularSkill from './src/components/Main/browse/PopularSkill/Detail
 import DetailPath from './src/components/Main/browse/Paths/DetailPath/detail-path';
 import SettingScreen from './src/components/Setting/setting-screen';
 import { listCourses } from './src/data/listcourses';
-import { AuthenProvider } from './src/providers/authen';
+import { AuthenProvider } from './src/components/providers/authen';
+import { HomeProvider } from './src/components/providers/home';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,44 +55,47 @@ function AuthenStackScreen() {
 
 const HomeStack = createStackNavigator();
 const HomeStackScreen = () => (
-  <ThemeContext.Consumer>
-    {
-      ({ theme }) => (
-        <HomeStack.Navigator
-          initialRouteName={ScreenKey.Home}
-          screenOptions={
+  <HomeProvider>
+    <ThemeContext.Consumer>
       {
-        headerTitleStyle: {
-          fontSize: 20,
-          fontWeight: '500',
-        },
-        headerStyle: {
-          backgroundColor: theme.background,
-        },
-        headerTintColor: theme.textColor,
-      }
+    ({ theme }) => (
+      <HomeStack.Navigator
+        initialRouteName={ScreenKey.Home}
+        screenOptions={
+    {
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: '500',
+      },
+      headerStyle: {
+        backgroundColor: theme.background,
+      },
+      headerTintColor: theme.textColor,
     }
-        >
-          <HomeStack.Screen
-            name={ScreenKey.Home}
-            component={Home}
-          />
-          <HomeStack.Screen
-            name={ScreenKey.DetailCourse}
-            component={DetailCourse}
-          />
-          <HomeStack.Screen
-            name={ScreenKey.ListCourse}
-            component={ListCourses}
-          />
-          <HomeStack.Screen
-            name={ScreenKey.Setting}
-            component={SettingScreen}
-          />
-        </HomeStack.Navigator>
-      )
-    }
-  </ThemeContext.Consumer>
+  }
+      >
+        <HomeStack.Screen
+          name={ScreenKey.Home}
+          component={Home}
+        />
+        <HomeStack.Screen
+          name={ScreenKey.DetailCourse}
+          component={DetailCourse}
+        />
+        <HomeStack.Screen
+          name={ScreenKey.AllCourses}
+          component={AllCourses}
+        />
+        <HomeStack.Screen
+          name={ScreenKey.Setting}
+          component={SettingScreen}
+        />
+      </HomeStack.Navigator>
+    )
+  }
+    </ThemeContext.Consumer>
+
+  </HomeProvider>
 );
 
 const DownloadStack = createStackNavigator();
@@ -223,28 +227,6 @@ const MainStackScreen = () => (
     }
   </ThemeContext>
 );
-
-// const MainStack = createStackNavigator();
-// function MainNavigation() {
-//   return (
-//     <AuthenProvider>
-//       <MainStack.Navigator initialRouteName={ScreenKey.SplashScreen}>
-//         <MainStack.Screen
-//           name={ScreenKey.SplashScreen}
-//           component={SplashScreen}
-//           options={{ headerShown: false }}
-//         />
-//         <MainStack.Screen
-//           name={ScreenKey.Main}
-//           component={MainTabNavigator}
-//           options={{ headerShown: false }}
-//         />
-//       </MainStack.Navigator>
-
-//     </AuthenProvider>
-//   );
-// }
-
 export const ThemeContext = React.createContext();
 export const CoursesContext = React.createContext();
 

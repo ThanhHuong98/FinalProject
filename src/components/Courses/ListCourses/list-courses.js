@@ -1,32 +1,36 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable import/no-cycle */
 import React from 'react';
 import {
   StyleSheet,
   FlatList,
   SafeAreaView,
+  Text,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import CoursesItem from '../CourseItem/course-item';
 import separator from '../../Common/Separator/separator-bottom';
 import { ThemeContext } from '../../../../App';
 
-const ListCourses = ({ navigation, courses }) => (
+const ListCourses = ({ title, courses, onItemClick }) => (
   <ThemeContext.Consumer>
     {
         ({ theme }) => (
           <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
+            <Text style={{ ...styles.title, color: theme.textColor}}>{title}</Text>
             <FlatList
               data={courses}
               renderItem={({ item }) => (
                 <CoursesItem
-                  thumbnail={item.thumbnail}
-                  name={item.name}
-                  authors={item.authors}
-                  level={item.level}
+                  name={item.title}
+                  thumbnail={item.imageUrl}
+                  author={item['instructor.user.name']}
+                  numOfVideos={item.videoNumber}
                   date={item.date}
-                  duration={item.duration}
-                  rating={item.rating}
-                  navigation={navigation}
+                  duration={item.totalHours}
+                  rating={item.ratedNumber}
+                  price={item.price}
+                  onItemClick={() => onItemClick(item)}
                 />
               )}
               keyExtractor={(item) => item.id}
@@ -38,20 +42,18 @@ const ListCourses = ({ navigation, courses }) => (
   </ThemeContext.Consumer>
 );
 ListCourses.propTypes = {
-  navigation: PropTypes.object,
+  title: PropTypes.string,
   courses: PropTypes.arrayOf(PropTypes.object),
+  onItemClick: PropTypes.func,
 };
 
-ListCourses.defaultProps = {
+ListCourses.dedefaultProps = {
+  title: 'Software Development',
   courses: [
     {
       id: 1,
       name: 'Java Programming - Build your first project',
       thumbnail: 'https://pluralsight.imgix.net/course-images/java-fundamentals-language-v1.jpg',
-      authors: [
-        'Ben Piper',
-        'Scott Allen',
-      ],
       level: 'Beginner',
       date: 1589250813000,
       duration: 600,
@@ -122,6 +124,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+    padding: 15,
   },
 });
 
