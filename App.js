@@ -25,6 +25,32 @@ import DetailPopularSkill from './src/components/Main/browse/PopularSkill/Detail
 import DetailPath from './src/components/Main/browse/Paths/DetailPath/detail-path';
 import SettingScreen from './src/components/Setting/setting-screen';
 import { listCourses } from './src/data/listcourses';
+import { AuthenProvider } from './src/providers/authen';
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const AuthenStack = createStackNavigator();
+function AuthenStackScreen() {
+  return (
+    <AuthenProvider>
+      <AuthenStack.Navigator screenOptions={{ headerShown: false }}>
+        <AuthenStack.Screen
+          name={ScreenKey.SplashScreen}
+          component={SplashScreen}
+        />
+        <AuthenStack.Screen
+          name={ScreenKey.Login}
+          component={Login}
+        />
+        <AuthenStack.Screen
+          name={ScreenKey.Register}
+          component={Register}
+        />
+      </AuthenStack.Navigator>
+    </AuthenProvider>
+  );
+}
 
 const HomeStack = createStackNavigator();
 const HomeStackScreen = () => (
@@ -150,9 +176,7 @@ function SearchStackScreen() {
     </SearchStack.Navigator>
   );
 }
-
-const Tab = createBottomTabNavigator();
-const MainTabNavigator = () => (
+const MainStackScreen = () => (
   <ThemeContext>
     {
       ({ theme }) => (
@@ -190,47 +214,36 @@ const MainTabNavigator = () => (
             },
           }}
         >
-          <Tab.Screen
-            name={ScreenKey.Home}
-            component={HomeStackScreen}
-          />
+          <Tab.Screen name={ScreenKey.Home} component={HomeStackScreen} />
           <Tab.Screen name={ScreenKey.Browse} component={BrowseStackScreen} />
           <Tab.Screen name={ScreenKey.Downloads} component={DownloadStackScreen} />
           <Tab.Screen name={ScreenKey.Search} component={SearchStackScreen} />
         </Tab.Navigator>
-
       )
     }
   </ThemeContext>
 );
 
-const MainStack = createStackNavigator();
-function MainNavigation() {
-  return (
-    <MainStack.Navigator initialRouteName={ScreenKey.SplashScreen}>
-      <MainStack.Screen
-        name={ScreenKey.SplashScreen}
-        component={SplashScreen}
-        options={{ headerShown: false }}
-      />
-      <MainStack.Screen
-        name={ScreenKey.Register}
-        component={Register}
-        options={{ headerShown: true }}
-      />
-      <MainStack.Screen
-        name={ScreenKey.Login}
-        component={Login}
-        options={{ headerShown: false }}
-      />
-      <MainStack.Screen
-        name={ScreenKey.Main}
-        component={MainTabNavigator}
-        options={{ headerShown: false }}
-      />
-    </MainStack.Navigator>
-  );
-}
+// const MainStack = createStackNavigator();
+// function MainNavigation() {
+//   return (
+//     <AuthenProvider>
+//       <MainStack.Navigator initialRouteName={ScreenKey.SplashScreen}>
+//         <MainStack.Screen
+//           name={ScreenKey.SplashScreen}
+//           component={SplashScreen}
+//           options={{ headerShown: false }}
+//         />
+//         <MainStack.Screen
+//           name={ScreenKey.Main}
+//           component={MainTabNavigator}
+//           options={{ headerShown: false }}
+//         />
+//       </MainStack.Navigator>
+
+//     </AuthenProvider>
+//   );
+// }
 
 export const ThemeContext = React.createContext();
 export const CoursesContext = React.createContext();
@@ -244,7 +257,10 @@ export default function App() {
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <CoursesContext.Provider value={{ sectionCourse }}>
         <NavigationContainer>
-          <MainNavigation />
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
+            <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
+          </Stack.Navigator>
         </NavigationContainer>
       </CoursesContext.Provider>
     </ThemeContext.Provider>

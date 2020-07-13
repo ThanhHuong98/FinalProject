@@ -44,6 +44,7 @@ export const Dimension = {
 };
 // ScreenKey define for navigation
 export const ScreenKey = {
+  Authen: 'Authen',
   Login: 'Sign in',
   Register: 'Register',
   SplashScreen: 'Splash Screen',

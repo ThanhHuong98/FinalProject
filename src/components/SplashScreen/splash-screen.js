@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
   bgSplash: {
     width: '100%',
     height: 200,
-  }
-
+  },
 });
 export default SplashScreen;

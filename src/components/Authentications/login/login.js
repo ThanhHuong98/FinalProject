@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+/* eslint-disable global-require */
+import React, { useState, useContext, useEffect } from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
 } from 'react-native';
+import AnimatedLoader from 'react-native-animated-loader';
 import CustomInput from '../../Common/CustomInput/custom-input';
 import ButtonSolid from '../../Common/SolidButton/solid-button';
 import {
@@ -14,38 +16,59 @@ import {
   ScreenKey
 } from '../../../Constant/Constant';
 import OutLineButton from '../../Common/OutLineButton/outLine-button';
+import { AuthenContext } from '../../../providers/authen';
+import { reduce } from 'lodash';
 
 const Login = ({ navigation }) => {
-  const [username, setTextUsename] = useState('');
-  const [password, setTextPassword] = useState('');
-  const onLogin = () => {
-    navigation.navigate(ScreenKey.Main);
+  const [loginInfo, setLoginInfo] = useState({
+    email: null,
+    password: null,
+  });
+  const handleInputEmail = (email) => {
+    setLoginInfo({
+      ...loginInfo,
+      email,
+    });
   };
+  const handleInputPassword = (password) => {
+    setLoginInfo({
+      ...loginInfo,
+      password,
+    });
+  };
+
   const onSubscribe = () => {
     navigation.navigate(ScreenKey.Register);
   };
   const onHelpMore = () => {
 
   };
+  const authenContext = useContext(AuthenContext);
+  useEffect(() => {
+    if (authenContext.state.loginStatus === 1) {
+      navigation.replace(ScreenKey.Main);
+    }
+  }, [authenContext.state.loginStatus]);
 
+  const handleLogin = () => {
+    authenContext.login(loginInfo.email, loginInfo.password);
+  };
   return (
     <View style={styles.container}>
       <CustomInput
         label="Email or username"
-        onChangeValue={(text) => setTextUsename(text)}
-        value={username}
+        onChangeValue={(email) => handleInputEmail(email)}
       />
       <CustomInput
         label="Password"
-        onChangeValue={(text) => setTextPassword(text)}
-        value={password}
+        onChangeValue={(password) => handleInputPassword(password)}
         isSecure
       />
       <View style={styles.solidBtn}>
         <ButtonSolid
           title="Sign in"
           backgroundColor={Colors.blue}
-          onChooseOption={onLogin}
+          onChooseOption={() => handleLogin()}
         />
       </View>
       <TouchableOpacity
@@ -59,6 +82,13 @@ const Login = ({ navigation }) => {
           onChooseOption={onSubscribe}
         />
       </View>
+      <AnimatedLoader
+        visible={authenContext.state.isLoading}
+        overlayColor="rgba(255,255,255,0.75)"
+        source={require('../../../../assets/common/loader.json')}
+        animationStyle={styles.lottie}
+        speed={2}
+      />
     </View>
   );
 };
@@ -83,6 +113,10 @@ const styles = StyleSheet.create({
   },
   outlinebtn: {
     marginTop: Dimension.marginSmall,
+  },
+  lottie: {
+    width: 100,
+    height: 100,
   }
 
 });
