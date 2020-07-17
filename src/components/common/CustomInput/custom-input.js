@@ -5,7 +5,6 @@ import {
   Text,
   TextInput,
 } from 'react-native';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import propTypes from 'prop-types';
 import { Dimension } from '../../../Constant/Constant';
 
@@ -14,16 +13,17 @@ const CustomInput = ({
   value,
   onChangeValue,
   isSecure,
+  keyboardType,
 }) => {
   return (
     <View style={styles.textInputContainer}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
         style={styles.textInput}
-        // onChangeText={(text) => setValue(text)}
         onChangeText={onChangeValue}
         defaultValue={value}
         secureTextEntry={isSecure}
+        keyboardType={keyboardType}
       />
     </View>
   );
@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
 CustomInput.propTypes = {
   label: propTypes.string,
   value: propTypes.string,
+  keyboardType: propTypes.string,
   isSecure: propTypes.bool,
   onChangeValue: propTypes.func,
 };
@@ -64,6 +65,7 @@ CustomInput.defaultProps = {
   label: '',
   value: '',
   isSecure: false,
+  keyboardType: '',
   onChangeValue: (f) => f,
 };
 

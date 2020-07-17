@@ -1,5 +1,7 @@
-import { REQUEST_LOGIN, LOGIN_SUCCESS, LOGIN_FAILED }
-  from '../Constant/actions/authen';
+import {
+  REQUEST_LOGIN, LOGIN_SUCCESS, LOGIN_FAILED,
+  REQUEST_REGISTER, REGISTER_RESPONE
+} from '../Constant/actions/authen';
 
 const AuthenReducer = (state, action) => {
   switch (action.type) {
@@ -19,6 +21,17 @@ const AuthenReducer = (state, action) => {
         ...state,
         isLoading: false,
         loginStatus: 2,
+      };
+    case REQUEST_REGISTER:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case REGISTER_RESPONE:
+      return {
+        ...state,
+        isLoading: false,
+        registerRespone: action.data,
       };
     default:
       return state;

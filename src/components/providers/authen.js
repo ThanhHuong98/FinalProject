@@ -14,6 +14,7 @@ const initialState = {
   */
   loginStatus: 0,
   isLoading: false,
+  registerRespone: {},
 };
 const AuthenProvider = (props) => {
   const [state, dispatch] = useReducer(AuthenReducer, initialState);

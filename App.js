@@ -163,26 +163,6 @@ function BrowseStackScreen() {
               name={ScreenKey.DetailCategory}
               component={DetailCategory}
             />
-            {/* <BrowseStack.Screen
-        name={ScreenKey.DetailCourse}
-        component={DetailCourse}
-      />
-      <BrowseStack.Screen
-        name={ScreenKey.NewRelease}
-        component={AllCourses}
-      />
-      <BrowseStack.Screen
-        name={ScreenKey.DetailPopularSkill}
-        component={DetailPopularSkill}
-      />
-      <BrowseStack.Screen
-        name={ScreenKey.Recommened}
-        component={AllCourses}
-      />
-      <BrowseStack.Screen
-        name={ScreenKey.DetailAuthor}
-        component={DetailAuthor}
-      /> */}
           </BrowseStack.Navigator>
 
         )
@@ -269,7 +249,7 @@ export default function App() {
             <NavigationContainer>
               <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {
-                  !isLogined()
+                  isLogined()
                     ? <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
                     : null
                 }

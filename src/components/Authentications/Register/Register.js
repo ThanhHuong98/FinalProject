@@ -1,69 +1,109 @@
-import React, { useState } from 'react';
+/* eslint-disable global-require */
+import React, { useState, useEffect, useContext } from 'react';
 // eslint-disable-next-line import/no-unresolved
 import {
   StyleSheet,
   View,
-  Text,
-  CheckBox,
+  Alert,
 } from 'react-native';
+import AnimatedLoader from 'react-native-animated-loader';
 import SolidButton from '../../Common/SolidButton/solid-button';
 import CustomInput from '../../Common/CustomInput/custom-input';
-import { Colors, Dimension, FontSize } from '../../../Constant/Constant';
+import {
+  Colors, Dimension, FontSize, ScreenKey
+} from '../../../Constant/Constant';
+import { AuthenContext } from '../../providers/authen';
+import { checkRegisterInfo } from '../../../core/services/checkRegisterInfo';
 
-const Register = () => {
-  const [email, setTextEmail] = useState('');
-  const [isSelected, setSelection] = useState(false);
+const Register = ({ navigation }) => {
+  const [registerInfo, setRegisterInfo] = useState({
+    username: '',
+    email: '',
+    password: '',
+    phone: '',
+  });
+  // const [error, setError] = useState('');
+
+  const authenContext = useContext(AuthenContext);
 
   const onCreateAccount = () => {
-    // console.log(email);
+    const info = registerInfo;
+    const msgCheckInfo = checkRegisterInfo(info.username, info.password, info.email, info.phone);
+    if (msgCheckInfo) {
+      Alert.alert(
+        'Create new account',
+        msgCheckInfo,
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          },
+          { text: 'OK', onPress: () => console.log('OK Pressed') }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      authenContext.register(info);
+    }
   };
-  const onChangeText = (emailVal) => {
-    setTextEmail(emailVal);
-    // console.log(`EmailVal: ${emailVal}`);
-    // console.log(`Emai: ${email}`);
-  };
+
+  useEffect(() => {
+    if (authenContext.state.registerRespone.message === 'OK') {
+      navigation.navigate(ScreenKey.Login);
+    }
+  }, [authenContext.state.registerRespone.message]);
 
   return (
-
     <View style={styles.container}>
       <View style={styles.topDisplay}>
         <View style={styles.sideDisplay}>
           <CustomInput
             label="Username"
-            onChangeValue={(text) => onChangeText(text)}
-            value={email}
+            onChangeValue={(value) => setRegisterInfo({ ...registerInfo, username: value })}
+            value={registerInfo.username}
           />
         </View>
         <View style={styles.separator} />
         <View style={styles.sideDisplay}>
           <CustomInput
             label="Password"
-            onChangeValue={(text) => onChangeText(text)}
-            value={email}
+            onChangeValue={(value) => setRegisterInfo({ ...registerInfo, password: value })}
+            value={registerInfo.password}
+            isSecure
           />
         </View>
       </View>
-      <View style={styles.primaryDisplay}>
+      <View style={{ marginTop: 15 }}>
         <CustomInput
           label="Email"
-          onChangeValue={(text) => onChangeText(text)}
-          value={email}
+          onChangeValue={(value) => setRegisterInfo({ ...registerInfo, email: value })}
+          value={registerInfo.email}
         />
-        <View style={styles.checkBoxContainer}>
-          <CheckBox
-            value={isSelected}
-            onValueChange={(value) => setSelection(value)}
-            style={styles.checkbox}
-          />
-          <Text style={styles.textSecondary}>By checking here and continuing, you agree to the Term of Use and Privacy Polcy</Text>
-        </View>
-        <View style={styles.buttonWrapper}>
-          <SolidButton
-            title="Create Account"
-            backgroundColor={Colors.blue}
-            onChooseOption={onCreateAccount}
-          />
-        </View>
+      </View>
+      <View style={{ marginTop: 15 }}>
+        <CustomInput
+          label="Phone number"
+          onChangeValue={(value) => setRegisterInfo({ ...registerInfo, phone: value })}
+          value={registerInfo.phone}
+          keyboardType="numeric"
+        />
+      </View>
+      <View style={{ marginTop: 15 }}>
+        <SolidButton
+          title="Create Account"
+          backgroundColor={Colors.blue}
+          onChooseOption={() => onCreateAccount()}
+        />
+      </View>
+      <View>
+        <AnimatedLoader
+          visible={authenContext.state.isLoading}
+          overlayColor="rgba(0,0,0,0.65)"
+          source={require('../../../../assets/common/loader.json')}
+          animationStyle={styles.loading}
+          speed={2}
+        />
       </View>
     </View>
   );
@@ -88,7 +128,6 @@ const styles = StyleSheet.create({
     width: '2%'
   },
   primaryDisplay: {
-    marginTop: Dimension.marginMedium,
   },
   buttonWrapper: {
     marginTop: Dimension.marginMedium,
@@ -98,20 +137,9 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xsmall,
     textAlign: 'left',
   },
-  checkBoxContainer: {
-    flexDirection: 'row',
-    alignSelf: 'flex-start',
-    width: '95%',
-    marginTop: Dimension.marginMedium,
-  },
-  checkbox: {
-    width: '5%',
-    height: 17,
-    backgroundColor: 'transparent',
-    borderColor: 'white',
-    borderWidth: 2,
-    borderRadius: 2,
-    marginRight: 10,
+  loading: {
+    height: 100,
+    width: 100,
   },
 });
 
