@@ -23,8 +23,8 @@ export const requestLogin = (dispatch) => (email, password) => {
   dispatch(waitLogin());
 
   const data = {
-    email,
-    password
+    email: 'Nglethimylinh@gmail.com',
+    password: '123456789'
   };
 
   api.post('/user/login', data)

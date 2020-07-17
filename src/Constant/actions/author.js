@@ -1,0 +1,3 @@
+export const REQUEST_AUTHOR = 'REQUEST_AUTHOR';
+export const RECEIVE_AUTHOR = 'RECEIVE_AUTHOR';
+export const REQUEST_FAIL = 'REQUEST_FAIL';

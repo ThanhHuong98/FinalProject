@@ -59,17 +59,14 @@ export const ScreenKey = {
   Search: 'Search',
 
   Browse: 'Browse',
-  Paths: 'Paths',
   NewRelease: 'New Release',
   Recommened: 'Recommened for you',
 
   DetailAuthor: 'Detail Author',
   DetailPopularSkill: 'Detail Popular Skill',
-  DetailPath: 'Detail Path',
+  DetailCategory: 'Detail Category',
 
   Setting: 'Setting'
-
-
 };
 // Theme define
 export const themes = {

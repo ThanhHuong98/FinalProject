@@ -5,16 +5,14 @@ import {
 } from '../../../../../Constant/Constant';
 
 
-const SectionPopularSkillsItem = ({ title, onChooseOption }) => {
-  return (
-    <TouchableOpacity
-      style={styles.themeItem}
-      onPress={onChooseOption}
-    >
-      <Text style={styles.title}>{title}</Text>
-    </TouchableOpacity>
-  );
-};
+const ItemSkill = ({ name, onClickItem }) => (
+  <TouchableOpacity
+    style={styles.themeItem}
+    onPress={() => onClickItem()}
+  >
+    <Text style={styles.title}>{name}</Text>
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   themeItem: {
@@ -34,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SectionPopularSkillsItem;
+export default ItemSkill;

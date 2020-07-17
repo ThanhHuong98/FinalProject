@@ -19,17 +19,13 @@ import {
 // eslint-disable-next-line import/no-cycle
 import { ThemeContext } from '../../../../../../App';
 
-const ListAuthors = ({ title, authors, navigation }) => {
+const ListAuthors = ({ title, authors, onClickItem }) => {
   const separator = () => {
     return (
       <View
         style={{ marginRight: Dimension.marginMedium }}
       />
     );
-  };
-
-  const onSeeDetailAuthor = () => {
-    navigation.navigate(ScreenKey.DetailAuthor);
   };
 
   return (
@@ -45,9 +41,10 @@ const ListAuthors = ({ title, authors, navigation }) => {
                 data={authors}
                 renderItem={({ item }) => (
                   <AuthorsItem
-                    name={item.name}
-                    avatar={item.avatar}
-                    onChooseOption={onSeeDetailAuthor}
+                    id={item['user.id']}
+                    name={item['user.name']}
+                    avatar={item['user.avatar']}
+                    onChooseItem={() => onClickItem(item)}
                   />
                 )}
                 ItemSeparatorComponent={separator}
@@ -64,7 +61,6 @@ const ListAuthors = ({ title, authors, navigation }) => {
 ListAuthors.propTypes = {
   title: PropTypes.string,
   authors: PropTypes.arrayOf(PropTypes.object),
-  navigation: PropTypes.object,
 };
 ListAuthors.defaultProps = {
   title: 'List Authors',

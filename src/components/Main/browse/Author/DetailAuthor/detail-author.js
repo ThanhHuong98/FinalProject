@@ -1,53 +1,68 @@
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable import/no-cycle */
 /* eslint-disable global-require */
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
-  View, Text, TouchableWithoutFeedback, Image, ScrollView, StyleSheet,
+  View, Text, Image, ScrollView, StyleSheet,
 } from 'react-native';
-import PropTypes, { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import CollapsableDescription from '../../../../Common/Pannel/collapsable-description';
 import ListCourses from '../../../../Courses/ListCourses/list-courses';
 import { ScreenKey, Colors } from '../../../../../Constant/Constant';
 import { ThemeContext } from '../../../../../../App';
+import { AuthorContext } from '../../../../providers/author';
+import ListSkills from '../../PopularSkill/ListSkills/list-skills';
 
 const DetailAuthor = ({
-  name, avatar, isFollowing, desc, personalLink, courses, navigation,
+  route, navigation,
 }) => {
-  const buttonBackground = isFollowing ? Colors.transparent : Colors.mblue;
-  const buttonTextColor = isFollowing ? Colors.mblue : Colors.white;
+  
+  const authorId = route.params.id;
+  const authorContext = useContext(AuthorContext);
+  useEffect(() => {
+    authorContext.getAuthorDetails(authorId);
+  }, []);
 
   return (
     <ThemeContext.Consumer>
       {
-        ({ theme }) => {
-          return (
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={{ ...styles.container, backgroundColor: theme.background }}>
-                <View style={{ ...styles.infoBlock, backgroundColor: theme.background }}>
-                  <Image source={{ uri: avatar }} style={styles.avatar} resizeMode="cover"/>
-                  <Text style={{ ...styles.name, color: theme.textColor }}>{name}</Text>
-                  <TouchableWithoutFeedback>
-                    <Text style={{ ...styles.btnFollow, backgroundColor: buttonBackground, color: buttonTextColor }}>{isFollowing ? 'FOLLOWING' : 'FOLLOW'}</Text>
-                  </TouchableWithoutFeedback>
-                  <Text style={styles.followDesc}>You'll be notified when new courses are published</Text>
-                  <CollapsableDescription minHeight={100} description={desc}/>
-                  <View style={styles.socialContainer}>
-                    <Image source={require('../../../../../../assets/author/link-icon.png')} style={styles.icon}/>
-                    <Text style={{ ...styles.link, color: theme.textColor }}>{personalLink}</Text>
-                  </View>
-                  <View style={styles.socialContainer}>
-                    <Image source={require('../../../../../../assets/author/facebook-icon.png')} style={styles.socialIcon}/>
-                    <Image source={require('../../../../../../assets/author/linkedin-icon.png')} style={styles.socialIcon}/>
-                  </View>
+        ({ theme }) => (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={{ ...styles.container, backgroundColor: theme.background }}>
+              <View style={{ ...styles.infoBlock, backgroundColor: theme.background }}>
+                <Image source={{ uri: authorContext.state.authorDetails.avatar }} style={styles.avatar} resizeMode="cover" />
+                <Text style={{ ...styles.name, color: theme.textColor }}>{authorContext.state.authorDetails.name}</Text>
+                {
+                  authorContext.state.authorDetails.intro
+                    ? <CollapsableDescription minHeight={100} description={authorContext.state.authorDetails.intro} />
+                    : null
+                }
+                <View style={styles.subInfoContainer}>
+                  <Image source={require('../../../../../../assets/author/email.png')} style={styles.socialIcon} />
+                  <Text style={{ ...styles.subInfo, color: theme.textColor }}>{authorContext.state.authorDetails.email}</Text>
                 </View>
-                <View style={styles.listCourses}>
-                  <ListCourses title="Courses" onItemClick={(id) => navigation.push(ScreenKey.DetailCourse)}/>
+                <View style={styles.subInfoContainer}>
+                  <Image source={require('../../../../../../assets/author/ursa-major.png')} style={styles.socialIcon} />
+                  <Text style={{ ...styles.subInfo, color: theme.textColor }}>{authorContext.state.authorDetails.major}</Text>
                 </View>
               </View>
-            </ScrollView>
-          );
-        }
+              <View style={styles.listSkills}>
+                <ListSkills
+                  skills={authorContext.state.authorDetails.skills}
+                />
+              </View>
+              <View style={styles.listCourses}>
+                <ListCourses
+                  courses={authorContext.state.authorDetails.courses}
+                  title="Các khóa học"
+                  onItemClick={(id) => navigation.push(ScreenKey.DetailCourse)}
+                />
+              </View>
+            </View>
+          </ScrollView>
+        )
       }
     </ThemeContext.Consumer>
   );
@@ -92,14 +107,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.backgroundColor,
     flexDirection: 'column',
     marginHorizontal: 15,
-    padding: 15,
   },
-  link: {
+  subInfo: {
     color: Colors.white,
     fontSize: 15,
     fontWeight: '500',
   },
   listCourses: {
+  },
+  listSkills: {
+    marginLeft: 15,
   },
   name: {
     color: Colors.white,
@@ -107,10 +124,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginVertical: 10,
   },
-  socialContainer: {
-    alignItems: 'center',
-    alignSelf: 'flex-start',
+  subInfoContainer: {
     flexDirection: 'row',
+    alignSelf: 'flex-start',
     marginTop: 15,
   },
   socialIcon: {
@@ -122,22 +138,11 @@ const styles = StyleSheet.create({
 });
 
 DetailAuthor.propTypes = {
-  name: PropTypes.string,
-  avatar: PropTypes.string,
-  isFollowing: PropTypes.bool,
-  desc: PropTypes.string,
-  personalLink: PropTypes.string,
-  courses: PropTypes.arrayOf(object),
+  route: PropTypes.object,
   navigation: PropTypes.object,
 };
 
 DetailAuthor.defaultProps = {
-  name: 'Scott Allen',
-  avatar: 'https://pluralsight.imgix.net/author/lg/44cb43b3-83e4-4458-9b39-a7ded3411616.jpg',
-  isFollowing: false,
-  desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer est tellus, malesuada at erat a, volutpat consequat dolor. Etiam commodo nisl sit amet arcu congue varius. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut est justo, sodales eu metus vel, auctor varius lorem. Proin nec feugiat nisi. Donec bibendum scelerisque sapien. Pellentesque consequat hendrerit augue ac tincidunt. Pellentesque non est eget ipsum sagittis malesuada at vitae tellus.',
-  personalLink: 'http://odetocode.com/blogs/all',
-  courses: [],
 };
 
 export default DetailAuthor;

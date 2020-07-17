@@ -10,7 +10,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Colors, ScreenKey, themes } from './src/Constant/Constant';
-
 import Login from './src/components/Authentications/login/login';
 import Register from './src/components/Authentications/Register/register';
 import SplashScreen from './src/components/SplashScreen/splash-screen';
@@ -21,12 +20,13 @@ import Search from './src/components/Main/search/Search';
 import Downloads from './src/components/Main/downloads/downloads';
 import DetailCourse from './src/components/DetailCourse/detail-course';
 import DetailAuthor from './src/components/Main/browse/Author/DetailAuthor/detail-author';
-import DetailPopularSkill from './src/components/Main/browse/PopularSkill/DetailPopularSkill/detail-popular-skill';
-import DetailPath from './src/components/Main/browse/Paths/DetailPath/detail-path';
 import SettingScreen from './src/components/Setting/setting-screen';
-import { listCourses } from './src/data/listcourses';
+import DetailCategory from './src/components/Main/browse/Categories/DetailCategory/detail-category';
 import { AuthenProvider } from './src/components/providers/authen';
 import { HomeProvider } from './src/components/providers/home';
+import { BrowseProvider } from './src/components/providers/browse';
+import { AuthorProvider } from './src/components/providers/author';
+import { getUserInfo } from './src/storage/storage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -55,9 +55,8 @@ function AuthenStackScreen() {
 
 const HomeStack = createStackNavigator();
 const HomeStackScreen = () => (
-  <HomeProvider>
-    <ThemeContext.Consumer>
-      {
+  <ThemeContext.Consumer>
+    {
     ({ theme }) => (
       <HomeStack.Navigator
         initialRouteName={ScreenKey.Home}
@@ -93,9 +92,7 @@ const HomeStackScreen = () => (
       </HomeStack.Navigator>
     )
   }
-    </ThemeContext.Consumer>
-
-  </HomeProvider>
+  </ThemeContext.Consumer>
 );
 
 const DownloadStack = createStackNavigator();
@@ -132,18 +129,47 @@ const DownloadStackScreen = () => (
 const BrowseStack = createStackNavigator();
 function BrowseStackScreen() {
   return (
-    <BrowseStack.Navigator>
-      <BrowseStack.Screen
-        name={ScreenKey.Browse}
-        component={Browse}
-      />
-      <BrowseStack.Screen
+    <ThemeContext.Consumer>
+      {
+        ({ theme }) => (
+          <BrowseStack.Navigator
+            initialRouteName={ScreenKey.Browse}
+            screenOptions={
+    {
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: '500',
+      },
+      headerStyle: {
+        backgroundColor: theme.background,
+      },
+      headerTintColor: theme.textColor,
+    }
+  }
+          >
+            <BrowseStack.Screen
+              name={ScreenKey.Browse}
+              component={Browse}
+            />
+            <BrowseStack.Screen
+              name={ScreenKey.AllCourses}
+              component={AllCourses}
+            />
+            <BrowseStack.Screen
+              name={ScreenKey.DetailAuthor}
+              component={DetailAuthor}
+            />
+            <BrowseStack.Screen
+              name={ScreenKey.DetailCategory}
+              component={DetailCategory}
+            />
+            {/* <BrowseStack.Screen
         name={ScreenKey.DetailCourse}
         component={DetailCourse}
       />
       <BrowseStack.Screen
         name={ScreenKey.NewRelease}
-        component={ListCourses}
+        component={AllCourses}
       />
       <BrowseStack.Screen
         name={ScreenKey.DetailPopularSkill}
@@ -151,21 +177,17 @@ function BrowseStackScreen() {
       />
       <BrowseStack.Screen
         name={ScreenKey.Recommened}
-        component={ListCourses}
-      />
-      <BrowseStack.Screen
-        name={ScreenKey.Paths}
-        component={ListCourses}
-      />
-      <BrowseStack.Screen
-        name={ScreenKey.DetailPath}
-        component={DetailPath}
+        component={AllCourses}
       />
       <BrowseStack.Screen
         name={ScreenKey.DetailAuthor}
         component={DetailAuthor}
-      />
-    </BrowseStack.Navigator>
+      /> */}
+          </BrowseStack.Navigator>
+
+        )
+      }
+    </ThemeContext.Consumer>
   );
 }
 
@@ -232,20 +254,32 @@ export const CoursesContext = React.createContext();
 
 export default function App() {
   const [theme, setTheme] = useState(themes.light);
-  const [sectionCourse, setSectionCourse] = useState(listCourses);
-  // console.log("List Course Data test ", sectionCourse);
+  const isLogined = () => {
+    const user = getUserInfo();
+    console.log('user', user);
+    if (user) return true;
+    return false;
+  };
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      <CoursesContext.Provider value={{ sectionCourse }}>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
-            <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </CoursesContext.Provider>
-    </ThemeContext.Provider>
+    <HomeProvider>
+      <BrowseProvider>
+        <AuthorProvider>
+          <ThemeContext.Provider value={{ theme, setTheme }}>
+            <NavigationContainer>
+              <Stack.Navigator screenOptions={{ headerShown: false }}>
+                {
+                  !isLogined()
+                    ? <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
+                    : null
+                }
+                <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </ThemeContext.Provider>
+        </AuthorProvider>
+      </BrowseProvider>
+    </HomeProvider>
   );
 }
 registerRootComponent(App);

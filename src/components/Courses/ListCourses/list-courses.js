@@ -17,7 +17,7 @@ const ListCourses = ({ title, courses, onItemClick }) => (
     {
         ({ theme }) => (
           <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
-            <Text style={{ ...styles.title, color: theme.textColor}}>{title}</Text>
+            <Text style={{ ...styles.title, color: theme.textColor }}>{title}</Text>
             <FlatList
               data={courses}
               renderItem={({ item }) => (

@@ -3,21 +3,23 @@ import {
   StyleSheet, ImageBackground, Text, TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { Colors } from '../../../Constant/Constant';
 
 const ImageButton = ({
-  title, width, url, onChooseOption
+  title, width, thumbnail, onClickItem, bgColor, fontSize, borderRadius
 }) => (
   <ImageBackground
-    style={{ ...styles.container, width }}
-    source={{ uri: url }}
+    style={{
+      ...styles.container, width, backgroundColor: bgColor, borderRadius
+    }}
+    source={{ uri: thumbnail }}
   >
     <TouchableOpacity
       style={styles.touch}
-      onPress={onChooseOption}
+      onPress={() => onClickItem()}
     >
-      <Text style={styles.title}>{title}</Text>
+      <Text style={{...styles.title, fontSize }}>{title}</Text>
     </TouchableOpacity>
-
   </ImageBackground>
 );
 
@@ -41,12 +43,14 @@ const styles = StyleSheet.create({
 ImageButton.propTypes = {
   title: PropTypes.string.isRequired,
   width: PropTypes.number,
-  url: PropTypes.string.isRequired,
-  onChooseOption: PropTypes.func.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  onClickItem: PropTypes.func.isRequired,
+  bgColor: PropTypes.string,
 };
 
 ImageButton.defaultProps = {
   width: '100%',
+  bgColor: Colors.transparent,
 };
 
 export default ImageButton;

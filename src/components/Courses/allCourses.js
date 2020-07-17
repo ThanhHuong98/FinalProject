@@ -35,13 +35,6 @@ const AllCourses = ({ route, navigation }) => {
               courses={homeContext.state.allCourse}
               onItemClick={(item) => onItemClick(item)}
             />
-            <AnimatedLoader
-              visible={homeContext.state.isLoading}
-              overlayColor="rgba(0,0,0,0.65)"
-              source={require('../../../assets/common/loader.json')}
-              animationStyle={styles.loading}
-              speed={2}
-            />
           </SafeAreaView>
         )
       }
