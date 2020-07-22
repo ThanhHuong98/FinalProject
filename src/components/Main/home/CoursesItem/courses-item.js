@@ -46,7 +46,7 @@ const SectionCoursesItem = ({
                   : 'Không có thông tin giảng viên'
               }
               </Text>
-              <Text style={{ ...styles.subtitile, marginTop: 2 }}>{ `${numOfVideos} . ${formatMonthYearType(date)} . ${formatHourType1(duration)}`}</Text>
+              <Text style={{ ...styles.subtitile, marginTop: 2 }}>{ `${numOfVideos} (videos) . ${formatMonthYearType(date)} . ${formatHourType1(duration)}`}</Text>
               <Star score={rating} style={styles.starStyle} />
               <Text style={{ ...styles.subtitile, marginTop: 2 }}>
                 {

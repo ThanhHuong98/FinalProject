@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
-import React, { useState, useEffect, useContext } from 'react';
 // eslint-disable-next-line import/no-unresolved
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -22,8 +22,6 @@ const Register = ({ navigation }) => {
     password: '',
     phone: '',
   });
-  // const [error, setError] = useState('');
-
   const authenContext = useContext(AuthenContext);
 
   const onCreateAccount = () => {
@@ -31,15 +29,16 @@ const Register = ({ navigation }) => {
     const msgCheckInfo = checkRegisterInfo(info.username, info.password, info.email, info.phone);
     if (msgCheckInfo) {
       Alert.alert(
-        'Create new account',
+        'Thông báo',
         msgCheckInfo,
         [
           {
             text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
             style: 'cancel'
           },
-          { text: 'OK', onPress: () => console.log('OK Pressed') }
+          {
+            text: 'OK',
+          }
         ],
         { cancelable: false }
       );
@@ -59,7 +58,7 @@ const Register = ({ navigation }) => {
       <View style={styles.topDisplay}>
         <View style={styles.sideDisplay}>
           <CustomInput
-            label="Username"
+            label="Tên đăng nhập"
             onChangeValue={(value) => setRegisterInfo({ ...registerInfo, username: value })}
             value={registerInfo.username}
           />
@@ -67,7 +66,7 @@ const Register = ({ navigation }) => {
         <View style={styles.separator} />
         <View style={styles.sideDisplay}>
           <CustomInput
-            label="Password"
+            label="Mật khẩu"
             onChangeValue={(value) => setRegisterInfo({ ...registerInfo, password: value })}
             value={registerInfo.password}
             isSecure
@@ -83,7 +82,7 @@ const Register = ({ navigation }) => {
       </View>
       <View style={{ marginTop: 15 }}>
         <CustomInput
-          label="Phone number"
+          label="Số điện thoại"
           onChangeValue={(value) => setRegisterInfo({ ...registerInfo, phone: value })}
           value={registerInfo.phone}
           keyboardType="numeric"
@@ -91,7 +90,7 @@ const Register = ({ navigation }) => {
       </View>
       <View style={{ marginTop: 15 }}>
         <SolidButton
-          title="Create Account"
+          title="Tạo tài khoản"
           backgroundColor={Colors.blue}
           onChooseOption={() => onCreateAccount()}
         />
@@ -104,6 +103,25 @@ const Register = ({ navigation }) => {
           animationStyle={styles.loading}
           speed={2}
         />
+        {/* {
+          error
+            ? (
+              Alert.alert(
+                'Create new account',
+                error,
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                  },
+                  { text: 'OK', onPress: () => console.log('OK Pressed') }
+                ],
+                { cancelable: false }
+              )
+            )
+            : null
+        } */}
       </View>
     </View>
   );

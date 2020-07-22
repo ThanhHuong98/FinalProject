@@ -6,14 +6,14 @@
 export const checkRegisterInfo = (username, password, email, phone) => {
   if (username && email && password && phone) {
     if (!isCheckAvailableEmail(email)) {
-      return ('Email khong hop le, Vui longf kiem tra lai!');
+      return ('Email không hợp lệ, vui lòng kiểm tra lại!');
     }
     if (!isCheckAviablePhone(phone)) {
-      return ('Phone khong hop le, Vui longf kiem tra lai!');
+      return ('Só điện thoại không hợp lệ, vui lòng kiểm tra lại!');
     }
     return '';
   }
-  return 'Vui long nhap du thong tin';
+  return 'Vui lòng nhập nhập đầy đủ thông tin';
 };
 
 const isCheckAvailableEmail = (email) => {

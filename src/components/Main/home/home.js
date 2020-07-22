@@ -4,26 +4,44 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Button,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
 import AnimatedLoader from 'react-native-animated-loader';
 import SectionCourses from './SectionCourses/section-courses';
 import { ScreenKey, Dimension } from '../../../Constant/Constant';
 import { ThemeContext } from '../../../../App';
 import { HomeContext } from '../../providers/home';
+import IconProfile from '../../../../assets/home/user.svg'
+import IconSetting from '../../../../assets/home/settings.svg'
 
 function Home({ navigation }) {
   const onSetting = () => {
     navigation.navigate(ScreenKey.Setting);
   };
+  const onProfile = () => {
+    navigation.navigate(ScreenKey.Profile);
+  };
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button
-          onPress={onSetting}
-          title="Setting"
-        />
-      ),
+        <ThemeContext.Consumer>
+          {({theme}) => (
+            <TouchableOpacity onPress={() => onProfile()}>
+              <IconProfile  width={25} height={25} marginHorizontal={15} style={{fill: theme.iconColor}}/>
+            </TouchableOpacity>
+          )}
+        </ThemeContext.Consumer>
+       ),
+       headerLeft: () => (
+        <ThemeContext.Consumer>
+          {({theme}) => (
+            <TouchableOpacity onPress={() => onSetting()}>
+              <IconSetting  width={25} height={25} marginHorizontal={15} style={{fill: theme.iconColor}}/>
+            </TouchableOpacity>
+          )}
+        </ThemeContext.Consumer>
+       ),
     });
   }, [navigation]);
 
@@ -96,6 +114,11 @@ const styles = StyleSheet.create({
   lottie: {
     width: 100,
     height: 100,
+  },
+  iconHeader: {
+      height: 20,
+      marginHorizontal: 15,
+      width: 20,
   }
 });
 

@@ -48,6 +48,7 @@ export const ScreenKey = {
   Login: 'Sign in',
   Register: 'Register',
   SplashScreen: 'Splash Screen',
+  Profile: 'Profile',
 
   Main: 'Main',
   Home: 'Home',
@@ -55,7 +56,7 @@ export const ScreenKey = {
   AllCourses: 'All Courses',
   DetailCourse: 'Detail Course',
 
-  Downloads: 'Downloads',
+  Favorite: 'Favorites',
   Search: 'Search',
 
   Browse: 'Browse',
@@ -76,7 +77,9 @@ export const themes = {
     subTextColor: '#bdbdbd',
     itemColor: '#e0e0e0',
     detailBlockColor: '#f5f5f5',
-    textHeader: 'blue'
+    textHeader: 'blue',
+    headerColor: '#ffffff',
+    iconColor: '#000'
   },
   dark: {
     background: '#000a12',
@@ -84,6 +87,8 @@ export const themes = {
     subTextColor: '#aeaeae',
     itemColor: '#2c3038',
     detailBlockColor: '#404040',
-    textHeader: 'blue'
+    textHeader: 'blue',
+    headerColor: '#102027',
+    iconColor: '#FFF'
   }
 };

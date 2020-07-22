@@ -17,15 +17,17 @@ import Browse from './src/components/Main/browse/browse';
 import Home from './src/components/Main/home/home';
 import AllCourses from './src/components/Courses/allCourses';
 import Search from './src/components/Main/search/Search';
-import Downloads from './src/components/Main/downloads/downloads';
+import Favorites from './src/components/Main/favorites/favorites';
 import DetailCourse from './src/components/DetailCourse/detail-course';
 import DetailAuthor from './src/components/Main/browse/Author/DetailAuthor/detail-author';
 import SettingScreen from './src/components/Setting/setting-screen';
+import Profile from './src/components/Profile/profile';
 import DetailCategory from './src/components/Main/browse/Categories/DetailCategory/detail-category';
 import { AuthenProvider } from './src/components/providers/authen';
 import { HomeProvider } from './src/components/providers/home';
 import { BrowseProvider } from './src/components/providers/browse';
 import { AuthorProvider } from './src/components/providers/author';
+import { FavoritesProvider } from './src/components/providers/favorites';
 import { getUserInfo } from './src/storage/storage';
 
 const Stack = createStackNavigator();
@@ -67,7 +69,7 @@ const HomeStackScreen = () => (
         fontWeight: '500',
       },
       headerStyle: {
-        backgroundColor: theme.background,
+        backgroundColor: theme.headerColor,
       },
       headerTintColor: theme.textColor,
     }
@@ -89,19 +91,23 @@ const HomeStackScreen = () => (
           name={ScreenKey.Setting}
           component={SettingScreen}
         />
+        <HomeStack.Screen
+          name={ScreenKey.Profile}
+          component={Profile}
+        />
       </HomeStack.Navigator>
     )
   }
   </ThemeContext.Consumer>
 );
 
-const DownloadStack = createStackNavigator();
-const DownloadStackScreen = () => (
+const FavoriteStack = createStackNavigator();
+const FavoriteStackScreen = () => (
   <ThemeContext.Consumer>
     {
       ({ theme }) => (
-        <DownloadStack.Navigator
-          initialRouteName={ScreenKey.Downloads}
+        <FavoriteStack.Navigator
+          initialRouteName={ScreenKey.Favorite}
           creenOptions={
           {
             headerTitleStyle: {
@@ -115,11 +121,11 @@ const DownloadStackScreen = () => (
           }
         }
         >
-          <DownloadStack.Screen
-            name={ScreenKey.Downloads}
-            component={Downloads}
+          <FavoriteStack.Screen
+            name={ScreenKey.Favorite}
+            component={Favorites}
           />
-        </DownloadStack.Navigator>
+        </FavoriteStack.Navigator>
 
       )
     }
@@ -195,10 +201,10 @@ const MainStackScreen = () => (
                 iconName = focused
                   ? 'ios-home'
                   : 'ios-home';
-              } else if (route.name === ScreenKey.Downloads) {
+              } else if (route.name === ScreenKey.Favorite) {
                 iconName = focused
-                  ? 'ios-download'
-                  : 'ios-download';
+                  ? 'ios-heart'
+                  : 'ios-heart';
               } else if (route.name === ScreenKey.Browse) {
                 iconName = focused
                   ? 'ios-apps'
@@ -222,7 +228,7 @@ const MainStackScreen = () => (
         >
           <Tab.Screen name={ScreenKey.Home} component={HomeStackScreen} />
           <Tab.Screen name={ScreenKey.Browse} component={BrowseStackScreen} />
-          <Tab.Screen name={ScreenKey.Downloads} component={DownloadStackScreen} />
+          <Tab.Screen name={ScreenKey.Favorite} component={FavoriteStackScreen} />
           <Tab.Screen name={ScreenKey.Search} component={SearchStackScreen} />
         </Tab.Navigator>
       )
@@ -245,18 +251,21 @@ export default function App() {
     <HomeProvider>
       <BrowseProvider>
         <AuthorProvider>
-          <ThemeContext.Provider value={{ theme, setTheme }}>
-            <NavigationContainer>
-              <Stack.Navigator screenOptions={{ headerShown: false }}>
-                {
-                  isLogined()
+          <FavoritesProvider>
+            <ThemeContext.Provider value={{ theme, setTheme }}>
+              <NavigationContainer>
+                <Stack.Navigator screenOptions={{ headerShown: false }}>
+                  {
+                  !isLogined()
                     ? <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
                     : null
                 }
-                <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </ThemeContext.Provider>
+                  <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </ThemeContext.Provider>
+
+          </FavoritesProvider>
         </AuthorProvider>
       </BrowseProvider>
     </HomeProvider>

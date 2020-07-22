@@ -17,7 +17,7 @@ const SectionTitle = ({ title, onChooseOption }) => (
               onPress={onChooseOption}
               style={styles.touch}
             >
-              <Text style={styles.titleButton}>See all &gt;</Text>
+              <Text style={styles.titleButton}>Thêm &gt;</Text>
             </TouchableOpacity>
           </View>
         )
