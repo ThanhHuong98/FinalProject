@@ -30,7 +30,7 @@ const Favorites = ({ navigation }) => {
                 </View>
               )
               : (
-                <ListFavorites />
+                <ListFavorites favorites={favoritesContext.state.allFavorites} />
               )
           }
         </View>
