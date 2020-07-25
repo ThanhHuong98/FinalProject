@@ -12,8 +12,8 @@ import SectionCourses from './SectionCourses/section-courses';
 import { ScreenKey, Dimension } from '../../../Constant/Constant';
 import { ThemeContext } from '../../../../App';
 import { HomeContext } from '../../providers/home';
-import IconProfile from '../../../../assets/home/user.svg'
-import IconSetting from '../../../../assets/home/settings.svg'
+import IconProfile from '../../../../assets/home/user.svg';
+import IconSetting from '../../../../assets/home/settings.svg';
 
 function Home({ navigation }) {
   const onSetting = () => {
@@ -26,22 +26,22 @@ function Home({ navigation }) {
     navigation.setOptions({
       headerRight: () => (
         <ThemeContext.Consumer>
-          {({theme}) => (
+          {({ theme }) => (
             <TouchableOpacity onPress={() => onProfile()}>
-              <IconProfile  width={25} height={25} marginHorizontal={15} style={{fill: theme.iconColor}}/>
+              <IconProfile width={25} height={25} marginHorizontal={15} style={{ fill: theme.iconColor }} />
             </TouchableOpacity>
           )}
         </ThemeContext.Consumer>
-       ),
-       headerLeft: () => (
+      ),
+      headerLeft: () => (
         <ThemeContext.Consumer>
-          {({theme}) => (
+          {({ theme }) => (
             <TouchableOpacity onPress={() => onSetting()}>
-              <IconSetting  width={25} height={25} marginHorizontal={15} style={{fill: theme.iconColor}}/>
+              <IconSetting width={25} height={25} marginHorizontal={15} style={{ fill: theme.iconColor }} />
             </TouchableOpacity>
           )}
         </ThemeContext.Consumer>
-       ),
+      ),
     });
   }, [navigation]);
 
@@ -116,9 +116,9 @@ const styles = StyleSheet.create({
     height: 100,
   },
   iconHeader: {
-      height: 20,
-      marginHorizontal: 15,
-      width: 20,
+    height: 20,
+    marginHorizontal: 15,
+    width: 20,
   }
 });
 

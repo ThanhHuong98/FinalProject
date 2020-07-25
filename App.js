@@ -109,18 +109,18 @@ const FavoriteStackScreen = () => (
       ({ theme }) => (
         <FavoriteStack.Navigator
           initialRouteName={ScreenKey.Favorite}
-          creenOptions={
-          {
-            headerTitleStyle: {
-              fontSize: 20,
-              fontWeight: '500',
-            },
-            headerStyle: {
-              backgroundColor: theme.background,
-            },
-            headerTintColor: theme.textColor,
-          }
-        }
+          screenOptions={
+{
+  headerTitleStyle: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  headerStyle: {
+    backgroundColor: theme.background,
+  },
+  headerTintColor: theme.textColor,
+}
+}
         >
           <FavoriteStack.Screen
             name={ScreenKey.Favorite}
@@ -181,12 +181,34 @@ function BrowseStackScreen() {
 const SearchStack = createStackNavigator();
 function SearchStackScreen() {
   return (
-    <SearchStack.Navigator>
-      <SearchStack.Screen
-        name={ScreenKey.Search}
-        component={Search}
-      />
-    </SearchStack.Navigator>
+    <ThemeContext>
+      {
+        ({ theme }) => (
+          <SearchStack.Navigator
+            initialRouteName={ScreenKey.Favorite}
+            screenOptions={
+{
+  headerTitleStyle: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  headerStyle: {
+    backgroundColor: theme.background,
+  },
+  headerTintColor: theme.textColor,
+}
+}
+          >
+            <SearchStack.Screen
+              name={ScreenKey.Search}
+              component={Search}
+            />
+          </SearchStack.Navigator>
+
+        )
+
+      }
+    </ThemeContext>
   );
 }
 const MainStackScreen = () => (

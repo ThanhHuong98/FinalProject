@@ -18,16 +18,16 @@ const Browse = ({ navigation }) => {
   // const onSetting = () => {
   //   navigation.navigate(ScreenKey.Setting);
   // };
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      // headerRight: () => (
-      //   <Button
-      //     onPress={() => onSetting()}
-      //     title="Setting"
-      //   />
-      // ),
-    });
-  }, [navigation]);
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     // headerRight: () => (
+  //     //   <Button
+  //     //     onPress={() => onSetting()}
+  //     //     title="Setting"
+  //     //   />
+  //     // ),
+  //   });
+  // }, [navigation]);
 
   const onNewRelease = (category, title) => {
     navigation.navigate(ScreenKey.AllCourses, { category, title });
