@@ -7,7 +7,7 @@ import { Colors, FontSize } from '../../../Constant/Constant';
 import { ThemeContext } from '../../../../App';
 import ListFavorites from './ListFavorite/list-favorite';
 import { FavoritesContext } from '../../providers/favorites';
-import NullImage from '../../../../assets/favorite/null.svg'
+import NullImage from '../../../../assets/favorite/null.svg';
 
 const Favorites = ({ navigation }) => {
   const favoritesContext = useContext(FavoritesContext);

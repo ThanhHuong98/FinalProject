@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import React, { } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,38 +8,62 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { ThemeContext } from '../../../App';
-import { Colors, FontSize, Dimension } from '../../Constant/Constant';
+import {
+  Colors, FontSize, Dimension, ScreenKey
+} from '../../Constant/Constant';
+import { ProfileContext } from '../providers/profile';
+import ButtonSolid from '../Common/SolidButton/solid-button';
+import { removeUserInfo } from '../../storage/storage';
 
 const Profile = ({
-  role, name, avatar, email
-}) => (
-  <ThemeContext.Consumer>
-    {
+  role, navigation,
+}) => {
+  const profileContext = useContext(ProfileContext);
+  useEffect(() => {
+    profileContext.requestProfile();
+  }, []);
+  const handleLogout = () => {
+    removeUserInfo();
+    // navigation.replace(ScreenKey.Login);
+  };
+  return (
+    <ThemeContext.Consumer>
+      {
             ({ theme }) => (
               <View style={{ ...styles.container, backgroundColor: theme.background }}>
                 <View style={styles.avatarContainer}>
                   <Image
                     style={styles.imageCricle}
-                    source={{ uri: avatar }}
+                    source={{ uri: profileContext.state.profile.avatar }}
                   />
-                  <Text style={{ ...styles.title, color: theme.textColor }}>{name}</Text>
+                  <Text style={{ ...styles.title, color: theme.textColor }}>{profileContext.state.profile.name}</Text>
                   <Text style={{ ...styles.text, color: theme.textColor }}>{role}</Text>
                 </View>
                 <View style={styles.extraInfo}>
                   <View style={styles.info}>
                     <Text style={{ ...styles.label, color: theme.textColor }}>Email: </Text>
-                    <Text style={{ ...styles.text, color: theme.textColor }}>{email}</Text>
+                    <Text style={{ ...styles.text, color: theme.textColor }}>{profileContext.state.profile.email}</Text>
                   </View>
                   <View style={styles.info}>
                     <Text style={{ ...styles.label, color: theme.textColor }}>Số điện thoại: </Text>
-                    <Text style={{ ...styles.text, color: theme.textColor }}>0969-283-845</Text>
+                    <Text style={{ ...styles.text, color: theme.textColor }}>{profileContext.state.profile.phone}</Text>
                   </View>
+                </View>
+                <View style={styles.solidBtn}>
+                  <ButtonSolid
+                    title="Log out"
+                    backgroundColor={Colors.blue}
+                    onChooseOption={() => handleLogout()}
+                  />
+
                 </View>
               </View>
             )
             }
-  </ThemeContext.Consumer>
-);
+    </ThemeContext.Consumer>
+
+  );
+};
 
 Profile.propTypes = {
   id: PropTypes.string,
@@ -99,6 +123,10 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 15,
+  },
+  solidBtn: {
+    marginTop: Dimension.marginLarge,
+    padding: Dimension.paddingMedium,
   },
 
 });

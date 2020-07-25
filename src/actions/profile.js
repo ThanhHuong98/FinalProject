@@ -1,22 +1,22 @@
 /* eslint-disable import/prefer-default-export */
 import api from '../api/api';
 import {
-  REQUEST_DATA,
-  REQUEST_FAILED,
-  RECEIVE_ALL_FAVORITES,
-} from '../Constant/actions/favorites';
+  REQUEST_PROFILE,
+  RECEIVE_PROFILE_SUCCESS,
+  RECEIVE_PROFILE_FAILED,
+} from '../Constant/actions/profile';
 import { getUserInfo } from '../storage/storage';
 
 const waitRequest = () => ({
-  type: REQUEST_DATA,
+  type: REQUEST_PROFILE,
 });
 
 const receiveData = (data) => ({
-  type: RECEIVE_ALL_FAVORITES,
+  type: RECEIVE_PROFILE_SUCCESS,
   data,
 });
 const requestFail = (error) => ({
-  type: REQUEST_FAILED,
+  type: RECEIVE_PROFILE_FAILED,
   error,
 });
 
@@ -28,16 +28,16 @@ const getToken = async () => {
   return null;
 };
 
-export const requestFavorites = (dispatch) => async (page) => {
+export const requestProfile = (dispatch) => async () => {
   dispatch(waitRequest());
-  const AuthStr1 = 'Bearer '.concat(await getToken());
-  api.get('/user/get-favorite-courses', { headers: { Authorization: AuthStr1 } })
+  const AuthStr = 'Bearer '.concat(await getToken());
+  api.get('/user/me', { headers: { Authorization: AuthStr } })
     .then((response) => {
-      console.log('Load Favorites: ', response.data.payload);
+      console.log('Load Profiles: ', response.data.payload);
       dispatch(receiveData(response.data.payload));
     })
     .catch((error) => {
-      // console.log('Load Favorites: ', error);
+      console.log('Load Favorites: ', error);
       requestFail(error);
     });
 };

@@ -24,6 +24,7 @@ import SettingScreen from './src/components/Setting/setting-screen';
 import Profile from './src/components/Profile/profile';
 import DetailCategory from './src/components/Main/browse/Categories/DetailCategory/detail-category';
 import { AuthenProvider } from './src/components/providers/authen';
+import { ProfileProvider } from './src/components/providers/profile';
 import { HomeProvider } from './src/components/providers/home';
 import { BrowseProvider } from './src/components/providers/browse';
 import { AuthorProvider } from './src/components/providers/author';
@@ -248,27 +249,32 @@ export default function App() {
   };
 
   return (
-    <HomeProvider>
-      <BrowseProvider>
-        <AuthorProvider>
-          <FavoritesProvider>
-            <ThemeContext.Provider value={{ theme, setTheme }}>
-              <NavigationContainer>
-                <Stack.Navigator screenOptions={{ headerShown: false }}>
-                  {
+    <AuthenProvider>
+      <HomeProvider>
+        <BrowseProvider>
+          <AuthorProvider>
+            <FavoritesProvider>
+              <ProfileProvider>
+                <ThemeContext.Provider value={{ theme, setTheme }}>
+                  <NavigationContainer>
+                    <Stack.Navigator screenOptions={{ headerShown: false }}>
+                      {
                   !isLogined()
                     ? <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
                     : null
                 }
-                  <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
-                </Stack.Navigator>
-              </NavigationContainer>
-            </ThemeContext.Provider>
+                      <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
+                    </Stack.Navigator>
+                  </NavigationContainer>
+                </ThemeContext.Provider>
 
-          </FavoritesProvider>
-        </AuthorProvider>
-      </BrowseProvider>
-    </HomeProvider>
+              </ProfileProvider>
+            </FavoritesProvider>
+          </AuthorProvider>
+        </BrowseProvider>
+      </HomeProvider>
+
+    </AuthenProvider>
   );
 }
 registerRootComponent(App);
