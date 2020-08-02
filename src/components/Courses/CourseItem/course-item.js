@@ -48,7 +48,7 @@ const CourseItem = ({
               }
               </Text>
               <Text style={{ ...styles.subtitile, marginTop: 3 }}>{ `${numOfVideos} (videos) . ${formatMonthYearType(date)} . ${duration}h`}</Text>
-              <Star score={rating} style={styles.starStyle} />
+              <Star score={rating > 5 ? 5 : rating} style={styles.starStyle} />
               <Text style={{ ...styles.subtitile, marginTop: 3 }}>
                 {
                   price === 0
@@ -123,4 +123,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
 });
+CourseItem.defaultProps = {
+  rating: 0,
+};
 export default CourseItem;

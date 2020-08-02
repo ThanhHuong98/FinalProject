@@ -56,7 +56,7 @@ function Home({ navigation }) {
   useEffect(() => {
     homeContext.getDataHomeScreen();
   }, []);
-
+  console.log("Data Home: ", homeContext.state.homeScreen.topSell);
   return (
     <ThemeContext.Consumer>
       { ({ theme }) => (

@@ -47,7 +47,7 @@ const SectionCoursesItem = ({
               }
               </Text>
               <Text style={{ ...styles.subtitile, marginTop: 2 }}>{ `${numOfVideos} (videos) . ${formatMonthYearType(date)} . ${formatHourType1(duration)}`}</Text>
-              <Star score={rating} style={styles.starStyle} />
+              <Star score={rating > 5 ? 5 : rating} style={styles.starStyle} />
               <Text style={{ ...styles.subtitile, marginTop: 2 }}>
                 {
                   price === 0
@@ -109,4 +109,8 @@ SectionCoursesItem.propTypes = {
   price: PropTypes.number,
   onClickItem: PropTypes.func,
 };
+SectionCoursesItem.defaultProps = {
+  rating: 0,
+};
+
 export default SectionCoursesItem;
