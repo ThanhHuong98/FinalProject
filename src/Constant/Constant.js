@@ -45,8 +45,10 @@ export const Dimension = {
 // ScreenKey define for navigation
 export const ScreenKey = {
   Authen: 'Authen',
-  Login: 'Sign in',
-  Register: 'Register',
+  Login: 'Đăng nhập',
+  Register: 'Đăng ký',
+  ForgotPassword: 'Quên mật khẩu',
+  ActiveEmail: 'Kích hoạt tài khoản',
   SplashScreen: 'Splash Screen',
   Profile: 'Profile',
 

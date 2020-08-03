@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import AnimatedLoader from 'react-native-animated-loader';
@@ -56,7 +55,6 @@ function Home({ navigation }) {
   useEffect(() => {
     homeContext.getDataHomeScreen();
   }, []);
-  console.log("Data Home: ", homeContext.state.homeScreen.topSell);
   return (
     <ThemeContext.Consumer>
       { ({ theme }) => (

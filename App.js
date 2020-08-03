@@ -12,6 +12,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Colors, ScreenKey, themes } from './src/Constant/Constant';
 import Login from './src/components/Authentications/login/login';
 import Register from './src/components/Authentications/Register/register';
+import ForgotPassword from './src/components/Authentications/ForgotPassword/forgot-password';
+import ActiveEmail from './src/components/Authentications/ActiveEmail/active-email';
 import SplashScreen from './src/components/SplashScreen/splash-screen';
 import Browse from './src/components/Main/browse/browse';
 import Home from './src/components/Main/home/home';
@@ -29,6 +31,7 @@ import { HomeProvider } from './src/components/providers/home';
 import { BrowseProvider } from './src/components/providers/browse';
 import { AuthorProvider } from './src/components/providers/author';
 import { FavoritesProvider } from './src/components/providers/favorites';
+import { SearchProvider } from './src/components/providers/search';
 import { getUserInfo } from './src/storage/storage';
 
 const Stack = createStackNavigator();
@@ -38,10 +41,24 @@ const AuthenStack = createStackNavigator();
 function AuthenStackScreen() {
   return (
     <AuthenProvider>
-      <AuthenStack.Navigator screenOptions={{ headerShown: false }}>
+      <AuthenStack.Navigator
+        screenOptions={
+        {
+          headerTitleStyle: {
+            fontSize: 20,
+            fontWeight: '500',
+          },
+          headerStyle: {
+            backgroundColor: themes.dark.background,
+          },
+          headerTintColor: themes.dark.textColor,
+        }
+      }
+      >
         <AuthenStack.Screen
           name={ScreenKey.SplashScreen}
           component={SplashScreen}
+          options={{ title: '' }}
         />
         <AuthenStack.Screen
           name={ScreenKey.Login}
@@ -50,6 +67,14 @@ function AuthenStackScreen() {
         <AuthenStack.Screen
           name={ScreenKey.Register}
           component={Register}
+        />
+        <AuthenStack.Screen
+          name={ScreenKey.ForgotPassword}
+          component={ForgotPassword}
+        />
+        <AuthenStack.Screen
+          name={ScreenKey.ActiveEmail}
+          component={ActiveEmail}
         />
       </AuthenStack.Navigator>
     </AuthenProvider>
@@ -181,8 +206,9 @@ function BrowseStackScreen() {
 const SearchStack = createStackNavigator();
 function SearchStackScreen() {
   return (
-    <ThemeContext>
-      {
+    <SearchProvider>
+      <ThemeContext>
+        {
         ({ theme }) => (
           <SearchStack.Navigator
             initialRouteName={ScreenKey.Favorite}
@@ -204,11 +230,10 @@ function SearchStackScreen() {
               component={Search}
             />
           </SearchStack.Navigator>
-
         )
-
       }
-    </ThemeContext>
+      </ThemeContext>
+    </SearchProvider>
   );
 }
 const MainStackScreen = () => (
@@ -281,7 +306,7 @@ export default function App() {
                   <NavigationContainer>
                     <Stack.Navigator screenOptions={{ headerShown: false }}>
                       {
-                  !isLogined()
+                  isLogined()
                     ? <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
                     : null
                 }
@@ -289,7 +314,6 @@ export default function App() {
                     </Stack.Navigator>
                   </NavigationContainer>
                 </ThemeContext.Provider>
-
               </ProfileProvider>
             </FavoritesProvider>
           </AuthorProvider>

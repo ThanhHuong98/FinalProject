@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import api from '../api/api';
-import { storeUserInfo, getUserInfo } from '../storage/storage';
+import { storeUserInfo } from '../storage/storage';
 import {
   REQUEST_LOGIN,
   LOGIN_SUCCESS,
@@ -8,11 +8,14 @@ import {
 
   REQUEST_REGISTER,
   REGISTER_RESPONE,
+  CANCEL_REGISTER,
+  CANCEL_LOGIN,
 
-  // REGISTER_FAILED,
+  REQUEST_RESET_PASS,
+  RESPONSE_RESET_PASS,
 
 } from '../Constant/actions/authen';
-
+// Login
 const waitLogin = () => ({
   type: REQUEST_LOGIN,
 });
@@ -29,8 +32,8 @@ export const requestLogin = (dispatch) => (email, password) => {
   dispatch(waitLogin());
 
   const data = {
-    email: 'Nglethimylinh@gmail.com',
-    password: '123456789'
+    email,
+    password
   };
 
   api.post('/user/login', data)
@@ -41,12 +44,19 @@ export const requestLogin = (dispatch) => (email, password) => {
       }, 1500);
     })
     .catch((error) => {
-      setInterval(() => {
-        dispatch(loginFailed());
-      }, 1500);
+      dispatch(loginFailed());
     });
 };
 
+const dismissLogin = () => ({
+  type: CANCEL_LOGIN,
+});
+
+export const cancelLogin = (dispatch) => () => {
+  dispatch(dismissLogin());
+};
+
+// Register
 const waitRegister = () => ({
   type: REQUEST_REGISTER,
 });
@@ -56,10 +66,16 @@ const responseRegister = (data) => ({
   data,
 });
 
-// const registerFailed = (data) => ({
-//   tyoe: REGISTER_FAILED,
-//   data,
-// });
+const dismissRegister = (data) => ({
+  type: CANCEL_REGISTER,
+  data,
+});
+
+export const cancelRegister = (dispatch) => () => {
+  const data = { message: '' };
+  dispatch(dismissRegister(data));
+};
+
 export const requestRegister = (dispatch) => (registerInfo) => {
   dispatch(waitRegister());
   const data = {
@@ -70,16 +86,40 @@ export const requestRegister = (dispatch) => (registerInfo) => {
   };
   api.post('/user/register', data)
     .then((response) => {
-      console.log("Message Register: ", response.data);
-      // setInterval(() => {
-      //   dispatch(responseRegister(response.data));
-      // }, 1500);
       dispatch(responseRegister(response.data));
     })
     .catch((error) => {
-      console.log(error);
       const mdata = { message: 'FAILED' };
-      console.log("Message Register: ", mdata);
       dispatch(responseRegister(mdata));
+    });
+};
+
+// Reset password by Email
+const waitReset = () => ({
+  type: REQUEST_RESET_PASS,
+});
+const receiveReset = (status) => ({
+  type: RESPONSE_RESET_PASS,
+  status,
+});
+
+export const cancelReset = (dispatch) => () => {
+  dispatch(receiveReset(0));
+};
+export const resetPassByEmail = (dispatch) => (email) => {
+  dispatch(waitReset());
+  const data = {
+    email
+  };
+  api.post('/user/forget-pass/send-email', data)
+    .then((response) => {
+      console.log('Send email reset pass: ', response.status);
+      if (response.status === 200) {
+        dispatch(receiveReset(1));
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(receiveReset(2));
     });
 };

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { getUserInfo } from '../storage/storage';
 
 const instance = axios.create({
   baseURL: 'https://api.itedu.me',

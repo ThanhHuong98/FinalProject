@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import {
@@ -9,7 +10,6 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Star from 'react-native-star-view';
-// eslint-disable-next-line import/no-cycle
 import { ThemeContext } from '../../../../../App';
 import { formatMonthYearType, formatHourType1 } from '../../../../utils/DateTimeUtils';
 import { Colors } from '../../../../Constant/Constant';

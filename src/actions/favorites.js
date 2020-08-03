@@ -33,7 +33,6 @@ export const requestFavorites = (dispatch) => async (page) => {
   const AuthStr1 = 'Bearer '.concat(await getToken());
   api.get('/user/get-favorite-courses', { headers: { Authorization: AuthStr1 } })
     .then((response) => {
-      console.log('Load Favorites: ', response.data.payload);
       dispatch(receiveData(response.data.payload));
     })
     .catch((error) => {

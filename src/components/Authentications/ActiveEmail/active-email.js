@@ -18,12 +18,12 @@ import {
 import { AuthenContext } from '../../providers/authen';
 import { isCheckAvailableEmail } from '../../../core/services/checkAuthen';
 
-const ForgotPassword = ({ navigation }) => {
+const ActiveEmail = ({ navigation }) => {
   const [msg, setMsg] = useState('');
   const authenContext = useContext(AuthenContext);
 
   const onBack = () => {
-    navigation.navigate(ScreenKey.Login);
+    navigation.navigate(ScreenKey.SplashScreen);
     authenContext.cancelReset();
   };
   const onLogin = () => {
@@ -62,9 +62,9 @@ const ForgotPassword = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.primaryDisplay}>
-        <Text style={styles.title}>Quên Mật Khẩu</Text>
+        <Text style={styles.title}>Kích Hoạt Tài Khoản</Text>
         <Text style={styles.instruction}>
-          Nhập Email đăng ký của bạn, và chúng tôi sẽ gửi link kích hoạt lại mật khẩu cho bạn qua email.
+          Bạn vui lòng nhập Email đăng ký tài khoản, chúng tôi sẽ kích hoạt tài khoản cho bạn.
         </Text>
         {
         msg
@@ -87,7 +87,7 @@ const ForgotPassword = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => onSendMail()}
           >
-            <Text style={styles.textPrimary}>Gửi email</Text>
+            <Text style={styles.textPrimary}>Kích hoạt</Text>
           </TouchableOpacity>
         </View>
         {
@@ -194,4 +194,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForgotPassword;
+export default ActiveEmail;

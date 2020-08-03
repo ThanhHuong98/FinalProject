@@ -1,6 +1,7 @@
 import {
   REQUEST_LOGIN, LOGIN_SUCCESS, LOGIN_FAILED,
-  REQUEST_REGISTER, REGISTER_RESPONE
+  REQUEST_REGISTER, REGISTER_RESPONE, CANCEL_REGISTER, CANCEL_LOGIN,
+  RESPONSE_RESET_PASS, REQUEST_RESET_PASS,
 } from '../Constant/actions/authen';
 
 const AuthenReducer = (state, action) => {
@@ -9,6 +10,7 @@ const AuthenReducer = (state, action) => {
       return {
         ...state,
         isLoading: true,
+        loginStatus: 0,
       };
     case LOGIN_SUCCESS:
       return {
@@ -22,6 +24,12 @@ const AuthenReducer = (state, action) => {
         isLoading: false,
         loginStatus: 2,
       };
+    case CANCEL_LOGIN:
+      return {
+        ...state,
+        isLoading: false,
+        loginStatus: 0,
+      };
     case REQUEST_REGISTER:
       return {
         ...state,
@@ -32,6 +40,24 @@ const AuthenReducer = (state, action) => {
         ...state,
         isLoading: false,
         registerRespone: action.data,
+      };
+    case CANCEL_REGISTER:
+      return {
+        ...state,
+        isLoading: false,
+        registerRespone: action.data,
+      };
+    case REQUEST_RESET_PASS:
+      return {
+        ...state,
+        isLoading: true,
+        resetStatus: 0,
+      };
+    case RESPONSE_RESET_PASS:
+      return {
+        ...state,
+        isLoading: false,
+        resetStatus: action.status,
       };
     default:
       return state;

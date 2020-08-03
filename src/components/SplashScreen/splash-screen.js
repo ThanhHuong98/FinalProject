@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import React from 'react';
 import {
   StyleSheet,
@@ -19,34 +20,33 @@ const SplashScreen = ({ navigation }) => {
   const onSubscribe = () => {
     navigation.navigate(ScreenKey.Register);
   };
-  const onExplore = () => {
-    navigation.navigate(ScreenKey.Main);
+  const onActive = () => {
+    navigation.navigate(ScreenKey.ActiveEmail);
   };
 
   return (
     <View style={styles.container}>
       <Image
         style={styles.bgSplash}
-        // eslint-disable-next-line global-require
         source={require('../../../assets/bg-splash.png')}
       />
       <View style={{ paddingTop: 10 }}>
         <ButtonSolid
-          title="Sign in"
+          title="Đăng nhập"
           backgroundColor={Colors.blue}
           onChooseOption={onLogin}
         />
       </View>
       <View style={{ paddingTop: 10 }}>
         <OutLineButton
-          title="Subscribe to MyApp"
+          title="Đăng ký hệ thống"
           onChooseOption={onSubscribe}
         />
       </View>
       <View style={{ paddingTop: 10 }}>
         <OutLineButton
-          title="Explore without a Subscribe"
-          onChooseOption={onExplore}
+          title="Kích hoạt tài khoản"
+          onChooseOption={onActive}
         />
       </View>
     </View>
@@ -58,7 +58,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: Colors.backgroundColor,
     justifyContent: 'center',
-    padding: Dimension.paddingMedium,
+    paddingBottom: Dimension.paddingMedium,
+    paddingLeft: Dimension.paddingMedium,
+    paddingRight: Dimension.paddingMedium,
   },
   bgSplash: {
     width: '100%',
