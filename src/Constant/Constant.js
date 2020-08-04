@@ -60,6 +60,7 @@ export const ScreenKey = {
 
   Favorite: 'Yêu thích',
   Search: 'Tìm kiếm',
+  Download: 'Tải xuống',
 
   Browse: 'Browse',
   NewRelease: 'Khóa học Mới',
@@ -69,7 +70,8 @@ export const ScreenKey = {
   DetailPopularSkill: 'Detail Popular Skill',
   DetailCategory: 'Chi tiết danh mục',
 
-  Setting: 'Cài đặt'
+  Setting: 'Cài đặt',
+  SetTheme: 'Chế độ xem'
 };
 // Theme define
 export const themes = {

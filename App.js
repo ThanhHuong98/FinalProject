@@ -20,9 +20,11 @@ import Home from './src/components/Main/home/home';
 import AllCourses from './src/components/Courses/allCourses';
 import Search from './src/components/Main/search/Search';
 import Favorites from './src/components/Main/favorites/favorites';
+import Download from './src/components/Main/download/download';
 import DetailCourse from './src/components/DetailCourse/detail-course';
 import DetailAuthor from './src/components/Main/browse/Author/DetailAuthor/detail-author';
 import SettingScreen from './src/components/Setting/setting-screen';
+import SetTheme from './src/components/Setting/thems';
 import Profile from './src/components/Profile/profile';
 import DetailCategory from './src/components/Main/browse/Categories/DetailCategory/detail-category';
 import { AuthenProvider } from './src/components/providers/authen';
@@ -118,6 +120,10 @@ const HomeStackScreen = () => (
           component={SettingScreen}
         />
         <HomeStack.Screen
+          name={ScreenKey.SetTheme}
+          component={SetTheme}
+        />
+        <HomeStack.Screen
           name={ScreenKey.Profile}
           component={Profile}
         />
@@ -126,7 +132,6 @@ const HomeStackScreen = () => (
   }
   </ThemeContext.Consumer>
 );
-
 const FavoriteStack = createStackNavigator();
 const FavoriteStackScreen = () => (
   <ThemeContext.Consumer>
@@ -152,6 +157,36 @@ const FavoriteStackScreen = () => (
             component={Favorites}
           />
         </FavoriteStack.Navigator>
+
+      )
+    }
+  </ThemeContext.Consumer>
+);
+const DownloadStack = createStackNavigator();
+const DownloadStackScreen = () => (
+  <ThemeContext.Consumer>
+    {
+      ({ theme }) => (
+        <DownloadStack.Navigator
+          initialRouteName={ScreenKey.Download}
+          screenOptions={
+{
+  headerTitleStyle: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  headerStyle: {
+    backgroundColor: theme.background,
+  },
+  headerTintColor: theme.textColor,
+}
+}
+        >
+          <DownloadStack.Screen
+            name={ScreenKey.Download}
+            component={Download}
+          />
+        </DownloadStack.Navigator>
 
       )
     }
@@ -253,14 +288,18 @@ const MainStackScreen = () => (
                 iconName = focused
                   ? 'ios-heart'
                   : 'ios-heart';
+              } else if (route.name === ScreenKey.Download) {
+                iconName = focused
+                  ? 'ios-download'
+                  : 'ios-download';
               } else if (route.name === ScreenKey.Browse) {
                 iconName = focused
                   ? 'ios-apps'
                   : 'ios-apps';
               } else if (route.name === ScreenKey.Search) {
                 iconName = focused
-                  ? 'ios-search'
-                  : 'ios-search';
+                  ? 'ios-arrow'
+                  : 'ios-arrow';
               }
               return <Ionicons name={iconName} size={size} color={color} />;
             },
@@ -277,6 +316,7 @@ const MainStackScreen = () => (
           <Tab.Screen name={ScreenKey.Home} component={HomeStackScreen} />
           <Tab.Screen name={ScreenKey.Browse} component={BrowseStackScreen} />
           <Tab.Screen name={ScreenKey.Favorite} component={FavoriteStackScreen} />
+          <Tab.Screen name={ScreenKey.Download} component={DownloadStackScreen} />
           <Tab.Screen name={ScreenKey.Search} component={SearchStackScreen} />
         </Tab.Navigator>
       )

@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xxsmall,
   },
   subtitile: {
-    color: Colors.greyWhite,
+    color: '#9e9e9e',
     fontSize: FontSize.xsmall,
   },
   starRating: {

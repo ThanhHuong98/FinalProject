@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-cycle */
 import React, { } from 'react';
 import {
   StyleSheet,
@@ -5,47 +7,63 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import { themes } from '../../Constant/Constant';
 import Separator from '../Common/Separator/separator-bottom';
-// eslint-disable-next-line import/no-cycle
 import { ThemeContext } from '../../../App';
+import ArrowDark from '../../../assets/setting/next-dark.svg';
+import ArrowLight from '../../../assets/setting/next-light.svg';
 
-const Setting = () => {
-  const onLight = (theme, setTheme) => {
-    if (theme === themes.dark) {
-      setTheme(themes.light);
-    }
-  };
+import SunLight from '../../../assets/setting/sun-light.svg';
+import SunDark from '../../../assets/setting/sun-dark.svg';
 
-  const onDark = (theme, setTheme) => {
-    if (theme === themes.light) {
-      setTheme(themes.dark);
-    }
+import GlobalLight from '../../../assets/setting/global-light.svg';
+import GlobalDark from '../../../assets/setting/global-dark.svg';
+
+import { ScreenKey, themes } from '../../Constant/Constant';
+
+const Setting = ({ navigation }) => {
+  const settingThemes = () => {
+    navigation.navigate(ScreenKey.SetTheme);
   };
 
   return (
     <ThemeContext.Consumer>
       {
-        ({ theme, setTheme }) => {
-          console.log("Test Theme on Setting Screen: ", theme.background);
-          return (
-            <View style={{ ...styles.container, backgroundColor: theme.background }}>
-              <TouchableOpacity onPress={() => onLight(theme, setTheme)}>
-                <Text style={{ ...styles.text, color: theme.textColor }}>Light</Text>
-                <Separator />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => onDark(theme, setTheme)}>
-                <Text style={{ ...styles.text, color: theme.textColor }}>Dark</Text>
-                <Separator />
-              </TouchableOpacity>
-            </View>
-          );
-        }
+        ({ theme }) => (
+          <View style={{ ...styles.container, backgroundColor: theme.background }}>
+            <TouchableOpacity style={styles.itemOption} onPress={() => settingThemes()}>
+              {
+                theme === themes.light
+                  ? (<SunDark width={15} height={18} />)
+                  : (<SunLight width={15} height={18} />)
+              }
+              <Text style={{ ...styles.text, color: theme.textColor }}>Chế độ xem</Text>
+              {
+                  theme === themes.light
+                    ? (<ArrowDark width={15} height={18} />)
+                    : (<ArrowLight width={15} height={18} />)
+                }
+            </TouchableOpacity>
+            <Separator />
+            <TouchableOpacity style={styles.itemOption}>
+              {
+                theme === themes.light
+                  ? (<GlobalDark width={15} height={18} />)
+                  : (<GlobalLight width={15} height={18} />)
+              }
+              <Text style={{ ...styles.text, color: theme.textColor }}>Ngôn ngữ</Text>
+              {
+                  theme === themes.light
+                    ? (<ArrowDark width={15} height={18} />)
+                    : (<ArrowLight width={15} height={18} />)
+                }
+            </TouchableOpacity>
+            <Separator />
+          </View>
+        )
         }
     </ThemeContext.Consumer>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -54,8 +72,15 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 15,
+    width: '90%',
+    marginLeft: 7,
+  },
+  itemOption: {
+    flexDirection: 'row',
     padding: 10,
+    width: '100%',
   }
+
 
 });
 
