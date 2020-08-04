@@ -49,13 +49,17 @@ const CourseItem = ({
               </Text>
               <Text style={{ ...styles.subtitile, marginTop: 3 }}>{ `${numOfVideos} (videos) . ${formatMonthYearType(date)} . ${duration}h`}</Text>
               <Star score={rating > 5 ? 5 : rating} style={styles.starStyle} />
-              <Text style={{ ...styles.subtitile, marginTop: 3 }}>
-                {
-                  price === 0
-                    ? '(Miễn phí)'
-                    : `(${price} VNĐ)`
-                }
-              </Text>
+              {
+                price === 0
+                  ? (<Text style={{ ...styles.subtitile, marginTop: 3 }}>Miễn phí</Text>)
+                  : (
+                    <Text style={{ ...styles.textPrice, marginTop: 3 }}>
+                      {price}
+                      {' '}
+                      VNĐ
+                    </Text>
+                  )
+              }
             </View>
             <View style={styles.popupmenu}>
               <PopupMenu actions={['Edit', 'Remove']} onPress={() => onShowMenu()} />
@@ -108,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xxsmall,
   },
   subtitile: {
-    color: Colors.greyWhite,
+    color: '#9e9e9e',
     fontSize: FontSize.xsmall,
   },
   starRating: {
@@ -121,6 +125,10 @@ const styles = StyleSheet.create({
     width: 100,
     height: 20,
     marginTop: 3,
+  },
+  textPrice: {
+    color: '#0084bc',
+    fontSize: 11,
   },
 });
 CourseItem.defaultProps = {

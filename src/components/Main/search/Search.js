@@ -13,7 +13,7 @@ import { Colors } from '../../../Constant/Constant';
 import { ThemeContext } from '../../../../App';
 import { SearchContext } from '../../providers/search';
 import ClearIcon from '../../../../assets/search/clear-icon.png';
-
+import ListCourses from '../../Courses/ListCourses/list-courses';
 const verticalSeparator = () => (
   <View style={styles.verticalSeparator} />
 );
@@ -79,6 +79,7 @@ const SearchBar = ({
   );
 };
 const Search = ({ navigation }) => {
+
   const searchContext = useContext(SearchContext);
   const [searchKey, setSearchKey] = useState('');
   const [isSearching, setIsSearching] = useState(false);
@@ -161,10 +162,10 @@ const Search = ({ navigation }) => {
               )
               : (
                 <View style={{ marginTop: 20 }}>
-                  {/* <ListCourses
-                    title=""
+                  <ListCourses
+                    title="Kết quả tìm kiếm"
                     courses={searchContext.state.searchResult}
-                  /> */}
+                  />
                 </View>
               )
           }

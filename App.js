@@ -306,7 +306,7 @@ export default function App() {
                   <NavigationContainer>
                     <Stack.Navigator screenOptions={{ headerShown: false }}>
                       {
-                  isLogined()
+                  !isLogined()
                     ? <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
                     : null
                 }

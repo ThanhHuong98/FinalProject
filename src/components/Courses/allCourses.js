@@ -5,13 +5,16 @@ import React, { useContext, useEffect } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
+  View,
+  Text,
 } from 'react-native';
 import AnimatedLoader from 'react-native-animated-loader';
 import PropTypes from 'prop-types';
 import { ThemeContext } from '../../../App';
 import { HomeContext } from '../providers/home';
-import { ScreenKey } from '../../Constant/Constant';
+import { ScreenKey, Colors, FontSize } from '../../Constant/Constant';
 import ListCourses from './ListCourses/list-courses';
+import NullImage from '../../../assets/favorite/null.svg';
 
 const AllCourses = ({ route, navigation }) => {
   const selectedCategory = route.params.category;
@@ -30,11 +33,24 @@ const AllCourses = ({ route, navigation }) => {
       {
         ({ theme }) => (
           <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
-            <ListCourses
-              title={selectedTitle}
-              courses={homeContext.state.allCourse}
-              onItemClick={(item) => onItemClick(item)}
-            />
+            {
+              homeContext.state.allCourse.length === 0
+                ? (
+                  <View style={styles.center}>
+                    <NullImage width={50} height={50} style={{ fill: '#bdbdbd' }} />
+                    <Text style={styles.decription}>
+                      Khoá học trống
+                    </Text>
+                  </View>
+                )
+                : (
+                  <ListCourses
+                    title={selectedTitle}
+                    courses={homeContext.state.allCourse}
+                    onItemClick={(item) => onItemClick(item)}
+                  />
+                )
+            }
           </SafeAreaView>
         )
       }
@@ -56,6 +72,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1
+  },
+  decription: {
+    color: Colors.greyWhite,
+    fontSize: FontSize.large,
+    marginTop: 10,
+  }
 });
 
 

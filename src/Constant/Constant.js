@@ -49,32 +49,32 @@ export const ScreenKey = {
   Register: 'Đăng ký',
   ForgotPassword: 'Quên mật khẩu',
   ActiveEmail: 'Kích hoạt tài khoản',
-  SplashScreen: 'Splash Screen',
-  Profile: 'Profile',
+  SplashScreen: 'Chào mừng',
+  Profile: 'Quản ký tài khoản',
 
   Main: 'Main',
-  Home: 'Home',
-  ListCourse: 'List Courses',
-  AllCourses: 'All Courses',
-  DetailCourse: 'Detail Course',
+  Home: 'Trang chủ',
+  ListCourse: 'Danh sách khoá học',
+  AllCourses: 'Danh sách khoá học',
+  DetailCourse: 'Chi tiết khoá học',
 
-  Favorite: 'Favorites',
-  Search: 'Search',
+  Favorite: 'Yêu thích',
+  Search: 'Tìm kiếm',
 
   Browse: 'Browse',
-  NewRelease: 'New Release',
-  Recommened: 'Recommened for you',
+  NewRelease: 'Khóa học Mới',
+  Recommened: 'Khoá học dành cho bạn',
 
-  DetailAuthor: 'Detail Author',
+  DetailAuthor: 'Thông tin tác giả',
   DetailPopularSkill: 'Detail Popular Skill',
-  DetailCategory: 'Detail Category',
+  DetailCategory: 'Chi tiết danh mục',
 
-  Setting: 'Setting'
+  Setting: 'Cài đặt'
 };
 // Theme define
 export const themes = {
   light: {
-    background: '#f5f5f5',
+    background: '#ffffff',
     textColor: '#000a12',
     subTextColor: '#bdbdbd',
     itemColor: '#e0e0e0',
@@ -84,13 +84,13 @@ export const themes = {
     iconColor: '#000'
   },
   dark: {
-    background: '#000a12',
+    background: '#121212',
     textColor: '#FFFF',
     subTextColor: '#aeaeae',
     itemColor: '#2c3038',
     detailBlockColor: '#404040',
     textHeader: 'blue',
-    headerColor: '#102027',
+    headerColor: '#121212',
     iconColor: '#FFF'
   }
 };

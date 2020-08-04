@@ -22,14 +22,13 @@ export const performSearch = (dispatch) => async (searchKey, page) => {
       limit: 10,
       page,
     };
-    console.log('data', data);
     const response = await api.post('/course/search', data);
-    if (response) {
-      console.log('search: ', response);
-      dispatch(receiveResult(response.payload.rows));
-    }
+    const result = response.data;
+    if (result.message === 'OK') {
+      dispatch(receiveResult(result.payload.rows));
+    } else dispatch(requestFailed());
   } catch (error) {
     console.log(error);
-    dispatch(requestFailed());
+    dispatch(requestFailed);
   }
 };

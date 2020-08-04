@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import {
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Star from 'react-native-star-view';
+// eslint-disable-next-line import/no-cycle
 import { ThemeContext } from '../../../../../App';
 import { formatMonthYearType, formatHourType1 } from '../../../../utils/DateTimeUtils';
 import { Colors } from '../../../../Constant/Constant';
@@ -48,13 +48,17 @@ const SectionCoursesItem = ({
               </Text>
               <Text style={{ ...styles.subtitile, marginTop: 2 }}>{ `${numOfVideos} (videos) . ${formatMonthYearType(date)} . ${formatHourType1(duration)}`}</Text>
               <Star score={rating > 5 ? 5 : rating} style={styles.starStyle} />
-              <Text style={{ ...styles.subtitile, marginTop: 2 }}>
-                {
-                  price === 0
-                    ? '(Miễn phí)'
-                    : `(${price} VNĐ)`
-                }
-              </Text>
+              {
+                price === 0
+                  ? (<Text style={{ ...styles.subtitile, marginTop: 2 }}>Miễn phí</Text>)
+                  : (
+                    <Text style={{ ...styles.textPrice, marginTop: 2 }}>
+                      {price}
+                      {' '}
+                      VNĐ
+                    </Text>
+                  )
+              }
             </View>
           </TouchableOpacity>
         )
@@ -85,6 +89,10 @@ const styles = StyleSheet.create({
   },
   subtitile: {
     color: '#9e9e9e',
+    fontSize: 11,
+  },
+  textPrice: {
+    color: '#0084bc',
     fontSize: 11,
   },
   starRating: {

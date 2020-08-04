@@ -38,8 +38,9 @@ const styles = StyleSheet.create({
   },
   touch: {
     backgroundColor: Colors.secondaryColor,
+    opacity: 0.7,
     borderRadius: 25,
-    width: '18%',
+    width: '16%'
   },
   title: {
     color: Colors.white,
