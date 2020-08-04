@@ -21,7 +21,7 @@ const SplashScreen = ({ navigation }) => {
     navigation.navigate(ScreenKey.Register);
   };
   const onActive = () => {
-    navigation.navigate(ScreenKey.ActiveEmail);
+    navigation.navigate(ScreenKey.ActiveEmail, { intenType: 0 });
   };
 
   return (

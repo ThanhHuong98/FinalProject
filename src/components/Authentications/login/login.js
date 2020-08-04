@@ -60,6 +60,7 @@ const Login = ({ navigation }) => {
 
   const onBack = () => {
     navigation.navigate(ScreenKey.SplashScreen);
+    authenContext.cancelLogin();
   };
 
   React.useLayoutEffect(() => {

@@ -18,17 +18,24 @@ import {
 import { AuthenContext } from '../../providers/authen';
 import { isCheckAvailableEmail } from '../../../core/services/checkAuthen';
 
-const ActiveEmail = ({ navigation }) => {
+const ActiveEmail = ({ route, navigation }) => {
+  const intentType = route.params.intenType;
+
   const [msg, setMsg] = useState('');
   const authenContext = useContext(AuthenContext);
 
   const onBack = () => {
-    navigation.navigate(ScreenKey.SplashScreen);
-    authenContext.cancelReset();
+    if (intentType === 1) {
+      navigation.navigate(ScreenKey.Register);
+      authenContext.cancelActive();
+    } else {
+      navigation.navigate(ScreenKey.SplashScreen);
+      authenContext.cancelActive();
+    }
   };
   const onLogin = () => {
     navigation.navigate(ScreenKey.Login);
-    authenContext.cancelReset();
+    authenContext.cancelActive();
   };
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -45,18 +52,20 @@ const ActiveEmail = ({ navigation }) => {
   }, [navigation]);
   const [email, setTextEmail] = useState('');
   const onSendMail = () => {
-    if (!isCheckAvailableEmail(email)) {
+    if (email === '') {
+      setMsg('Email không được để trống.');
+    } else if (!isCheckAvailableEmail(email)) {
       setMsg('Email không đúng hợp lệ, vui lòng nhập lại!');
     } else {
-      authenContext.resetPassByEmail(email);
+      authenContext.activeAccount(email);
     }
   };
   useEffect(() => {
-    setMsg(authenContext.state.resetStatus);
-    if (authenContext.state.resetStatus === 1) {
+    setMsg(authenContext.state.activeStatus);
+    if (authenContext.state.activeStatus === 1) {
       // navigation.navigate(ScreenKey.Login);
     }
-  }, [authenContext.state.resetStatus]);
+  }, [authenContext.state.activeStatus]);
 
   console.log('Message Forgot: ', msg);
   return (
@@ -64,15 +73,15 @@ const ActiveEmail = ({ navigation }) => {
       <View style={styles.primaryDisplay}>
         <Text style={styles.title}>Kích Hoạt Tài Khoản</Text>
         <Text style={styles.instruction}>
-          Bạn vui lòng nhập Email đăng ký tài khoản, chúng tôi sẽ kích hoạt tài khoản cho bạn.
+          Nhập Email đăng ký của bạn, chúng ta sẽ kích hoạt tài khoản cho bạn.
         </Text>
         {
         msg
           ? (
             msg === 2
-              ? (<Text style={styles.textEror}>Đã xảy ra lỗi khi gửi email hoặc email chưa đăng ký</Text>)
+              ? (<Text style={styles.textEror}>Tài khoản của bạn đã được kích hoạt hoặc tài khoản không tồn tại.</Text>)
               : (msg === 1
-                ? (<Text style={styles.textSuccess}>Email đã được gửi đi, bạn vui lòng mở email để tiến hành thay đổi mật khẩu.</Text>)
+                ? (<Text style={styles.textSuccess}>Gửi email kích hoạt tài khoản thành công. Vui lòng kiểm tra hộp thoại email để xác nhận kích hoạt tài khoản.</Text>)
                 : <Text style={styles.textEror}>{msg}</Text>)
           )
           : null
@@ -87,7 +96,7 @@ const ActiveEmail = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => onSendMail()}
           >
-            <Text style={styles.textPrimary}>Kích hoạt</Text>
+            <Text style={styles.textPrimary}>Kích Hoạt</Text>
           </TouchableOpacity>
         </View>
         {
@@ -101,7 +110,15 @@ const ActiveEmail = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
             )
-            : null
+            : (
+              <View style={styles.buttonSolidGrey}>
+                <TouchableOpacity
+                  onPress={() => onBack()}
+                >
+                  <Text style={styles.textPrimary}>Huỷ Kích Hoạt</Text>
+                </TouchableOpacity>
+              </View>
+            )
         }
       </View>
     </View>

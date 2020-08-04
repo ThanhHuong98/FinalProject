@@ -3,7 +3,8 @@
 /* eslint-disable react/prop-types */
 import React, { useReducer } from 'react';
 import AuthenReducer from '../../reducers/authen';
-import { requestLogin, requestRegister, resetPassByEmail, cancelReset } from '../../actions/authen';
+import { requestLogin, requestRegister, resetPassByEmail, cancelReset, activeAccount, cancelActive, cancelLogin, cancelRegister
+} from '../../actions/authen';
 
 const AuthenContext = React.createContext();
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   isLoading: false,
   registerRespone: {},
   resetStatus: 0,
+  activeStatus: 0,
 };
 const AuthenProvider = (props) => {
   const [state, dispatch] = useReducer(AuthenReducer, initialState);
@@ -28,6 +30,10 @@ const AuthenProvider = (props) => {
             register: requestRegister(dispatch),
             resetPassByEmail: resetPassByEmail(dispatch),
             cancelReset: cancelReset(dispatch),
+            activeAccount: activeAccount(dispatch),
+            cancelActive: cancelActive(dispatch),
+            cancelRegister: cancelRegister(dispatch),
+            cancelLogin: cancelLogin(dispatch),
           }
         }
     >

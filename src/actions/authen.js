@@ -14,6 +14,9 @@ import {
   REQUEST_RESET_PASS,
   RESPONSE_RESET_PASS,
 
+  REQUEST_ACTIVE_ACCOUNT,
+  RESPONSE_ACTIVE_ACCOUNT,
+
 } from '../Constant/actions/authen';
 // Login
 const waitLogin = () => ({
@@ -122,4 +125,35 @@ export const resetPassByEmail = (dispatch) => (email) => {
       console.log(error);
       dispatch(receiveReset(2));
     });
+};
+
+// Active Account:
+const waitActive = () => ({
+  type: REQUEST_ACTIVE_ACCOUNT,
+});
+
+const receiveActive = (status) => ({
+  type: RESPONSE_ACTIVE_ACCOUNT,
+  status,
+});
+
+export const activeAccount = (dispatch) => (email) => {
+  dispatch(waitActive());
+  const data = {
+    email
+  };
+  api.post('/user/send-activate-email', data)
+    .then((response) => {
+      console.log('Send email active account: ', response.status);
+      if (response.status === 200) {
+        dispatch(receiveActive(1));
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(receiveActive(2));
+    });
+};
+export const cancelActive = (dispatch) => () => {
+  dispatch(receiveActive(0));
 };

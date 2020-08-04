@@ -26,6 +26,7 @@ const Register = ({ navigation }) => {
 
   const onBack = () => {
     navigation.navigate(ScreenKey.SplashScreen);
+    authenContext.cancelRegister();
   };
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -59,7 +60,7 @@ const Register = ({ navigation }) => {
   useEffect(() => {
     setMsg(authenContext.state.registerRespone.message);
     if (authenContext.state.registerRespone.message === 'OK') {
-      navigation.navigate(ScreenKey.Login);
+      navigation.navigate(ScreenKey.ActiveEmail, { intenType: 1 });
     }
   }, [authenContext.state.registerRespone.message]);
   return (
