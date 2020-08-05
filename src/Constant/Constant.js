@@ -51,6 +51,7 @@ export const ScreenKey = {
   ActiveEmail: 'Kích hoạt tài khoản',
   SplashScreen: 'Chào mừng',
   Profile: 'Quản ký tài khoản',
+  EditProfile: 'Chỉnh sửa',
 
   Main: 'Main',
   Home: 'Trang chủ',

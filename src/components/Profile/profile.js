@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/require-default-props */
 /* eslint-disable import/no-cycle */
 import React, { useContext, useEffect } from 'react';
 import {
@@ -5,6 +7,7 @@ import {
   View,
   Text,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { ThemeContext } from '../../../App';
@@ -12,19 +15,32 @@ import {
   Colors, FontSize, Dimension, ScreenKey
 } from '../../Constant/Constant';
 import { ProfileContext } from '../providers/profile';
-import ButtonSolid from '../Common/SolidButton/solid-button';
+import OutLineButton from '../Common/OutLineButton/outLine-button';
 import { removeUserInfo } from '../../storage/storage';
 
 const Profile = ({
   role, navigation,
 }) => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => handleLogout()}>
+          <Text style={{ ...styles.text, color: Colors.blue, marginRight: 10, }}>Đăng xuất</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
+
   const profileContext = useContext(ProfileContext);
   useEffect(() => {
     profileContext.requestProfile();
   }, []);
   const handleLogout = () => {
-    removeUserInfo();
+    // removeUserInfo();
     // navigation.replace(ScreenKey.Login);
+  };
+  const handleEdit = () => {
+    navigation.navigate(ScreenKey.EditProfile, { data: profileContext.state.profile });
   };
   return (
     <ThemeContext.Consumer>
@@ -41,19 +57,23 @@ const Profile = ({
                 </View>
                 <View style={styles.extraInfo}>
                   <View style={styles.info}>
-                    <Text style={{ ...styles.label, color: theme.textColor }}>Email: </Text>
+                    <Text style={{ ...styles.label, color: theme.textColor }}>Email:   </Text>
                     <Text style={{ ...styles.text, color: theme.textColor }}>{profileContext.state.profile.email}</Text>
                   </View>
                   <View style={styles.info}>
-                    <Text style={{ ...styles.label, color: theme.textColor }}>Số điện thoại: </Text>
+                    <Text style={{ ...styles.label, color: theme.textColor }}>Số điện thoại:   </Text>
                     <Text style={{ ...styles.text, color: theme.textColor }}>{profileContext.state.profile.phone}</Text>
+                  </View>
+                  <View style={styles.info}>
+                    <Text style={{ ...styles.label, color: theme.textColor }}>Ngày tham gia:   </Text>
+                    <Text style={{ ...styles.text, color: theme.textColor }}>26/5/2020</Text>
                   </View>
                 </View>
                 <View style={styles.solidBtn}>
-                  <ButtonSolid
-                    title="Log out"
+                  <OutLineButton
+                    title="Chỉnh sửa thông tin"
                     backgroundColor={Colors.blue}
-                    onChooseOption={() => handleLogout()}
+                    onChooseOption={() => handleEdit()}
                   />
 
                 </View>
@@ -95,11 +115,11 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     flexDirection: 'column',
     marginLeft: Dimension.marginMedium,
-    marginTop: Dimension.marginLarge,
+    marginTop: Dimension.marginMedium,
   },
   info: {
     marginLeft: Dimension.marginMedium,
-    marginTop: Dimension.marginMedium,
+    marginTop: 18,
     flexDirection: 'row',
   },
   imageCricle: {
@@ -125,8 +145,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   solidBtn: {
-    marginTop: Dimension.marginLarge,
-    padding: Dimension.paddingMedium,
+    marginTop: Dimension.marginMedium,
+    padding: Dimension.marginMedium,
   },
 
 });

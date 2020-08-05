@@ -3,7 +3,7 @@
 /* eslint-disable import/no-cycle */
 import React, { useEffect, useContext } from 'react';
 import {
-  View, ScrollView, ImageBackground, Text, StyleSheet,
+  View, ImageBackground, Text, StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import ListCourses from '../../../../Courses/ListCourses/list-courses';

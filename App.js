@@ -26,6 +26,7 @@ import DetailAuthor from './src/components/Main/browse/Author/DetailAuthor/detai
 import SettingScreen from './src/components/Setting/setting-screen';
 import SetTheme from './src/components/Setting/thems';
 import Profile from './src/components/Profile/profile';
+import EditProfile from './src/components/Profile/edit-profile';
 import DetailCategory from './src/components/Main/browse/Categories/DetailCategory/detail-category';
 import { AuthenProvider } from './src/components/providers/authen';
 import { ProfileProvider } from './src/components/providers/profile';
@@ -126,6 +127,12 @@ const HomeStackScreen = () => (
         <HomeStack.Screen
           name={ScreenKey.Profile}
           component={Profile}
+          options={{ title: '' }}
+        />
+        <HomeStack.Screen
+          name={ScreenKey.EditProfile}
+          component={EditProfile}
+          options={{ title: '' }}
         />
       </HomeStack.Navigator>
     )
@@ -298,8 +305,8 @@ const MainStackScreen = () => (
                   : 'ios-apps';
               } else if (route.name === ScreenKey.Search) {
                 iconName = focused
-                  ? 'ios-arrow'
-                  : 'ios-arrow';
+                  ? 'ios-search'
+                  : 'ios-search';
               }
               return <Ionicons name={iconName} size={size} color={color} />;
             },
