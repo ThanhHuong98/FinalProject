@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/require-default-props */
 /* eslint-disable import/no-cycle */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect , useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -19,8 +19,12 @@ import OutLineButton from '../Common/OutLineButton/outLine-button';
 import { removeUserInfo } from '../../storage/storage';
 
 const Profile = ({
-  role, navigation,
+  role, navigation, route
 }) => {
+  //const intentType = route.params.data;
+  //const [isLoadInfo, setLoadInfo] = useState(0);
+  //if (intentType) setLoadInfo(intentType);
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (

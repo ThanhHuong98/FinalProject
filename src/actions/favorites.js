@@ -36,7 +36,7 @@ export const requestFavorites = (dispatch) => async (page) => {
       dispatch(receiveData(response.data.payload));
     })
     .catch((error) => {
-      // console.log('Load Favorites: ', error);
+      console.log('Load Favorites: ', error);
       requestFail(error);
     });
 };

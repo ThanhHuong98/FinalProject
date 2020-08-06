@@ -30,7 +30,7 @@ export const isCheckAvailableEmail = (email) => {
   return expression.test(String(email).toLowerCase());
 };
 
-const isCheckAviablePhone = (phone) => {
+export const isCheckAviablePhone = (phone) => {
   const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   if (phone.match(phoneno)) {
     return true;
