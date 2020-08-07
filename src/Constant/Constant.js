@@ -58,6 +58,7 @@ export const ScreenKey = {
   ListCourse: 'Danh sách khoá học',
   AllCourses: 'Danh sách khoá học',
   DetailCourse: 'Chi tiết khoá học',
+  DetailStack: 'Chi tiết',
 
   Favorite: 'Yêu thích',
   Search: 'Tìm kiếm',

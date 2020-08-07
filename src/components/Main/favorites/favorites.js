@@ -5,13 +5,16 @@ import React, { useContext, useEffect } from 'react';
 import {
   StyleSheet, View, Text, Image
 } from 'react-native';
-import { Colors, FontSize } from '../../../Constant/Constant';
+import { Colors, FontSize, ScreenKey } from '../../../Constant/Constant';
 import { ThemeContext } from '../../../../App';
 import ListFavorites from './ListFavorite/list-favorite';
 import { FavoritesContext } from '../../providers/favorites';
 
 const Favorites = ({ navigation }) => {
   const favoritesContext = useContext(FavoritesContext);
+  const onItemClick = (course) => {
+    navigation.navigate(ScreenKey.DetailCourse, { course });
+  };
   useEffect(() => {
     favoritesContext.requestFavorites();
   }, [navigation]);
@@ -31,7 +34,10 @@ const Favorites = ({ navigation }) => {
                 </View>
               )
               : (
-                <ListFavorites favorites={favoritesContext.state.allFavorites} />
+                <ListFavorites
+                  onItemClick={(item) => onItemClick(item)}
+                  favorites={favoritesContext.state.allFavorites}
+                />
               )
           }
         </View>

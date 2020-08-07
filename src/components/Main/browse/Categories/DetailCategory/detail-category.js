@@ -17,6 +17,9 @@ const DetailSectionCategories = ({
 }) => {
   const category = route.params.data;
   const browseContext = useContext(BrowseContext);
+  const onItemClick = (course) => {
+    navigation.navigate(ScreenKey.DetailCourse, { course });
+  };
   useEffect(() => {
     browseContext.getCategoryDetails(category.id);
   }, []);
@@ -58,7 +61,7 @@ const DetailSectionCategories = ({
                       <ListCourses
                         title="Các khoá học"
                         courses={browseContext.state.categoryDetails}
-                        onItemClick={(courseId) => navigation.navigate(ScreenKey.DetailCourse)}
+                        onItemClick={(item) => onItemClick(item)}
                       />
                     </View>
 

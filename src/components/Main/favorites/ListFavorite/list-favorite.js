@@ -28,7 +28,7 @@ const ListFavorites = ({ title, favorites, onItemClick }) => (
                   courseImage={item.courseImage}
                   instructorName={item.instructorName}
                   coursePrice={item.coursePrice}
-                  onItemClick={() => onItemClick(item)}
+                  onClickItem={() => onItemClick(item)}
                 />
               )}
               keyExtractor={(item) => item.id}

@@ -10,11 +10,12 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import AnimatedLoader from 'react-native-animated-loader';
 import ItemRecentSearch from './ItemRecentSearch';
-import { Colors } from '../../../Constant/Constant';
+import { Colors, ScreenKey } from '../../../Constant/Constant';
 import { ThemeContext } from '../../../../App';
 import { SearchContext } from '../../providers/search';
 import ClearIcon from '../../../../assets/search/clear-icon.png';
 import ListCourses from '../../Courses/ListCourses/list-courses';
+
 const verticalSeparator = () => (
   <View style={styles.verticalSeparator} />
 );
@@ -84,6 +85,10 @@ const Search = ({ navigation }) => {
   const searchContext = useContext(SearchContext);
   const [searchKey, setSearchKey] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+
+  const onItemClick = (course) => {
+    navigation.navigate(ScreenKey.DetailCourse, { course });
+  };
 
   const handleChooseItem = (name) => {
     handleSearch(name);
@@ -166,6 +171,7 @@ const Search = ({ navigation }) => {
                   <ListCourses
                     title="Kết quả tìm kiếm"
                     courses={searchContext.state.searchResult}
+                    onItemClick={(item) => onItemClick(item)}
                   />
                 </View>
               )

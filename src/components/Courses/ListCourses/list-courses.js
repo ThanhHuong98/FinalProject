@@ -30,7 +30,7 @@ const ListCourses = ({ title, courses, onItemClick }) => (
                   duration={item.totalHours}
                   rating={item.ratedNumber}
                   price={item.price}
-                  onItemClick={() => onItemClick(item)}
+                  onClickItem={() => onItemClick(item)}
                 />
               )}
               keyExtractor={(item) => item.id}
