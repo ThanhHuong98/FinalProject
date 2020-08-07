@@ -103,7 +103,6 @@ export const uploadAvatar = (dispatch) => async (avatarFile) => {
   api.post('/user/upload-avatar', data, { headers: { Authorization: AuthStr } })
     .then((response) => {
       if (response.data.message === 'OK') {
-        console.log('upload avatar sucessfully: : ', response.data.payload.url);
         dispatch(receiveUrl(response.data.payload.url));
       } else dispatch(receiveUrl('FAILED'));
     })

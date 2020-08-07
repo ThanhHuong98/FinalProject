@@ -36,6 +36,7 @@ import { AuthorProvider } from './src/components/providers/author';
 import { FavoritesProvider } from './src/components/providers/favorites';
 import { SearchProvider } from './src/components/providers/search';
 import { getUserInfo } from './src/storage/storage';
+import { CourseDetailsProvider } from './src/components/providers/courseDetails';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -343,31 +344,34 @@ export default function App() {
   };
 
   return (
-    <AuthenProvider>
-      <HomeProvider>
-        <BrowseProvider>
-          <AuthorProvider>
-            <FavoritesProvider>
-              <ProfileProvider>
-                <ThemeContext.Provider value={{ theme, setTheme }}>
-                  <NavigationContainer>
-                    <Stack.Navigator screenOptions={{ headerShown: false }}>
-                      {
-                  !isLogined()
-                    ? <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
-                    : null
+    <CourseDetailsProvider>
+      <AuthenProvider>
+        <HomeProvider>
+          <BrowseProvider>
+            <AuthorProvider>
+              <FavoritesProvider>
+                <ProfileProvider>
+                  <ThemeContext.Provider value={{ theme, setTheme }}>
+                    <NavigationContainer>
+                      <Stack.Navigator screenOptions={{ headerShown: false }}>
+                        {
+                 !isLogined()
+                   ? <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
+                   : null
                 }
-                      <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
-                    </Stack.Navigator>
-                  </NavigationContainer>
-                </ThemeContext.Provider>
-              </ProfileProvider>
-            </FavoritesProvider>
-          </AuthorProvider>
-        </BrowseProvider>
-      </HomeProvider>
+                        <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
+                      </Stack.Navigator>
+                    </NavigationContainer>
+                  </ThemeContext.Provider>
+                </ProfileProvider>
+              </FavoritesProvider>
+            </AuthorProvider>
+          </BrowseProvider>
+        </HomeProvider>
 
-    </AuthenProvider>
+      </AuthenProvider>
+
+    </CourseDetailsProvider>
   );
 }
 registerRootComponent(App);

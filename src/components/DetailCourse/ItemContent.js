@@ -1,9 +1,10 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable global-require */
 import React from 'react';
 import {
-  View, Text, StyleSheet, Image, FlatList, TouchableOpacity,
+  View, Text, StyleSheet, Image, FlatList, TouchableOpacity, TouchableWithoutFeedback
 } from 'react-native';
 import PropTypes, { object } from 'prop-types';
 import { Colors } from '../../Constant/Constant';
@@ -12,78 +13,67 @@ import { formatHourType2 } from '../../utils/DateTimeUtils';
 import PopupMenu from '../Common/PopupMenu/popup-menu';
 import { ThemeContext } from '../../../App';
 
-const ProgressBar = ({ progress, total }) => {
-  const progressColor = progress === total ? Colors.green : Colors.white;
-  const progressWidth = `${getPercentage(progress, total)}%`;
-  return (
-    <View style={styles.progressContainer}>
-      <View style={{ ...styles.progress, width: progressWidth, backgroundColor: progressColor }}/>
-    </View>
-  );
-};
-
 const ItemLesson = ({
-  name, duration, isCompleted, isPlaying, textColor
-}) => (
-  <TouchableOpacity style={styles.lessonContainer}>
-    {isPlaying
-      ? <Image source={require('../../../assets/icon.png')} style={{ ...styles.lessonStatus, backgroundColor: Colors.black }}/>
-      : isCompleted
-        ? <Image source={require('../../../assets/icon.png')} style={{ ...styles.lessonStatus, backgroundColor: Colors.black }}/>
-        : <View style={{ ...styles.lessonStatus, backgroundColor: Colors.gray }}/>
-    }
-    <Text style={{ ...styles.lessonName, color: textColor}}>{name}</Text>
-    <Text style={styles.lessonDuration}>{formatHourType2(duration)}</Text>
-  </TouchableOpacity>
-);
-
-const ItemSeparator = () => (
-  <View style={styles.itemSeparator}/>
-);
-
-const Module = ({
-  moduleName, index, duration, progress, content,
+  name, duration, isCompleted, isPlaying, onClickLesson,
 }) => (
   <ThemeContext.Consumer>
     {
-      ({ theme }) => {
-        return (
-          <View style={{ ...styles.moduleContainer, backgroundColor: theme.background }}>
-            <View style={styles.titleContainer}>
-              <View style={styles.thumbnail}>
-                <View style={styles.textThumbnailContainer}>
-                  <Text style={{ ...styles.textThumbnail, color: theme.textColor }}>{index}</Text>
-                </View>
-                <View style={styles.progressBar}>
-                  <ProgressBar progress={progress} total={duration}/>
-                </View>
+      ({ theme }) => (
+        <TouchableOpacity style={styles.lessonContainer} onPress={() => onClickLesson()}>
+          {isPlaying
+            ? <Image source={require('../../../assets/course-detail/play-icon.png')} style={{ ...styles.lessonStatus, backgroundColor: theme.background }} />
+            : isCompleted
+              ? <Image source={require('../../../assets/course-detail/completed-tick-icon.png')} style={{ ...styles.lessonStatus, backgroundColor: theme.background }} />
+              : <View style={{ ...styles.lessonStatus, backgroundColor: Colors.gray }} />}
+          <Text style={{ ...styles.lessonName, color: theme.textColor }}>{name}</Text>
+          <Text style={styles.lessonDuration}>{formatHourType2(duration)}</Text>
+        </TouchableOpacity>
+      )
+    }
+  </ThemeContext.Consumer>
+);
+
+const ItemSeparator = () => (
+  <View style={styles.itemSeparator} />
+);
+
+const Module = ({
+  moduleName, index, duration, playingLesson, lessons, onClickLesson,
+}) => (
+  <ThemeContext.Consumer>
+    {
+      ({ theme }) => (
+        <View style={{ ...styles.moduleContainer, backgroundColor: theme.background }}>
+          <View style={styles.titleContainer}>
+            <View style={styles.thumbnail}>
+              <View style={styles.textThumbnailContainer}>
+                <Text style={styles.textThumbnail}>{index}</Text>
               </View>
-              <View style={styles.moduleInfo}>
-                <Text style={{ ...styles.moduleName, color: theme.textColor }}>{moduleName}</Text>
-                <Text style={styles.moduleDuration}>{formatHourType2(duration)}</Text>
-              </View>
-              <PopupMenu
-              />
             </View>
-
-            <FlatList
-              data={content}
-              showsVerticalScrollIndicator={false}
-              ItemSeparatorComponent={ItemSeparator}
-              renderItem={({ item }) => (
-                <ItemLesson
-                  name={item.name}
-                  duration={item.duration}
-                  isCompleted={item.isCompleted}
-                  isPlaying={item.isPlaying}
-                  textColor={theme.textColor}
-                />
-              )}
-            />
+            <View style={styles.moduleInfo}>
+              <Text style={{ ...styles.moduleName, color: theme.textColor }}>{moduleName}</Text>
+              <Text style={styles.moduleDuration}>{formatHourType2(duration)}</Text>
+            </View>
+            <TouchableWithoutFeedback>
+              <PopupMenu width={10} height={10} style={{ fill: '#fff' }} />
+            </TouchableWithoutFeedback>
           </View>
-
-        );
-      }
+          <FlatList
+            data={lessons}
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={ItemSeparator}
+            renderItem={({ item }) => (
+              <ItemLesson
+                name={item.name}
+                duration={(item.hours || 0) * 3600 * 1000}
+                isCompleted={item.isFinish}
+                isPlaying={playingLesson === item.id}
+                onClickLesson={() => onClickLesson(item.id)}
+              />
+            )}
+          />
+        </View>
+      )
     }
   </ThemeContext.Consumer>
 );
@@ -102,7 +92,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   lessonName: {
-    color: Colors.white,
     flex: 1,
     fontSize: 14,
     marginHorizontal: 5,
@@ -113,7 +102,6 @@ const styles = StyleSheet.create({
     width: 10,
   },
   moduleContainer: {
-    backgroundColor: 'red',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     paddingVertical: 20,
@@ -129,28 +117,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   moduleName: {
-    color: Colors.white,
     fontSize: 16,
     marginBottom: 5,
   },
-  optionIcon: {
-    height: '40%',
-    width: 10,
-  },
-  progress: {
-    height: '100%',
-  },
-  progressBar: {
-    height: 4,
-    width: '100%',
-  },
-  progressContainer: {
-    backgroundColor: Colors.lightGray,
-    height: '100%',
-    width: '100%',
-  },
   textThumbnail: {
-    color: 'red',
+    color: Colors.white,
     fontSize: 16,
     marginTop: 5,
   },
@@ -176,51 +147,24 @@ const styles = StyleSheet.create({
   },
 });
 
-ProgressBar.propTypes = {
-  progress: PropTypes.number,
-  total: PropTypes.number,
-};
-
 ItemLesson.propTypes = {
   name: PropTypes.string,
   duration: PropTypes.number,
   isCompleted: PropTypes.bool,
   isPlaying: PropTypes.bool,
+  onClickLesson: PropTypes.func,
 };
 
 Module.propTypes = {
   moduleName: PropTypes.string,
   index: PropTypes.number,
+  playingLesson: PropTypes.string,
   duration: PropTypes.number,
-  progress: PropTypes.number,
-  content: PropTypes.arrayOf(object),
+  lessons: PropTypes.arrayOf(object),
+  onClickLesson: PropTypes.func,
 };
 
 Module.defaultProps = {
-  moduleName: 'Getting Started with Agular',
-  index: 1,
-  duration: 2400000,
-  progress: 600000,
-  content: [
-    {
-      name: 'Introduction',
-      duration: 180000,
-      isCompleted: false,
-      isPlaying: false,
-    },
-    {
-      name: 'Practice Exercises',
-      duration: 180000,
-      isCompleted: false,
-      isPlaying: true,
-    },
-    {
-      name: 'Introduction to TypeScript',
-      duration: 180000,
-      isCompleted: true,
-      isPlaying: false,
-    },
-  ],
 };
 
 export default Module;

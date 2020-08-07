@@ -84,7 +84,8 @@ export const themes = {
     detailBlockColor: '#f5f5f5',
     textHeader: 'blue',
     headerColor: '#ffffff',
-    iconColor: '#000'
+    iconColor: '#000',
+    block: '#ffffff',
   },
   dark: {
     background: '#121212',
@@ -94,6 +95,7 @@ export const themes = {
     detailBlockColor: '#404040',
     textHeader: 'blue',
     headerColor: '#121212',
-    iconColor: '#FFF'
+    iconColor: '#FFF',
+    block: '#404040',
   }
 };
