@@ -14,7 +14,6 @@ import { ThemeContext } from '../../../App';
 import { HomeContext } from '../providers/home';
 import { ScreenKey, Colors, FontSize } from '../../Constant/Constant';
 import ListCourses from './ListCourses/list-courses';
-import NullImage from '../../../assets/favorite/null.svg';
 
 const AllCourses = ({ route, navigation }) => {
   const selectedCategory = route.params.category;
@@ -37,7 +36,6 @@ const AllCourses = ({ route, navigation }) => {
               homeContext.state.allCourse.length === 0
                 ? (
                   <View style={styles.center}>
-                    <NullImage width={50} height={50} style={{ fill: '#bdbdbd' }} />
                     <Text style={styles.decription}>
                       Khoá học trống
                     </Text>

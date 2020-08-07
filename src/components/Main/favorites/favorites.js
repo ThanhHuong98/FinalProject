@@ -2,18 +2,19 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable import/no-cycle */
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  StyleSheet, View, Text, Image
+} from 'react-native';
 import { Colors, FontSize } from '../../../Constant/Constant';
 import { ThemeContext } from '../../../../App';
 import ListFavorites from './ListFavorite/list-favorite';
 import { FavoritesContext } from '../../providers/favorites';
-import NullImage from '../../../../assets/favorite/null.svg';
 
 const Favorites = ({ navigation }) => {
   const favoritesContext = useContext(FavoritesContext);
   useEffect(() => {
     favoritesContext.requestFavorites();
-  }, []);
+  }, [navigation]);
   return (
     <ThemeContext.Consumer>
       {
@@ -23,7 +24,7 @@ const Favorites = ({ navigation }) => {
             favoritesContext.state.allFavorites.length === 0
               ? (
                 <View style={styles.center}>
-                  <NullImage width={50} height={50} style={{ fill: '#bdbdbd' }} />
+                  <Image source={require('../../../../assets/course-detail/like-fill-icon.png')} style={styles.image} />
                   <Text style={styles.decription}>
                     Bạn chưa có khoá học yêu thích
                   </Text>
@@ -55,6 +56,10 @@ const styles = StyleSheet.create({
     color: Colors.greyWhite,
     fontSize: FontSize.large,
     marginTop: 10,
+  },
+  image: {
+    width: 50,
+    height: 50,
   }
 });
 

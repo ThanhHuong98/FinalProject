@@ -2,15 +2,16 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable import/no-cycle */
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Colors, FontSize } from '../../../Constant/Constant';
+import {
+  StyleSheet, View, Text, Image
+} from 'react-native';
+import { Colors, FontSize, themes } from '../../../Constant/Constant';
 import { ThemeContext } from '../../../../App';
 // import ListFavorites from './ListFavorite/list-favorite';
 import { FavoritesContext } from '../../providers/favorites';
-import NullImage from '../../../../assets/favorite/null.svg';
 
 const Download = ({ navigation }) => {
-  const favoritesContext = useContext(FavoritesContext);
+  // const favoritesContext = useContext(FavoritesContext);
   useEffect(() => {
     // favoritesContext.requestFavorites();
   }, []);
@@ -34,7 +35,11 @@ const Download = ({ navigation }) => {
               )
           } */}
           <View style={styles.center}>
-            <NullImage width={50} height={50} style={{ fill: '#bdbdbd' }} />
+            {
+              theme === themes.dark
+                ? (<Image source={require('../../../../assets/course-detail/download-icon.png')} style={styles.image} />)
+                : (<Image source={require('../../../../assets/course-detail/download-icon-dark.png')} style={styles.image} />)
+            }
             <Text style={styles.decription}>
               Bạn chưa có khoá học tải xuống
             </Text>
@@ -61,6 +66,10 @@ const styles = StyleSheet.create({
     color: Colors.greyWhite,
     fontSize: FontSize.large,
     marginTop: 10,
+  },
+  image: {
+    width: 50,
+    height: 50,
   }
 });
 
