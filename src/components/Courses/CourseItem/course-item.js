@@ -61,9 +61,9 @@ const CourseItem = ({
                   )
               }
             </View>
-            <View style={styles.popupmenu}>
+            {/* <View style={styles.popupmenu}>
               <PopupMenu actions={['Edit', 'Remove']} onPress={() => onShowMenu()} />
-            </View>
+            </View> */}
           </TouchableOpacity>
         )
       }
@@ -89,7 +89,7 @@ CourseItem.defaultTypes = {
   author: 'Ben Piper',
   date: '2020-07-07T17:41:45.592Z',
   duration: 20,
-  rating: 4.5,
+  rating: 0,
   price: 0,
   numOfVideos: 10,
 };

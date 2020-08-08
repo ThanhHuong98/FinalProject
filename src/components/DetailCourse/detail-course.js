@@ -101,10 +101,11 @@ const DetailCourse = ({
                     {
                     checkYoutubeUrl(courseDetailContext.state.currentLesson.videoUrl)
                       ? (
-                        <YoutubePlayer
-                          videoId={extractVideoIdFromYoutubeUrl(courseDetailContext.state.currentLesson.videoUrl)}
-                          height={230}
-                        />
+                        // <YoutubePlayer
+                        //   videoId={extractVideoIdFromYoutubeUrl(courseDetailContext.state.currentLesson.videoUrl)}
+                        //   height={230}
+                        // />
+                        null
                       )
                       : (
                         <Video

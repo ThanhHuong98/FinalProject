@@ -19,17 +19,26 @@ import OutLineButton from '../Common/OutLineButton/outLine-button';
 import { removeUserInfo } from '../../storage/storage';
 
 const Profile = ({
-  role, navigation, route
+  role, navigation,
 }) => {
-  // const intentType = route.params.data;
-  // const [isLoadInfo, setLoadInfo] = useState(0);
-  // if (intentType) setLoadInfo(intentType);
+  const handleLogout = () => {
+    removeUserInfo();
+    navigation.navigate(ScreenKey.Authen);
+  };
+  const handleBack = () => {
+    navigation.navigate(ScreenKey.Main);
+  };
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={() => handleLogout()}>
           <Text style={{ ...styles.text, color: Colors.blue, marginRight: 10, }}>Đăng xuất</Text>
+        </TouchableOpacity>
+      ),
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => handleBack()}>
+          <Text style={{ ...styles.text, color: Colors.blue, marginLeft: 10, }}>Trở về</Text>
         </TouchableOpacity>
       ),
     });
@@ -39,10 +48,6 @@ const Profile = ({
   useEffect(() => {
     profileContext.requestProfile();
   }, []);
-  const handleLogout = () => {
-    removeUserInfo();
-    navigation.navigate(ScreenKey.Authen);
-  };
   const handleEdit = () => {
     navigation.navigate(ScreenKey.EditProfile, { data: profileContext.state.profile });
   };

@@ -32,7 +32,7 @@ const SectionCourses = ({
             numOfVideos={item.videoNumber}
             date={item.date}
             duration={item.totalHours}
-            rating={item.ratedNumber}
+            rating={item.contentPoint}
             price={item.price}
             onClickItem={() => onClickCourse(item)}
           />

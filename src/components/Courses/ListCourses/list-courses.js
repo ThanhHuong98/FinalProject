@@ -28,7 +28,7 @@ const ListCourses = ({ title, courses, onItemClick }) => (
                   numOfVideos={item.videoNumber}
                   date={item.date}
                   duration={item.totalHours}
-                  rating={item.ratedNumber}
+                  rating={item.contentPoint}
                   price={item.price}
                   onClickItem={() => onItemClick(item)}
                 />

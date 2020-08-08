@@ -50,7 +50,7 @@ export const ScreenKey = {
   ForgotPassword: 'Quên mật khẩu',
   ActiveEmail: 'Kích hoạt tài khoản',
   SplashScreen: 'Chào mừng',
-  Profile: 'Quản ký tài khoản',
+  Profile: 'Tài khoản',
   EditProfile: 'Chỉnh sửa',
   ProfileMain: 'ProfileMain',
   Splash: 'Splash',

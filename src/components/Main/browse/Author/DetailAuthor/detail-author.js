@@ -24,14 +24,17 @@ const DetailAuthor = ({
   useEffect(() => {
     authorContext.getAuthorDetails(authorId);
   }, []);
+  const onItemClick = (course) => {
+    navigation.push(ScreenKey.DetailScreen, { screen: ScreenKey.DetailCourse, params: { course } });
+  };
 
   return (
     <ThemeContext.Consumer>
       {
         ({ theme }) => (
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{ ...styles.container, backgroundColor: theme.background }}>
-              <View style={{ ...styles.infoBlock, backgroundColor: theme.background }}>
+          <ScrollView showsVerticalScrollIndicator={false} style={{ ...styles.container, backgroundColor: theme.background}}>
+            <View style={{ ...styles.block, backgroundColor: theme.block }}>
+              <View style={{ ...styles.infoBlock, backgroundColor: theme.block }}>
                 <Image source={{ uri: authorContext.state.authorDetails.avatar }} style={styles.avatar} resizeMode="cover" />
                 <Text style={{ ...styles.name, color: theme.textColor }}>{authorContext.state.authorDetails.name}</Text>
                 {
@@ -57,7 +60,7 @@ const DetailAuthor = ({
                 <ListCourses
                   courses={authorContext.state.authorDetails.courses}
                   title="Các khóa học"
-                  onItemClick={(id) => navigation.push(ScreenKey.DetailCourse)}
+                  onItemClick={(item) => onItemClick(item)}
                 />
               </View>
             </View>
@@ -85,11 +88,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   container: {
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.transparent,
     flexDirection: 'column',
     height: '100%',
-    paddingTop: 20,
     width: '100%',
+  },
+  block: {
+    paddingTop: 20,
   },
   followDesc: {
     color: Colors.gray,

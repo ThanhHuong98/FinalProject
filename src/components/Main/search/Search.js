@@ -69,10 +69,10 @@ const SearchBar = ({
       value.length !== 0
         ? (
           <TouchableWithoutFeedback onPress={() => handleCancelSearch()}>
-            {/* <Image
+            <Image
               source={require('../../../../assets/common/cancel-icon.png')}
               style={{ ...styles.iconSearch, marginLeft: 10 }}
-            /> */}
+            />
           </TouchableWithoutFeedback>
         )
         : null
