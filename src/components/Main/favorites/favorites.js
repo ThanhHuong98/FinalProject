@@ -13,7 +13,7 @@ import { FavoritesContext } from '../../providers/favorites';
 const Favorites = ({ navigation }) => {
   const favoritesContext = useContext(FavoritesContext);
   const onItemClick = (course) => {
-    navigation.navigate(ScreenKey.DetailCourse, { course });
+    navigation.push(ScreenKey.DetailScreen, { screen: ScreenKey.DetailCourse, params: { course } });
   };
   useEffect(() => {
     favoritesContext.requestFavorites();

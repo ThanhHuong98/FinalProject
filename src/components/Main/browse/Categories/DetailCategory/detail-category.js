@@ -18,7 +18,7 @@ const DetailSectionCategories = ({
   const category = route.params.data;
   const browseContext = useContext(BrowseContext);
   const onItemClick = (course) => {
-    navigation.navigate(ScreenKey.DetailCourse, { course });
+    navigation.push(ScreenKey.DetailScreen, { screen: ScreenKey.DetailCourse, params: { course } });
   };
   useEffect(() => {
     browseContext.getCategoryDetails(category.id);

@@ -22,7 +22,7 @@ const AllCourses = ({ route, navigation }) => {
   const homeContext = useContext(HomeContext);
 
   const onItemClick = (course) => {
-    navigation.navigate(ScreenKey.DetailCourse, { course });
+    navigation.push(ScreenKey.DetailScreen, { screen: ScreenKey.DetailCourse, params: { course } });
   };
   useEffect(() => {
     homeContext.getAllCourse(selectedCategory);

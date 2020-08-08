@@ -19,7 +19,7 @@ function Home({ navigation }) {
     navigation.navigate(ScreenKey.Setting);
   };
   const onProfile = () => {
-    navigation.navigate(ScreenKey.Profile);
+    navigation.navigate(ScreenKey.ProfileMain);
   };
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -48,7 +48,7 @@ function Home({ navigation }) {
     navigation.navigate(ScreenKey.AllCourses, { category, title });
   };
   const onClickCourse = (course) => {
-    navigation.navigate(ScreenKey.DetailCourse, { course });
+    navigation.push(ScreenKey.DetailScreen, { screen: ScreenKey.DetailCourse, params: { course } });
   };
 
   const homeContext = useContext(HomeContext);

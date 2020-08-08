@@ -40,12 +40,12 @@ import { CourseDetailsProvider } from './src/components/providers/courseDetails'
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
 const AuthenStack = createStackNavigator();
 function AuthenStackScreen() {
   return (
     <AuthenProvider>
       <AuthenStack.Navigator
+        initialRouteName={ScreenKey.SplashScreen}
         screenOptions={
         {
           headerTitleStyle: {
@@ -110,10 +110,6 @@ const HomeStackScreen = () => (
           component={Home}
         />
         <HomeStack.Screen
-          name={ScreenKey.DetailCourse}
-          component={DetailCourse}
-        />
-        <HomeStack.Screen
           name={ScreenKey.AllCourses}
           component={AllCourses}
         />
@@ -125,19 +121,82 @@ const HomeStackScreen = () => (
           name={ScreenKey.SetTheme}
           component={SetTheme}
         />
-        <HomeStack.Screen
-          name={ScreenKey.Profile}
-          component={Profile}
-          options={{ title: '' }}
-        />
-        <HomeStack.Screen
-          name={ScreenKey.EditProfile}
-          component={EditProfile}
-          options={{ title: '' }}
-        />
       </HomeStack.Navigator>
     )
   }
+  </ThemeContext.Consumer>
+);
+const DetailStack = createStackNavigator();
+const DetailStackScreen = () => (
+  <ThemeContext.Consumer>
+    {
+      ({ theme }) => (
+        <CourseDetailsProvider>
+          <DetailStack.Navigator
+            initialRouteName={ScreenKey.Home}
+            screenOptions={
+{
+  headerTitleStyle: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  headerStyle: {
+    backgroundColor: theme.background,
+  },
+  headerTintColor: theme.textColor,
+}
+}
+          >
+            <DetailStack.Screen
+              name={ScreenKey.DetailCourse}
+              component={DetailCourse}
+              options={{ headerShown: false }}
+            />
+          </DetailStack.Navigator>
+
+        </CourseDetailsProvider>
+      )
+    }
+  </ThemeContext.Consumer>
+);
+const ProfileStack = createStackNavigator();
+const ProfileStackScreen = () => (
+  <ThemeContext.Consumer>
+    {
+      ({ theme }) => (
+        <ProfileStack.Navigator
+          initialRouteName={ScreenKey.Profile}
+          screenOptions={
+{
+  headerTitleStyle: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  headerStyle: {
+    backgroundColor: theme.background,
+  },
+  headerTintColor: theme.textColor,
+}
+}
+        >
+          <ProfileStack.Screen
+            name={ScreenKey.Profile}
+            component={Profile}
+          />
+          <ProfileStack.Screen
+            name={ScreenKey.EditProfile}
+            component={EditProfile}
+            options={{ title: '' }}
+          />
+          <ProfileStack.Screen
+            name={ScreenKey.Authen}
+            component={AuthenStackScreen}
+            options={{ title: '', headerShown: false }}
+          />
+        </ProfileStack.Navigator>
+
+      )
+    }
   </ThemeContext.Consumer>
 );
 const FavoriteStack = createStackNavigator();
@@ -344,34 +403,33 @@ export default function App() {
   };
 
   return (
-    <CourseDetailsProvider>
-      <AuthenProvider>
-        <HomeProvider>
-          <BrowseProvider>
-            <AuthorProvider>
-              <FavoritesProvider>
-                <ProfileProvider>
-                  <ThemeContext.Provider value={{ theme, setTheme }}>
-                    <NavigationContainer>
-                      <Stack.Navigator screenOptions={{ headerShown: false }}>
-                        {
+    <AuthenProvider>
+      <HomeProvider>
+        <BrowseProvider>
+          <AuthorProvider>
+            <FavoritesProvider>
+              <ProfileProvider>
+                <ThemeContext.Provider value={{ theme, setTheme }}>
+                  <NavigationContainer>
+                    <Stack.Navigator screenOptions={{ headerShown: false }}>
+                      {
                  !isLogined()
                    ? <Stack.Screen name={ScreenKey.Authen} component={AuthenStackScreen} />
                    : null
                 }
-                        <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
-                      </Stack.Navigator>
-                    </NavigationContainer>
-                  </ThemeContext.Provider>
-                </ProfileProvider>
-              </FavoritesProvider>
-            </AuthorProvider>
-          </BrowseProvider>
-        </HomeProvider>
+                      <Stack.Screen name={ScreenKey.Main} component={MainStackScreen} />
+                      <Stack.Screen name={ScreenKey.DetailScreen} component={DetailStackScreen} />
+                      <Stack.Screen name={ScreenKey.ProfileMain} component={ProfileStackScreen} />
+                    </Stack.Navigator>
+                  </NavigationContainer>
+                </ThemeContext.Provider>
+              </ProfileProvider>
+            </FavoritesProvider>
+          </AuthorProvider>
+        </BrowseProvider>
+      </HomeProvider>
 
-      </AuthenProvider>
-
-    </CourseDetailsProvider>
+    </AuthenProvider>
   );
 }
 registerRootComponent(App);

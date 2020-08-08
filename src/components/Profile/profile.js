@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/require-default-props */
 /* eslint-disable import/no-cycle */
-import React, { useContext, useEffect , useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -21,9 +21,9 @@ import { removeUserInfo } from '../../storage/storage';
 const Profile = ({
   role, navigation, route
 }) => {
-  //const intentType = route.params.data;
-  //const [isLoadInfo, setLoadInfo] = useState(0);
-  //if (intentType) setLoadInfo(intentType);
+  // const intentType = route.params.data;
+  // const [isLoadInfo, setLoadInfo] = useState(0);
+  // if (intentType) setLoadInfo(intentType);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -40,8 +40,8 @@ const Profile = ({
     profileContext.requestProfile();
   }, []);
   const handleLogout = () => {
-    // removeUserInfo();
-    // navigation.replace(ScreenKey.Login);
+    removeUserInfo();
+    navigation.navigate(ScreenKey.Authen);
   };
   const handleEdit = () => {
     navigation.navigate(ScreenKey.EditProfile, { data: profileContext.state.profile });

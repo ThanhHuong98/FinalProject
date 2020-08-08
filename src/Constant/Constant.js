@@ -52,13 +52,15 @@ export const ScreenKey = {
   SplashScreen: 'Chào mừng',
   Profile: 'Quản ký tài khoản',
   EditProfile: 'Chỉnh sửa',
+  ProfileMain: 'ProfileMain',
+  Splash: 'Splash',
 
   Main: 'Main',
   Home: 'Trang chủ',
   ListCourse: 'Danh sách khoá học',
   AllCourses: 'Danh sách khoá học',
   DetailCourse: 'Chi tiết khoá học',
-  DetailStack: 'Chi tiết',
+  DetailScreen: 'Chi tiết',
 
   Favorite: 'Yêu thích',
   Search: 'Tìm kiếm',

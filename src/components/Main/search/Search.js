@@ -87,7 +87,7 @@ const Search = ({ navigation }) => {
   const [isSearching, setIsSearching] = useState(false);
 
   const onItemClick = (course) => {
-    navigation.navigate(ScreenKey.DetailCourse, { course });
+    navigation.push(ScreenKey.DetailScreen, { screen: ScreenKey.DetailCourse, params: { course } });
   };
 
   const handleChooseItem = (name) => {
