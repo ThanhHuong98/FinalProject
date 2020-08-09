@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import React, { useState } from 'react';
+import React, {} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { themes } from '../../Constant/Constant';
 import Separator from '../Common/Separator/separator-bottom';
-import { ThemeContext } from '../../../App';
+import { ThemeContext, LanguageContext } from '../../../App';
 import Tick from '../../../assets/setting/tick.svg';
 
 const SetTheme = () => {
@@ -25,12 +25,15 @@ const SetTheme = () => {
   };
 
   return (
-    <ThemeContext.Consumer>
+    <LanguageContext.Consumer>
       {
+        ({ lang }) => (
+          <ThemeContext.Consumer>
+            {
         ({ theme, setTheme }) => (
           <View style={{ ...styles.container, backgroundColor: theme.background }}>
             <TouchableOpacity style={styles.itemOption} onPress={() => onDark(theme, setTheme)}>
-              <Text style={{ ...styles.text, color: theme.textColor }}>Tối</Text>
+              <Text style={{ ...styles.text, color: theme.textColor }}>{lang.Dark}</Text>
               {
                   theme === themes.dark
                     ? (<Tick width={15} height={18} style={{ fill: '#0084bc' }} />)
@@ -40,7 +43,7 @@ const SetTheme = () => {
             </TouchableOpacity>
             <Separator />
             <TouchableOpacity style={styles.itemOption} onPress={() => onLight(theme, setTheme)}>
-              <Text style={{ ...styles.text, color: theme.textColor }}>Sáng</Text>
+              <Text style={{ ...styles.text, color: theme.textColor }}>{lang.Light}</Text>
               {
                   theme === themes.light
                     ? (<Tick width={15} height={18} style={{ fill: '#0084bc' }} />)
@@ -50,13 +53,17 @@ const SetTheme = () => {
             </TouchableOpacity>
             <Separator />
             <TouchableOpacity style={styles.itemOption} onPress={null}>
-              <Text style={{ ...styles.text, color: theme.textColor }}>Hệ thống</Text>
+              <Text style={{ ...styles.text, color: theme.textColor }}>{lang.System}</Text>
             </TouchableOpacity>
             <Separator />
           </View>
         )
         }
-    </ThemeContext.Consumer>
+          </ThemeContext.Consumer>
+
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 

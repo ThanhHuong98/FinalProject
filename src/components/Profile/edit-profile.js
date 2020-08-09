@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable global-require */
 /* eslint-disable import/no-cycle */
@@ -14,7 +15,7 @@ import {
 import PropTypes from 'prop-types';
 import * as ImagePicker from 'expo-image-picker';
 import AnimatedLoader from 'react-native-animated-loader';
-import { ThemeContext } from '../../../App';
+import { ThemeContext, LanguageContext } from '../../../App';
 import {
   Colors, FontSize, Dimension, ScreenKey
 } from '../../Constant/Constant';
@@ -40,9 +41,9 @@ const EditProfile = ({
       name,
     });
   };
-  const handleInputPhone = (phone) => {
+  const handleInputPhone = (phone, lang) => {
     if (!isCheckAviablePhone(phone)) {
-      setError('Số điện thoại không hợp lệ, vui lòng nhập lại!');
+      setError(lang.PhoneInValid);
     } else {
       setEditInfo({
         ...editInfo,
@@ -86,19 +87,16 @@ const EditProfile = ({
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={() => onSave()}>
-          <Text style={{ ...styles.text, color: Colors.blue, marginRight: 10, }}>Lưu thay đổi</Text>
-        </TouchableOpacity>
+        <LanguageContext>
+          {
+            ({ lang }) => (
+              <TouchableOpacity onPress={() => onSave()}>
+                <Text style={{ ...styles.text, color: Colors.blue, marginRight: 10, }}>{lang.Save}</Text>
+              </TouchableOpacity>
+            )
+          }
+        </LanguageContext>
       ),
-      // headerLeft: () => (
-      //   <TouchableOpacity onPress={() => onBack()}>
-      //     <Image
-      //       style={styles.iconHeader}
-      //       source={require('../../../assets/authen/back.png')}
-      //     />
-
-      //   </TouchableOpacity>
-      // )
     });
   }, [editInfo]);
   useEffect(() => {
@@ -116,75 +114,81 @@ const EditProfile = ({
     openImagePickerAsync();
   };
   return (
-    <ThemeContext.Consumer>
+    <LanguageContext.Consumer>
       {
-            ({ theme }) => (
-              <View style={{ ...styles.container, backgroundColor: theme.background }}>
-                {
-                    profileContext.state.urlAvatar === 'FAILED'
-                      ? (
-                        <Text style={{ ...styles.textEror, marginLeft: 20, marginTop: 15 }}>
-                          Đã có lỗi xảy ra khi tải lên hình ảnh, vui lòng kiểm tra lại!
-                        </Text>
-                      )
-                      : (
-                        profileContext.state.urlAvatar !== ''
+        ({ lang }) => (
+          <ThemeContext.Consumer>
+            {
+                ({ theme }) => (
+                  <View style={{ ...styles.container, backgroundColor: theme.background }}>
+                    {
+                        profileContext.state.urlAvatar === 'FAILED'
                           ? (
-                            <Text style={{ ...styles.textSuccess, marginLeft: 20, marginTop: 15 }}>
-                              Tải lên hình ảnh thành công!
+                            <Text style={{ ...styles.textEror, marginLeft: 20, marginTop: 15 }}>
+                              {lang.UploadAvatarError}
+                            </Text>
+                          )
+                          : (
+                            profileContext.state.urlAvatar !== ''
+                              ? (
+                                <Text style={{ ...styles.textSuccess, marginLeft: 20, marginTop: 15 }}>
+                                  {lang.UploadAvatarSuccess}
+                                </Text>
+                              )
+                              : null
+                          )
+                      }
+                    <TouchableOpacity style={styles.avatarContainer} onPress={() => onChnageAvatar()}>
+                      <Image
+                        style={styles.imageCricle}
+                        source={{ uri: editInfo.selectedImage !== null ? editInfo.selectedImage : userInfo.avatar }}
+                      />
+                      <Text style={styles.textAction}>{lang.UpdateAvatar}</Text>
+                    </TouchableOpacity>
+                    <Separator />
+                    <View style={styles.extraInfo}>
+                      <Text style={{ ...styles.label, color: theme.textColor }}>{lang.Name}</Text>
+                      <TextInput
+                        style={{ ...styles.input, color: theme.textColor }}
+                        onChangeText={(name) => handleInputName(name)}
+                        defaultValue={editInfo.name}
+                      />
+                    </View>
+                    <Separator />
+                    <View style={styles.extraInfo}>
+                      <Text style={{ ...styles.label, color: theme.textColor }}>{lang.Phone}</Text>
+                      <TextInput
+                        style={{ ...styles.input, color: theme.textColor }}
+                        onChangeText={(phone) => handleInputPhone(phone, lang)}
+                        defaultValue={editInfo.phone}
+                        keyboardType="numeric"
+                      />
+                      {
+                        error
+                          ? (
+                            <Text style={styles.textEror}>
+                              {error}
                             </Text>
                           )
                           : null
-                      )
-                  }
-                <TouchableOpacity style={styles.avatarContainer} onPress={() => onChnageAvatar()}>
-                  <Image
-                    style={styles.imageCricle}
-                    source={{ uri: editInfo.selectedImage !== null ? editInfo.selectedImage : userInfo.avatar }}
-                  />
-                  <Text style={styles.textAction}>Chỉnh sửa hình ảnh</Text>
-                </TouchableOpacity>
-                <Separator />
-                <View style={styles.extraInfo}>
-                  <Text style={{ ...styles.label, color: theme.textColor }}>Tên</Text>
-                  <TextInput
-                    style={{ ...styles.input, color: theme.textColor }}
-                    onChangeText={(name) => handleInputName(name)}
-                    defaultValue={editInfo.name}
-                  />
-                </View>
-                <Separator />
-                <View style={styles.extraInfo}>
-                  <Text style={{ ...styles.label, color: theme.textColor }}>Số điện thoại</Text>
-                  <TextInput
-                    style={{ ...styles.input, color: theme.textColor }}
-                    onChangeText={(phone) => handleInputPhone(phone)}
-                    defaultValue={editInfo.phone}
-                    keyboardType="numeric"
-                  />
-                  {
-                    error
-                      ? (
-                        <Text style={styles.textEror}>
-                          {error}
-                        </Text>
-                      )
-                      : null
-                  }
-                </View>
-                <Separator />
-                <AnimatedLoader
-                  visible={profileContext.state.isLoading}
-                  overlayColor="rgba(255,255,255,0.75)"
-                  source={require('../../../assets/common/loader.json')}
-                  animationStyle={styles.lottie}
-                  speed={2}
-                />
-              </View>
-            )
-            }
-    </ThemeContext.Consumer>
+                      }
+                    </View>
+                    <Separator />
+                    <AnimatedLoader
+                      visible={profileContext.state.isLoading}
+                      overlayColor="rgba(255,255,255,0.75)"
+                      source={require('../../../assets/common/loader.json')}
+                      animationStyle={styles.lottie}
+                      speed={2}
+                    />
+                  </View>
+                )
+                }
+          </ThemeContext.Consumer>
 
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 

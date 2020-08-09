@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/require-default-props */
 /* eslint-disable import/no-cycle */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { ThemeContext } from '../../../App';
+import { ThemeContext, LanguageContext } from '../../../App';
 import {
   Colors, FontSize, Dimension, ScreenKey
 } from '../../Constant/Constant';
@@ -32,14 +32,26 @@ const Profile = ({
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={() => handleLogout()}>
-          <Text style={{ ...styles.text, color: Colors.blue, marginRight: 10, }}>Đăng xuất</Text>
-        </TouchableOpacity>
+        <LanguageContext>
+          {
+            ({ lang }) => (
+              <TouchableOpacity onPress={() => handleLogout()}>
+                <Text style={{ ...styles.text, color: Colors.blue, marginRight: 10, }}>{lang.Signout}</Text>
+              </TouchableOpacity>
+            )
+          }
+        </LanguageContext>
       ),
       headerLeft: () => (
-        <TouchableOpacity onPress={() => handleBack()}>
-          <Text style={{ ...styles.text, color: Colors.blue, marginLeft: 10, }}>Trở về</Text>
-        </TouchableOpacity>
+        <LanguageContext>
+          {
+            ({ lang }) => (
+              <TouchableOpacity onPress={() => handleBack()}>
+                <Text style={{ ...styles.text, color: Colors.blue, marginLeft: 10, }}>{lang.Back}</Text>
+              </TouchableOpacity>
+            )
+          }
+        </LanguageContext>
       ),
     });
   }, [navigation]);
@@ -52,45 +64,60 @@ const Profile = ({
     navigation.navigate(ScreenKey.EditProfile, { data: profileContext.state.profile });
   };
   return (
-    <ThemeContext.Consumer>
+    <LanguageContext.Consumer>
       {
-            ({ theme }) => (
-              <View style={{ ...styles.container, backgroundColor: theme.background }}>
-                <View style={styles.avatarContainer}>
-                  <Image
-                    style={styles.imageCricle}
-                    source={{ uri: profileContext.state.profile.avatar }}
-                  />
-                  <Text style={{ ...styles.title, color: theme.textColor }}>{profileContext.state.profile.name}</Text>
-                  <Text style={{ ...styles.text, color: theme.textColor }}>{role}</Text>
-                </View>
-                <View style={styles.extraInfo}>
-                  <View style={styles.info}>
-                    <Text style={{ ...styles.label, color: theme.textColor }}>Email:   </Text>
-                    <Text style={{ ...styles.text, color: theme.textColor }}>{profileContext.state.profile.email}</Text>
-                  </View>
-                  <View style={styles.info}>
-                    <Text style={{ ...styles.label, color: theme.textColor }}>Số điện thoại:   </Text>
-                    <Text style={{ ...styles.text, color: theme.textColor }}>{profileContext.state.profile.phone}</Text>
-                  </View>
-                  <View style={styles.info}>
-                    <Text style={{ ...styles.label, color: theme.textColor }}>Ngày tham gia:   </Text>
-                    <Text style={{ ...styles.text, color: theme.textColor }}>26/5/2020</Text>
-                  </View>
-                </View>
-                <View style={styles.solidBtn}>
-                  <OutLineButton
-                    title="Chỉnh sửa thông tin"
-                    backgroundColor={Colors.blue}
-                    onChooseOption={() => handleEdit()}
-                  />
+        ({ lang }) => (
+          <ThemeContext.Consumer>
+            {
+                ({ theme }) => (
+                  <View style={{ ...styles.container, backgroundColor: theme.background }}>
+                    <View style={styles.avatarContainer}>
+                      <Image
+                        style={styles.imageCricle}
+                        source={{ uri: profileContext.state.profile.avatar }}
+                      />
+                      <Text style={{ ...styles.title, color: theme.textColor }}>{profileContext.state.profile.name}</Text>
+                      <Text style={{ ...styles.text, color: theme.textColor }}>{role}</Text>
+                    </View>
+                    <View style={styles.extraInfo}>
+                      <View style={styles.info}>
+                        <Text style={{ ...styles.label, color: theme.textColor }}>
+                          {lang.Email}
+                          {':'}
+                          {'  '}
+                        </Text>
+                        <Text style={{ ...styles.text, color: theme.textColor }}>{profileContext.state.profile.email}</Text>
+                      </View>
+                      <View style={styles.info}>
+                        <Text style={{ ...styles.label, color: theme.textColor }}>
+                          {lang.Phone}
+                          {' '}
+                          {':'}
+                          {'  '}
+                        </Text>
+                        <Text style={{ ...styles.text, color: theme.textColor }}>{profileContext.state.profile.phone}</Text>
+                      </View>
+                      <View style={styles.info}>
+                        <Text style={{ ...styles.label, color: theme.textColor }}>Ngày tham gia:   </Text>
+                        <Text style={{ ...styles.text, color: theme.textColor }}>26/5/2020</Text>
+                      </View>
+                    </View>
+                    <View style={styles.solidBtn}>
+                      <OutLineButton
+                        title={lang.UpdateInfo}
+                        backgroundColor={Colors.blue}
+                        onChooseOption={() => handleEdit()}
+                      />
 
-                </View>
-              </View>
-            )
-            }
-    </ThemeContext.Consumer>
+                    </View>
+                  </View>
+                )
+                }
+          </ThemeContext.Consumer>
 
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 

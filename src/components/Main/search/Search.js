@@ -11,7 +11,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import AnimatedLoader from 'react-native-animated-loader';
 import ItemRecentSearch from './ItemRecentSearch';
 import { Colors, ScreenKey } from '../../../Constant/Constant';
-import { ThemeContext } from '../../../../App';
+import { ThemeContext, LanguageContext } from '../../../../App';
 import { SearchContext } from '../../providers/search';
 import ClearIcon from '../../../../assets/search/clear-icon.png';
 import ListCourses from '../../Courses/ListCourses/list-courses';
@@ -81,7 +81,6 @@ const SearchBar = ({
   );
 };
 const Search = ({ navigation }) => {
-
   const searchContext = useContext(SearchContext);
   const [searchKey, setSearchKey] = useState('');
   const [isSearching, setIsSearching] = useState(false);
@@ -110,8 +109,11 @@ const Search = ({ navigation }) => {
     setSearchKey(value);
   };
   return (
-    <ThemeContext.Consumer>
+    <LanguageContext.Consumer>
       {
+        ({ lang }) => (
+          <ThemeContext.Consumer>
+            {
     ({ theme }) => (
       <View style={{ ...styles.container, backgroundColor: theme.background }}>
         <SearchBar
@@ -151,7 +153,7 @@ const Search = ({ navigation }) => {
                       : null
                   }
                   <View style={styles.block}>
-                    <Text style={{ ...styles.blockTitle, color: theme.textColor }}>Tìm kiếm phổ biến</Text>
+                    <Text style={{ ...styles.blockTitle, color: theme.textColor }}>{lang.PopularSearch}</Text>
                     <View style={styles.interestsBlock}>
                       {
                         searchContext.state.populars.map((item, index) => (
@@ -187,7 +189,11 @@ const Search = ({ navigation }) => {
       </View>
     )
   }
-    </ThemeContext.Consumer>
+          </ThemeContext.Consumer>
+
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 

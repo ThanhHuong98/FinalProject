@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-sequences */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable global-require */
@@ -12,6 +13,7 @@ import {
 import AnimatedLoader from 'react-native-animated-loader';
 import CustomInput from '../../Common/CustomInput/custom-input';
 import ButtonSolid from '../../Common/SolidButton/solid-button';
+import { LanguageContext } from '../../../../App';
 import {
   Colors,
   FontSize,
@@ -77,8 +79,8 @@ const Login = ({ navigation }) => {
     });
   }, [navigation]);
 
-  const handleLogin = () => {
-    const msgCheckInfo = checkLoginInfo(loginInfo.email, loginInfo.password);
+  const handleLogin = (lang) => {
+    const msgCheckInfo = checkLoginInfo(loginInfo.email, loginInfo.password, lang);
     if (msgCheckInfo) {
       setMsg(msgCheckInfo);
     } else {
@@ -86,21 +88,23 @@ const Login = ({ navigation }) => {
     }
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.displayCenter}>
-        <Text style={styles.title}>Đăng Nhập</Text>
-        <Text style={styles.instruction}>
-          Nhập thông tin gồm tên đăng nhập email và mật khẩu của bạn để đăng nhập vào hệ thống.
-        </Text>
-      </View>
+    <LanguageContext.Consumer>
       {
+        ({ lang }) => (
+          <View style={styles.container}>
+            <View style={styles.displayCenter}>
+              <Text style={styles.title}>{lang.SignIn}</Text>
+              <Text style={styles.instruction}>
+                {lang.SignInDesc}
+              </Text>
+            </View>
+            {
         msg
           ? (
             msg === 2
               ? (
                 <Text style={styles.textEror}>
-                  Đăng nhập thất bại,
-                  Email hoặc mật khẩu không hợp lệ hoặc chưa kích hoạt tài khoản
+                  {lang.SignInError}
                 </Text>
               )
               : (
@@ -111,42 +115,46 @@ const Login = ({ navigation }) => {
           )
           : null
       }
-      <CustomInput
-        label="Email"
-        onChangeValue={(email) => handleInputEmail(email)}
-      />
-      <View style={styles.separator} />
-      <CustomInput
-        label="Mật khẩu"
-        onChangeValue={(password) => handleInputPassword(password)}
-        isSecure
-      />
-      <View style={styles.solidBtn}>
-        <ButtonSolid
-          title="Đăng nhập"
-          backgroundColor={Colors.blue}
-          onChooseOption={() => handleLogin()}
-        />
-      </View>
-      <TouchableOpacity
-        onPress={onHelpMore}
-      >
-        <Text style={styles.text}>Bạn quên mật khẩu ?</Text>
-      </TouchableOpacity>
-      <View style={styles.outlineBtn}>
-        <OutLineButton
-          title="Đăng nhập với Google"
-          onChooseOption={onSubscribe}
-        />
-      </View>
-      <AnimatedLoader
-        visible={authenContext.state.isLoading}
-        overlayColor="rgba(255,255,255,0.75)"
-        source={require('../../../../assets/common/loader.json')}
-        animationStyle={styles.lottie}
-        speed={2}
-      />
-    </View>
+            <CustomInput
+              label="Email"
+              onChangeValue={(email) => handleInputEmail(email)}
+            />
+            <View style={styles.separator} />
+            <CustomInput
+              label={lang.Password}
+              onChangeValue={(password) => handleInputPassword(password)}
+              isSecure
+            />
+            <View style={styles.solidBtn}>
+              <ButtonSolid
+                title={lang.SignIn}
+                backgroundColor={Colors.blue}
+                onChooseOption={() => handleLogin(lang)}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={onHelpMore}
+            >
+              <Text style={styles.text}>{lang.ForgotPassAsk}</Text>
+            </TouchableOpacity>
+            <View style={styles.outlineBtn}>
+              <OutLineButton
+                title={lang.SignInGoogle}
+                onChooseOption={onSubscribe}
+              />
+            </View>
+            <AnimatedLoader
+              visible={authenContext.state.isLoading}
+              overlayColor="rgba(255,255,255,0.75)"
+              source={require('../../../../assets/common/loader.json')}
+              animationStyle={styles.lottie}
+              speed={2}
+            />
+          </View>
+
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 const styles = StyleSheet.create({

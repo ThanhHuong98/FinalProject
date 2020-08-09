@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import Separator from '../Common/Separator/separator-bottom';
-import { ThemeContext } from '../../../App';
+import { ThemeContext, LanguageContext } from '../../../App';
 import ArrowDark from '../../../assets/setting/next-dark.svg';
 import ArrowLight from '../../../assets/setting/next-light.svg';
 
@@ -24,10 +24,16 @@ const Setting = ({ navigation }) => {
   const settingThemes = () => {
     navigation.navigate(ScreenKey.SetTheme);
   };
+  const settingLanguge = () => {
+    navigation.navigate(ScreenKey.SetLanguage);
+  };
 
   return (
-    <ThemeContext.Consumer>
+    <LanguageContext.Consumer>
       {
+        ({ lang }) => (
+          <ThemeContext.Consumer>
+            {
         ({ theme }) => (
           <View style={{ ...styles.container, backgroundColor: theme.background }}>
             <TouchableOpacity style={styles.itemOption} onPress={() => settingThemes()}>
@@ -36,7 +42,7 @@ const Setting = ({ navigation }) => {
                   ? (<SunDark width={15} height={18} />)
                   : (<SunLight width={15} height={18} />)
               }
-              <Text style={{ ...styles.text, color: theme.textColor }}>Chế độ xem</Text>
+              <Text style={{ ...styles.text, color: theme.textColor }}>{lang.ChangeTheme}</Text>
               {
                   theme === themes.light
                     ? (<ArrowDark width={15} height={18} />)
@@ -44,13 +50,13 @@ const Setting = ({ navigation }) => {
                 }
             </TouchableOpacity>
             <Separator />
-            <TouchableOpacity style={styles.itemOption}>
+            <TouchableOpacity style={styles.itemOption} onPress={() => settingLanguge()}>
               {
                 theme === themes.light
                   ? (<GlobalDark width={15} height={18} />)
                   : (<GlobalLight width={15} height={18} />)
               }
-              <Text style={{ ...styles.text, color: theme.textColor }}>Ngôn ngữ</Text>
+              <Text style={{ ...styles.text, color: theme.textColor }}>{lang.ChangeLang}</Text>
               {
                   theme === themes.light
                     ? (<ArrowDark width={15} height={18} />)
@@ -61,7 +67,11 @@ const Setting = ({ navigation }) => {
           </View>
         )
         }
-    </ThemeContext.Consumer>
+          </ThemeContext.Consumer>
+
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 const styles = StyleSheet.create({

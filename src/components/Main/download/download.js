@@ -6,7 +6,7 @@ import {
   StyleSheet, View, Text, Image
 } from 'react-native';
 import { Colors, FontSize, themes } from '../../../Constant/Constant';
-import { ThemeContext } from '../../../../App';
+import { ThemeContext, LanguageContext } from '../../../../App';
 // import ListFavorites from './ListFavorite/list-favorite';
 import { FavoritesContext } from '../../providers/favorites';
 
@@ -16,8 +16,11 @@ const Download = ({ navigation }) => {
     // favoritesContext.requestFavorites();
   }, []);
   return (
-    <ThemeContext.Consumer>
+    <LanguageContext.Consumer>
       {
+        ({ lang }) => (
+          <ThemeContext.Consumer>
+            {
       ({ theme }) => (
         <View style={{ ...styles.container, backgroundColor: theme.background }}>
           {/* {
@@ -41,14 +44,17 @@ const Download = ({ navigation }) => {
                 : (<Image source={require('../../../../assets/course-detail/download-icon-dark.png')} style={styles.image} />)
             }
             <Text style={styles.decription}>
-              Bạn chưa có khoá học tải xuống
+              {lang.NoCourses}
             </Text>
           </View>
         </View>
       )
     }
-    </ThemeContext.Consumer>
+          </ThemeContext.Consumer>
 
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 

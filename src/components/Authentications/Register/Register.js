@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-sequences */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
@@ -19,6 +20,8 @@ import {
 } from '../../../Constant/Constant';
 import { AuthenContext } from '../../providers/authen';
 import { checkRegisterInfo } from '../../../core/services/checkAuthen';
+import { LanguageContext } from '../../../../App';
+import { lang } from 'moment';
 
 const Register = ({ navigation }) => {
   const [msg, setMsg] = useState('');
@@ -48,8 +51,8 @@ const Register = ({ navigation }) => {
     phone: '',
   });
 
-  const onCreateAccount = () => {
-    const msgCheckInfo = checkRegisterInfo(registerInfo.username, registerInfo.password, registerInfo.email, registerInfo.phone);
+  const onCreateAccount = ( lang ) => {
+    const msgCheckInfo = checkRegisterInfo(registerInfo.username, registerInfo.password, registerInfo.email, registerInfo.phone, lang);
     if (msgCheckInfo) {
       setMsg(msgCheckInfo);
     } else {
@@ -64,74 +67,81 @@ const Register = ({ navigation }) => {
     }
   }, [authenContext.state.registerRespone.message]);
   return (
-    <View style={styles.container}>
-      <View style={styles.displayCenter}>
-        <Text style={styles.title}>Đăng Ký</Text>
-        <Text style={styles.instruction}>
-          Nhập thông tin gồm tên đăng nhập, mật khẩu, email, số điện thoại của bạn để đăng ký vào hệ thống.
-        </Text>
-      </View>
+    <LanguageContext.Consumer>
       {
+        ({ lang }) => (
+          <View style={styles.container}>
+            <View style={styles.displayCenter}>
+              <Text style={styles.title}>{lang.MSignUp}</Text>
+              <Text style={styles.instruction}>
+                {lang.SignUpDesc}
+              </Text>
+            </View>
+            {
         msg
           ? (
             msg === 'FAILED'
-              ? (<Text style={styles.textEror}>Đăng ký thất bại, email hoặc số điện thoại đã được sử dụng.</Text>)
+              ? (<Text style={styles.textEror}>{lang.SignUpFail}</Text>)
               : (msg === 'OK'
-                ? (<Text style={styles.textSuccess}>Đăng ký thành công!</Text>)
+                ? (<Text style={styles.textSuccess}>{lang.SignUpSucess}</Text>)
                 : <Text style={styles.textEror}>{msg}</Text>)
           )
           : null
       }
-      <View style={styles.topDisplay}>
-        <View style={styles.sideDisplay}>
-          <CustomInput
-            label="Tên đăng nhập"
-            onChangeValue={(value) => setRegisterInfo({ ...registerInfo, username: value })}
-            value={registerInfo.username}
-          />
-        </View>
-        <View style={styles.separator} />
-        <View style={styles.sideDisplay}>
-          <CustomInput
-            label="Mật khẩu"
-            onChangeValue={(value) => setRegisterInfo({ ...registerInfo, password: value })}
-            value={registerInfo.password}
-            isSecure
-          />
-        </View>
-      </View>
-      <View style={{ marginTop: 15 }}>
-        <CustomInput
-          label="Email"
-          onChangeValue={(value) => setRegisterInfo({ ...registerInfo, email: value })}
-          value={registerInfo.email}
-        />
-      </View>
-      <View style={{ marginTop: 15 }}>
-        <CustomInput
-          label="Số điện thoại"
-          onChangeValue={(value) => setRegisterInfo({ ...registerInfo, phone: value })}
-          value={registerInfo.phone}
-          keyboardType="numeric"
-        />
-      </View>
-      <View style={{ marginTop: 15 }}>
-        <SolidButton
-          title="Tạo tài khoản"
-          backgroundColor={Colors.blue}
-          onChooseOption={() => onCreateAccount()}
-        />
-      </View>
-      <View>
-        <AnimatedLoader
-          visible={authenContext.state.isLoading}
-          overlayColor="rgba(0,0,0,0.65)"
-          source={require('../../../../assets/common/loader.json')}
-          animationStyle={styles.loading}
-          speed={2}
-        />
-      </View>
-    </View>
+            <View style={styles.topDisplay}>
+              <View style={styles.sideDisplay}>
+                <CustomInput
+                  label={lang.Name}
+                  onChangeValue={(value) => setRegisterInfo({ ...registerInfo, username: value })}
+                  value={registerInfo.username}
+                />
+              </View>
+              <View style={styles.separator} />
+              <View style={styles.sideDisplay}>
+                <CustomInput
+                  label={lang.Password}
+                  onChangeValue={(value) => setRegisterInfo({ ...registerInfo, password: value })}
+                  value={registerInfo.password}
+                  isSecure
+                />
+              </View>
+            </View>
+            <View style={{ marginTop: 15 }}>
+              <CustomInput
+                label={lang.Email}
+                onChangeValue={(value) => setRegisterInfo({ ...registerInfo, email: value })}
+                value={registerInfo.email}
+              />
+            </View>
+            <View style={{ marginTop: 15 }}>
+              <CustomInput
+                label={lang.Phone}
+                onChangeValue={(value) => setRegisterInfo({ ...registerInfo, phone: value })}
+                value={registerInfo.phone}
+                keyboardType="numeric"
+              />
+            </View>
+            <View style={{ marginTop: 15 }}>
+              <SolidButton
+                title={lang.CreateAccount}
+                backgroundColor={Colors.blue}
+                onChooseOption={() => onCreateAccount(lang)}
+              />
+            </View>
+            <View>
+              <AnimatedLoader
+                visible={authenContext.state.isLoading}
+                overlayColor="rgba(0,0,0,0.65)"
+                source={require('../../../../assets/common/loader.json')}
+                animationStyle={styles.loading}
+                speed={2}
+              />
+            </View>
+          </View>
+
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 

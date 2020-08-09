@@ -6,7 +6,7 @@ import {
   StyleSheet, View, Text, Image
 } from 'react-native';
 import { Colors, FontSize, ScreenKey } from '../../../Constant/Constant';
-import { ThemeContext } from '../../../../App';
+import { ThemeContext, LanguageContext } from '../../../../App';
 import ListFavorites from './ListFavorite/list-favorite';
 import { FavoritesContext } from '../../providers/favorites';
 
@@ -19,8 +19,11 @@ const Favorites = ({ navigation }) => {
     favoritesContext.requestFavorites();
   }, [navigation]);
   return (
-    <ThemeContext.Consumer>
+    <LanguageContext>
       {
+        ({ lang }) => (
+          <ThemeContext.Consumer>
+            {
       ({ theme }) => (
         <View style={{ ...styles.container, backgroundColor: theme.background }}>
           {
@@ -29,7 +32,7 @@ const Favorites = ({ navigation }) => {
                 <View style={styles.center}>
                   <Image source={require('../../../../assets/course-detail/like-fill-icon.png')} style={styles.image} />
                   <Text style={styles.decription}>
-                    Bạn chưa có khoá học yêu thích
+                    {lang.NoCourses}
                   </Text>
                 </View>
               )
@@ -43,8 +46,11 @@ const Favorites = ({ navigation }) => {
         </View>
       )
     }
-    </ThemeContext.Consumer>
+          </ThemeContext.Consumer>
 
+        )
+      }
+    </LanguageContext>
   );
 };
 

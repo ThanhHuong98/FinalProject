@@ -17,6 +17,7 @@ import {
 } from '../../../Constant/Constant';
 import { AuthenContext } from '../../providers/authen';
 import { isCheckAvailableEmail } from '../../../core/services/checkAuthen';
+import { LanguageContext } from '../../../../App';
 
 const ForgotPassword = ({ navigation }) => {
   const [msg, setMsg] = useState('');
@@ -44,9 +45,9 @@ const ForgotPassword = ({ navigation }) => {
     });
   }, [navigation]);
   const [email, setTextEmail] = useState('');
-  const onSendMail = () => {
+  const onSendMail = (lang) => {
     if (!isCheckAvailableEmail(email)) {
-      setMsg('Email không đúng hợp lệ, vui lòng nhập lại!');
+      setMsg(lang.EmalInValid);
     } else {
       authenContext.resetPassByEmail(email);
     }
@@ -57,54 +58,59 @@ const ForgotPassword = ({ navigation }) => {
       // navigation.navigate(ScreenKey.Login);
     }
   }, [authenContext.state.resetStatus]);
-
-  console.log('Message Forgot: ', msg);
   return (
-    <View style={styles.container}>
-      <View style={styles.primaryDisplay}>
-        <Text style={styles.title}>Quên Mật Khẩu</Text>
-        <Text style={styles.instruction}>
-          Nhập Email đăng ký của bạn, và chúng tôi sẽ gửi link kích hoạt lại mật khẩu cho bạn qua email.
-        </Text>
-        {
+    <LanguageContext.Consumer>
+      {
+        ({ lang }) => (
+          <View style={styles.container}>
+            <View style={styles.primaryDisplay}>
+              <Text style={styles.title}>{lang.ForgotPass}</Text>
+              <Text style={styles.instruction}>
+                {lang.ForgotPassDesc}
+              </Text>
+              {
         msg
           ? (
             msg === 2
-              ? (<Text style={styles.textEror}>Đã xảy ra lỗi khi gửi email hoặc email chưa đăng ký</Text>)
+              ? (<Text style={styles.textEror}>{lang.ForgotPassError}</Text>)
               : (msg === 1
-                ? (<Text style={styles.textSuccess}>Email đã được gửi đi, bạn vui lòng mở email để tiến hành thay đổi mật khẩu.</Text>)
+                ? (<Text style={styles.textSuccess}>{lang.ForgotPassSucess}</Text>)
                 : <Text style={styles.textEror}>{msg}</Text>)
           )
           : null
       }
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(text) => setTextEmail(text)}
-          defaultValue={email}
-        />
-        <View style={styles.buttonSolidBlue}>
-          <TouchableOpacity
-            onPress={() => onSendMail()}
-          >
-            <Text style={styles.textPrimary}>Gửi email</Text>
-          </TouchableOpacity>
-        </View>
-        {
+              <Text style={styles.label}>{lang.Email}</Text>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={(text) => setTextEmail(text)}
+                defaultValue={email}
+              />
+              <View style={styles.buttonSolidBlue}>
+                <TouchableOpacity
+                  onPress={() => onSendMail(lang)}
+                >
+                  <Text style={styles.textPrimary}>{lang.SendEmail}</Text>
+                </TouchableOpacity>
+              </View>
+              {
           msg === 1
             ? (
               <View style={styles.buttonSolidGrey}>
                 <TouchableOpacity
                   onPress={() => onLogin()}
                 >
-                  <Text style={styles.textPrimary}>Quay lại màn hình Đăng nhập</Text>
+                  <Text style={styles.textPrimary}>{lang.ReturnLogin}</Text>
                 </TouchableOpacity>
               </View>
             )
             : null
         }
-      </View>
-    </View>
+            </View>
+          </View>
+
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 

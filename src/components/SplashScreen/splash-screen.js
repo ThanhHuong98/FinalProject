@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable global-require */
 import React from 'react';
 import {
@@ -12,6 +13,7 @@ import {
   ScreenKey
 } from '../../Constant/Constant';
 import OutLineButton from '../Common/OutLineButton/outLine-button';
+import { LanguageContext } from '../../../App';
 
 const SplashScreen = ({ navigation }) => {
   const onLogin = () => {
@@ -25,31 +27,38 @@ const SplashScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.bgSplash}
-        source={require('../../../assets/bg-splash.png')}
-      />
-      <View style={{ paddingTop: 10 }}>
-        <ButtonSolid
-          title="Đăng nhập"
-          backgroundColor={Colors.blue}
-          onChooseOption={onLogin}
-        />
-      </View>
-      <View style={{ paddingTop: 10 }}>
-        <OutLineButton
-          title="Đăng ký hệ thống"
-          onChooseOption={onSubscribe}
-        />
-      </View>
-      <View style={{ paddingTop: 10 }}>
-        <OutLineButton
-          title="Kích hoạt tài khoản"
-          onChooseOption={onActive}
-        />
-      </View>
-    </View>
+    <LanguageContext.Consumer>
+      {
+        ({ lang }) => (
+          <View style={styles.container}>
+            <Image
+              style={styles.bgSplash}
+              source={require('../../../assets/bg-splash.png')}
+            />
+            <View style={{ paddingTop: 10 }}>
+              <ButtonSolid
+                title={lang.SignIn}
+                backgroundColor={Colors.blue}
+                onChooseOption={onLogin}
+              />
+            </View>
+            <View style={{ paddingTop: 10 }}>
+              <OutLineButton
+                title={lang.SignUp}
+                onChooseOption={onSubscribe}
+              />
+            </View>
+            <View style={{ paddingTop: 10 }}>
+              <OutLineButton
+                title={lang.ActiveAccount}
+                onChooseOption={onActive}
+              />
+            </View>
+          </View>
+
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 const styles = StyleSheet.create({

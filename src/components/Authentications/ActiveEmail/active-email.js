@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
 /* eslint-disable global-require */
@@ -17,6 +18,7 @@ import {
 } from '../../../Constant/Constant';
 import { AuthenContext } from '../../providers/authen';
 import { isCheckAvailableEmail } from '../../../core/services/checkAuthen';
+import { LanguageContext } from '../../../../App';
 
 const ActiveEmail = ({ route, navigation }) => {
   const intentType = route.params.intenType;
@@ -51,11 +53,11 @@ const ActiveEmail = ({ route, navigation }) => {
     });
   }, [navigation]);
   const [email, setTextEmail] = useState('');
-  const onSendMail = () => {
+  const onSendMail = (lang) => {
     if (email === '') {
-      setMsg('Email không được để trống.');
+      setMsg(lang.EmailNotEmpty);
     } else if (!isCheckAvailableEmail(email)) {
-      setMsg('Email không đúng hợp lệ, vui lòng nhập lại!');
+      setMsg(lang.EmalInValid);
     } else {
       authenContext.activeAccount(email);
     }
@@ -66,47 +68,48 @@ const ActiveEmail = ({ route, navigation }) => {
       // navigation.navigate(ScreenKey.Login);
     }
   }, [authenContext.state.activeStatus]);
-
-  console.log('Message Forgot: ', msg);
   return (
-    <View style={styles.container}>
-      <View style={styles.primaryDisplay}>
-        <Text style={styles.title}>Kích Hoạt Tài Khoản</Text>
-        <Text style={styles.instruction}>
-          Nhập Email đăng ký của bạn, chúng ta sẽ kích hoạt tài khoản cho bạn.
-        </Text>
-        {
+    <LanguageContext.Consumer>
+      {
+        ({ lang }) => (
+          <View style={styles.container}>
+            <View style={styles.primaryDisplay}>
+              <Text style={styles.title}>{lang.ActiveAccountTitle}</Text>
+              <Text style={styles.instruction}>
+                {lang.ActiveDesc}
+              </Text>
+              {
         msg
           ? (
             msg === 2
-              ? (<Text style={styles.textEror}>Tài khoản của bạn đã được kích hoạt hoặc tài khoản không tồn tại.</Text>)
+              ? (<Text style={styles.textEror}>{lang.ActiveError}</Text>)
               : (msg === 1
-                ? (<Text style={styles.textSuccess}>Gửi email kích hoạt tài khoản thành công. Vui lòng kiểm tra hộp thoại email để xác nhận kích hoạt tài khoản.</Text>)
+                ? (<Text style={styles.textSuccess}>{lang.ActiveSucess}</Text>)
                 : <Text style={styles.textEror}>{msg}</Text>)
           )
           : null
       }
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(text) => setTextEmail(text)}
-          defaultValue={email}
-        />
-        <View style={styles.buttonSolidBlue}>
-          <TouchableOpacity
-            onPress={() => onSendMail()}
-          >
-            <Text style={styles.textPrimary}>Kích Hoạt</Text>
-          </TouchableOpacity>
-        </View>
-        {
+              <Text style={styles.label}>{lang.Email}</Text>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={(text) => setTextEmail(text)}
+                defaultValue={email}
+              />
+              <View style={styles.buttonSolidBlue}>
+                <TouchableOpacity
+                  onPress={() => onSendMail(lang)}
+                >
+                  <Text style={styles.textPrimary}>{lang.Activate}</Text>
+                </TouchableOpacity>
+              </View>
+              {
           msg === 1
             ? (
               <View style={styles.buttonSolidGrey}>
                 <TouchableOpacity
                   onPress={() => onLogin()}
                 >
-                  <Text style={styles.textPrimary}>Quay lại màn hình Đăng nhập</Text>
+                  <Text style={styles.textPrimary}>{lang.ReturnLogin}</Text>
                 </TouchableOpacity>
               </View>
             )
@@ -115,13 +118,17 @@ const ActiveEmail = ({ route, navigation }) => {
                 <TouchableOpacity
                   onPress={() => onBack()}
                 >
-                  <Text style={styles.textPrimary}>Huỷ Kích Hoạt</Text>
+                  <Text style={styles.textPrimary}>{lang.CancelActive}</Text>
                 </TouchableOpacity>
               </View>
             )
         }
-      </View>
-    </View>
+            </View>
+          </View>
+
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 

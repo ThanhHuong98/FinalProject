@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import AnimatedLoader from 'react-native-animated-loader';
 import PropTypes from 'prop-types';
-import { ThemeContext } from '../../../App';
+import { ThemeContext, LanguageContext } from '../../../App';
 import { HomeContext } from '../providers/home';
 import { ScreenKey, Colors, FontSize } from '../../Constant/Constant';
 import ListCourses from './ListCourses/list-courses';
@@ -28,8 +28,11 @@ const AllCourses = ({ route, navigation }) => {
     homeContext.getAllCourse(selectedCategory);
   }, []);
   return (
-    <ThemeContext.Consumer>
+    <LanguageContext.Consumer>
       {
+        ({ lang }) => (
+          <ThemeContext.Consumer>
+            {
         ({ theme }) => (
           <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
             {
@@ -37,7 +40,7 @@ const AllCourses = ({ route, navigation }) => {
                 ? (
                   <View style={styles.center}>
                     <Text style={styles.decription}>
-                      Khoá học trống
+                      {lang.NoCourses}
                     </Text>
                   </View>
                 )
@@ -52,7 +55,11 @@ const AllCourses = ({ route, navigation }) => {
           </SafeAreaView>
         )
       }
-    </ThemeContext.Consumer>
+          </ThemeContext.Consumer>
+        )
+      }
+
+    </LanguageContext.Consumer>
   );
 };
 AllCourses.propTypes = {

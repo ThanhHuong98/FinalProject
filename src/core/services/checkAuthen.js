@@ -3,26 +3,26 @@
 /* eslint-disable no-const-assign */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-unused-vars */
-export const checkRegisterInfo = (username, password, email, phone) => {
+export const checkRegisterInfo = (username, password, email, phone, lang) => {
   if (username && email && password && phone) {
     if (!isCheckAvailableEmail(email)) {
-      return ('Email không hợp lệ, vui lòng kiểm tra lại!');
+      return lang.EmalInValid;
     }
     if (!isCheckAviablePhone(phone)) {
-      return ('Só điện thoại không hợp lệ, vui lòng kiểm tra lại!');
+      return lang.PhoneInValid;
     }
     return '';
   }
-  return 'Vui lòng nhập đầy đủ thông tin';
+  return lang.InfomationRequires;
 };
-export const checkLoginInfo = (email, password) => {
+export const checkLoginInfo = (email, password, lang) => {
   if (email && password) {
     if (!isCheckAvailableEmail(email)) {
-      return ('Email không hợp lệ, vui lòng kiểm tra lại!');
+      return lang.EmalInValid;
     }
     return '';
   }
-  return 'Vui lòng nhập đầy đủ thông tin';
+  return lang.InfomationRequires;
 };
 
 export const isCheckAvailableEmail = (email) => {

@@ -11,7 +11,7 @@ import SectionAuthors from './Author/ListAuthors/list-authors';
 import ImageButton from '../../Common/ImageButton/image-button';
 import SectionCategories from './Categories/SectionCategories/section-categories';
 import { Dimension, ScreenKey, Colors } from '../../../Constant/Constant';
-import { ThemeContext } from '../../../../App';
+import { ThemeContext, LanguageContext } from '../../../../App';
 import { BrowseContext } from '../../providers/browse';
 
 const Browse = ({ navigation }) => {
@@ -40,43 +40,50 @@ const Browse = ({ navigation }) => {
     <ThemeContext.Consumer>
       {
          ({ theme }) => (
-           <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: theme.background }}>
-             <View style={{ ...styles.container }}>
-               <View style={styles.groupButton}>
-                 <ImageButton
-                   style={styles.imageButton}
-                   title="NEW RELEASE"
-                   onClickItem={() => onNewRelease('TOP_NEW', 'Các khóa học mới')}
-                   thumbnail="https://pluralsight.imgix.net/course-images/whats-new-vsphere-6-5-v1.jpg"
-                 />
-                 <ImageButton
-                   style={styles.imageButton}
-                   title="RECOMMENDED FOR YOU"
-                   onClickItem={() => onRecommened('RECOMMENDED', 'Có thể bạn quan tâm')}
-                   thumbnail="https://cdn.dribbble.com/users/13774/screenshots/11120020/freeapril_4x.jpg"
-                 />
-               </View>
-               <SectionCategories
-                 title="Top categories"
-                 categories={browseContext.state.categories}
-                 onClickItem={(category) => onClickCategory(category)}
-               />
-               <SectionAuthors
-                 title="Top Authors"
-                 authors={browseContext.state.authors}
-                 onClickItem={(author) => onClickAuthor(author)}
-               />
-               <View>
-                 <AnimatedLoader
-                   visible={browseContext.state.isLoading}
-                   overlayColor="rgba(0,0,0,0.65)"
-                   source={require('../../../../assets/common/loader.json')}
-                   animationStyle={styles.loading}
-                   speed={2}
-                 />
-               </View>
-             </View>
-           </ScrollView>
+           <LanguageContext>
+             {
+               ({ lang }) => (
+                 <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: theme.background }}>
+                   <View style={{ ...styles.container }}>
+                     <View style={styles.groupButton}>
+                       <ImageButton
+                         style={styles.imageButton}
+                         title={lang.NewRelease}
+                         onClickItem={() => onNewRelease('TOP_NEW', lang.NewCourses)}
+                         thumbnail="https://pluralsight.imgix.net/course-images/whats-new-vsphere-6-5-v1.jpg"
+                       />
+                       <ImageButton
+                         style={styles.imageButton}
+                         title={lang.RecommendedForYou}
+                         onClickItem={() => onRecommened('RECOMMENDED', lang.Recommended)}
+                         thumbnail="https://cdn.dribbble.com/users/13774/screenshots/11120020/freeapril_4x.jpg"
+                       />
+                     </View>
+                     <SectionCategories
+                       title={lang.TopCategory}
+                       categories={browseContext.state.categories}
+                       onClickItem={(category) => onClickCategory(category)}
+                     />
+                     <SectionAuthors
+                       title={lang.TopAuthor}
+                       authors={browseContext.state.authors}
+                       onClickItem={(author) => onClickAuthor(author)}
+                     />
+                     <View>
+                       <AnimatedLoader
+                         visible={browseContext.state.isLoading}
+                         overlayColor="rgba(0,0,0,0.65)"
+                         source={require('../../../../assets/common/loader.json')}
+                         animationStyle={styles.loading}
+                         speed={2}
+                       />
+                     </View>
+                   </View>
+                 </ScrollView>
+
+               )
+             }
+           </LanguageContext>
          )
       }
     </ThemeContext.Consumer>

@@ -75,7 +75,8 @@ export const ScreenKey = {
   DetailCategory: 'Chi tiết danh mục',
 
   Setting: 'Cài đặt',
-  SetTheme: 'Chế độ xem'
+  SetTheme: 'Chế độ xem',
+  SetLanguage: 'Ngôn ngữ'
 };
 // Theme define
 export const themes = {

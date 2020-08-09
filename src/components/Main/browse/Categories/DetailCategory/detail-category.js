@@ -8,9 +8,8 @@ import {
 import PropTypes from 'prop-types';
 import ListCourses from '../../../../Courses/ListCourses/list-courses';
 import { Colors, ScreenKey, FontSize } from '../../../../../Constant/Constant';
-import { ThemeContext } from '../../../../../../App';
+import { ThemeContext, LanguageContext } from '../../../../../../App';
 import { BrowseContext } from '../../../../providers/browse';
-import NullImage from '../../../../../../assets/favorite/null.svg';
 
 const DetailSectionCategories = ({
   route, navigation,
@@ -24,8 +23,11 @@ const DetailSectionCategories = ({
     browseContext.getCategoryDetails(category.id);
   }, []);
   return (
-    <ThemeContext.Consumer>
+    <LanguageContext.Consumer>
       {
+        ({ lang }) => (
+          <ThemeContext.Consumer>
+            {
       ({ theme }) => (
         <View style={{ ...styles.container, backgroundColor: theme.background }}>
 
@@ -33,9 +35,8 @@ const DetailSectionCategories = ({
               browseContext.state.categoryDetails.length === 0
                 ? (
                   <View style={styles.center}>
-                    <NullImage width={80} height={80} style={{ fill: '#bdbdbd' }} />
                     <Text style={styles.decription}>
-                      Không có khoá học thuộc danh mục này.
+                      {lang.NoCourses}
                     </Text>
                   </View>
                 )
@@ -59,7 +60,7 @@ const DetailSectionCategories = ({
                     </ImageBackground>
                     <View style={styles.listCourses}>
                       <ListCourses
-                        title="Các khoá học"
+                        title={lang.Courses}
                         courses={browseContext.state.categoryDetails}
                         onItemClick={(item) => onItemClick(item)}
                       />
@@ -71,8 +72,11 @@ const DetailSectionCategories = ({
         </View>
       )
     }
-    </ThemeContext.Consumer>
+          </ThemeContext.Consumer>
 
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 
