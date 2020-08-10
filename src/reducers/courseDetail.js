@@ -9,6 +9,7 @@ import {
   RECEIVE_COURSE_SECTION,
   RECEIVE_PROCESS,
   CHANGE_CURRENT_LESSON,
+  RECEIVE_OWN_COURSE_INFO,
 } from '../Constant/actions/courseDetails';
 
 const courseDetailsReducer = (state, action) => {
@@ -68,6 +69,11 @@ const courseDetailsReducer = (state, action) => {
           currentTime: action.data.currentTime,
           isFinish: action.data.isFinish,
         },
+      };
+    case RECEIVE_OWN_COURSE_INFO:
+      return {
+        ...state,
+        isOwnCourse: action.data,
       };
     default:
       return state;

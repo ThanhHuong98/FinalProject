@@ -1,27 +1,37 @@
+/* eslint-disable no-mixed-operators */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
-import React, { useContext, useEffect } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState
+} from 'react';
 import { Video } from 'expo-av';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {
-  View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Share
+  View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Share, Linking
 } from 'react-native';
 import PropTypes from 'prop-types';
 import AnimatedLoader from 'react-native-animated-loader';
+import Star from 'react-native-star-view';
 import { formatMonthYearType } from '../../utils/DateTimeUtils';
 import ItemAuthorHorizontal from './item-athor';
 import Content from './Content';
 import CollapsableDescription from '../Common/Pannel/collapsable-description';
 import { ScreenKey, Colors } from '../../Constant/Constant';
-import { ThemeContext, LanguageContext } from '../../../App';
+import { ThemeContext, LanguageContext, themes } from '../../../App';
 import { CourseDetailsContext } from '../providers/courseDetails';
 import { checkYoutubeUrl, extractVideoIdFromYoutubeUrl } from '../../utils/CommonUtils';
 
-const ItemFunction = ({ name, icon, color, onClick = (f) => f }) => (
+const ItemFunction = ({
+  name, icon, color, onClick = (f) => f
+}) => (
   <View style={styles.itemFunctionContainer}>
     <TouchableOpacity style={styles.iconFunctionContainer} onPress={() => onClick()}>
       <Image source={icon} style={styles.iconFunction} />
@@ -51,12 +61,15 @@ const DetailCourse = ({
 }) => {
   const { course } = route.params;
   const courseDetailContext = useContext(CourseDetailsContext);
-  console.log('course click', course.id);
+  const youtubeRef = useRef();
+  let expoRef;
+  let seeked = false;
+  const [isFinishLesson, setIsFinishLesson] = useState(false);
   useEffect(() => {
     courseDetailContext.getCourseInfo(course.id);
   }, []);
-  console.log('lesson', courseDetailContext.state.currentLesson);
-  // console.log('like: ', courseDetailContext.state.isLiked);
+
+  // console.log('lesson', courseDetailContext.state.currentLesson);
   const iconLike = courseDetailContext.state.isLiked ? require('../../../assets/course-detail/like-fill-icon.png') : require('../../../assets/course-detail/like-icon.png');
   const handleChangeLikeStatus = () => {
     courseDetailContext.changeLikeStatus(course.id);
@@ -82,134 +95,261 @@ const DetailCourse = ({
     }
   };
 
+  async function saveCurrentTime() {
+    if (courseDetailContext.state.currentLesson && courseDetailContext.state.isOwnCourse) {
+      if (!checkYoutubeUrl(courseDetailContext.state.currentLesson.videoUrl)) {
+        const status = await expoRef.getStatusAsync();
+        courseDetailContext.updateLearningTime(courseDetailContext.state.currentLesson.id, status.positionMillis / 1000);
+      } else {
+        const currentTime = await youtubeRef.current.getCurrentTime();
+        courseDetailContext.updateLearningTime(courseDetailContext.state.currentLesson.id, currentTime);
+      }
+    }
+    navigation.pop();
+  }
   const handleChangeLesson = (sectionId, lessonId) => {
     if (lessonId !== courseDetailContext.state.currentLesson.id) {
       courseDetailContext.changeCurrentLesson(course.id, sectionId, lessonId);
     }
   };
-  console.log('Process: ', courseDetailContext.state.process);
+
+  const handlePlayback = (component) => {
+    if (component) {
+      expoRef = component;
+      component.loadAsync({ uri: courseDetailContext.state.currentLesson.videoUrl });
+    }
+  };
+
+  const handlePlayVideo = (status) => {
+    if (status) {
+      if (status.isLoaded) {
+        if (!seeked) {
+          expoRef.setStatusAsync({ shouldPlay: true, positionMillis: courseDetailContext.state.currentLesson.currentTime * 1000 });
+          seeked = true;
+        }
+      }
+      if (!courseDetailContext.state.currentLesson.isFinish && status.positionMillis >= Math.floor(status.durationMillis * 95 / 100)) {
+        courseDetailContext.updateLessonStatus(courseDetailContext.state.currentLesson.id);
+      }
+    }
+  };
+
+  const handlePayment = () => {
+    const url = `https://itedu.me/payment/${courseDetailContext.state.courseInfo.id}`;
+    Linking.canOpenURL(url).then((supported) => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log(`Don't know how to open URI: ${url}`);
+      }
+    });
+  };
+
+  const handleRelatedCourses = () => {
+    navigation.replace(ScreenKey.RelatedCourse, { course: courseDetailContext.state.courseInfo });
+  };
+  console.log('isOwnCourse: ', courseDetailContext.state.isOwnCourse);
   return (
     <LanguageContext.Consumer>
       {
         ({ lang }) => (
           <ThemeContext.Consumer>
             {
-            ({ theme }) =>
-              (
-                <View style={{ ...styles.container, backgroundColor: theme.background }}>
-                  {
-                  courseDetailContext.state.courseInfo && courseDetailContext.state.currentLesson && courseDetailContext.state.currentLesson.videoUrl
-                    ? (
-                      <>
-                        {
+        ({ theme }) => (
+          <View style={{ ...styles.container, backgroundColor: theme.background }}>
+            {
+              courseDetailContext.state.courseInfo && courseDetailContext.state.currentLesson && courseDetailContext.state.currentLesson.videoUrl
+                ? (
+                  <>
+                    {
+                    courseDetailContext.state.isOwnCourse
+                      ? (
                         checkYoutubeUrl(courseDetailContext.state.currentLesson.videoUrl)
                           ? (
                             <YoutubePlayer
+                              ref={youtubeRef}
                               videoId={extractVideoIdFromYoutubeUrl(courseDetailContext.state.currentLesson.videoUrl)}
                               height={230}
+                              onChangeState={(state) => {
+                                if (state === 'buffering' && !seeked) {
+                                  youtubeRef.current.seekTo(courseDetailContext.state.currentLesson.currentTime);
+                                  seeked = true;
+                                }
+                              }}
+                              onPlaybackRateChange={(e) => console.log('playback rate change: ', e)}
                             />
-                            // null
                           )
                           : (
-                            // <Video
-                            //   source={{ uri: courseDetailContext.state.currentLesson.videoUrl }}
-                            //   resizeMode={Video.RESIZE_MODE_CONTAIN}
-                            //   useNativeControls
-                            //   style={styles.video}
-                            // />
-                            null
+                            <Video
+                              ref={handlePlayback}
+                              resizeMode={Video.RESIZE_MODE_CONTAIN}
+                              useNativeControls
+                              usePoster
+                              posterSource={{ uri: courseDetailContext.state.courseInfo.imageUrl }}
+                              style={styles.video}
+                              onPlaybackStatusUpdate={(status) => handlePlayVideo(status)}
+                            />
                           )
-                      }
-                        <ScrollView showsVerticalScrollIndicator={false}>
-                          <View style={{ ...styles.infoCourseBlock, backgroundColor: theme.block }}>
+                      )
+                      : (
+                        <Image
+                          source={{ uri: courseDetailContext.state.courseInfo.imageUrl }}
+                          style={{ height: 230 }}
+                          resizeMode="cover"
+                        />
+                      )
+                  }
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                      <View style={styles.infoCourseBlock}>
+                        <View style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'flex-start',
+                          marginBottom: 10,
+                        }}
+                        >
+                          <Text style={{ ...styles.title, color: theme.textColor }}>{courseDetailContext.state.courseInfo.title}</Text>
+                          <TouchableOpacity onPress={() => saveCurrentTime()}>
+                            {
+                              theme === themes.dark
+                                ? (
+                                  <Image source={require('../../../assets/common/close-icon.png')} style={styles.closeIcon} />
+                                )
+                                : (
+                                  <Image source={require('../../../assets/common/close-icon-dark.png')} style={styles.closeIcon} />
+                                )
+                            }
+
+                          </TouchableOpacity>
+                        </View>
+                        <ItemAuthorHorizontal
+                          name={courseDetailContext.state.courseInfo.instructor.name}
+                          avatar={courseDetailContext.state.courseInfo.instructor.avatar}
+                          onItemClick={() =>
+                            navigation.replace(ScreenKey.DetailAuthor, { id: courseDetailContext.state.courseInfo.instructor.id })}
+                        />
+                        <View style={styles.infoBlock}>
+                          <Text style={styles.info}>
+                            {formatMonthYearType(courseDetailContext.state.courseInfo.updatedAt)}
+                            {' '}
+                            ∙
+                            {courseDetailContext.state.courseInfo.videoNumber}
+                            {' '}
+                            video(s) ∙
+                            {courseDetailContext.state.courseInfo.totalHours}
+                            h ∙
+                          </Text>
+                        </View>
+                        <Star score={courseDetailContext.state.courseInfo.contentPoint > 5 ? 5 : courseDetailContext.state.courseInfo.contentPoint} style={styles.starStyle} />
+                        <View style={styles.func}>
+                          <View style={styles.functionContainer}>
+                            <ItemFunction name={lang.Like} icon={iconLike} onClick={() => handleChangeLikeStatus()} />
+                            <ItemFunction
+                              name={lang.Share}
+                              icon={require('../../../assets/course-detail/share-icon.png')}
+                              onClick={() => handleShare()}
+                            />
+                            <ItemFunction name={lang.Download} icon={require('../../../assets/course-detail/download-icon.png')} />
+                          </View>
+                        </View>
+                        <View style={styles.description}>
+                          <CollapsableDescription description={courseDetailContext.state.courseInfo.description} />
+                        </View>
+
+                        <ButtonFunction
+                          name={lang.RelatedCourses}
+                          icon={require('../../../assets/course-detail/related-icon.png')}
+                          onClick={() => handleRelatedCourses()}
+                        />
+                      </View>
+
+                      {
+                        courseDetailContext.state.isOwnCourse
+                          ? (
+                            <>
+                              <View style={styles.progressBar}>
+                                <ProgressBar progress={courseDetailContext.state.process} />
+                              </View>
+                              <View style={{ paddingHorizontal: 15 }}>
+                                <Content
+                                  modules={courseDetailContext.state.sections}
+                                  playingLesson={courseDetailContext.state.currentLesson.id}
+                                  onClickLesson={(sectionId, lessonId) => handleChangeLesson(sectionId, lessonId)}
+                                />
+                              </View>
+                            </>
+                          )
+                          : (
                             <View style={{
                               display: 'flex',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              alignItems: 'flex-start',
-                              marginBottom: 10,
+                              flexDirection: 'column',
+                              alignSelf: 'center',
+                              padding: 20,
                             }}
                             >
-                              <Text style={{ ...styles.title, color: theme.textColor }}>{courseDetailContext.state.courseInfo.title}</Text>
-                              {/* <TouchableOpacity onPress={() => navigation.pop()}>
-                                <Image source={require('../../../assets/common/close-icon.png')} style={styles.closeIcon} />
-                              </TouchableOpacity> */}
-                            </View>
-                            <ItemAuthorHorizontal
-                              name={courseDetailContext.state.courseInfo.instructor.name}
-                              avatar={courseDetailContext.state.courseInfo.instructor.avatar}
-                            />
-                            <View style={styles.infoBlock}>
-                              <Text style={styles.info}>
-                                {formatMonthYearType(courseDetailContext.state.courseInfo.updatedAt)}
-                                {' '}
-                                ∙
-                                {courseDetailContext.state.courseInfo.videoNumber}
-                                {' '}
-                                video(s) ∙
-                                {courseDetailContext.state.courseInfo.totalHours}
-                                h ∙
+                              <Text style={{
+                                fontSize: 13,
+                                color: theme.textColor,
+                                textAlign: 'center',
+                              }}
+                              >
+                                {lang.Payment}
                               </Text>
-                              {/* <StarRating
-                                containerStyle={styles.ratingBar}
-                                disabled
-                                halfStarEnabled
-                                halfStarColor="#fcba03"
-                                maxStars={5}
-                                rating={courseDetailContext.state.courseInfo.contentPoint}
-                                fullStarColor="#fcba03"
-                                emptyStarColor="#d4d4d4"
-                                starSize={10}/> */}
-                            </View>
-                            <View style={styles.func}>
-                              <View style={styles.functionContainer}>
-                                <ItemFunction name={lang.Like} icon={iconLike} onClick={() => handleChangeLikeStatus()} color={theme.textColor} />
-                                <ItemFunction
-                                  name={lang.Share}
-                                  icon={require('../../../assets/course-detail/share-icon.png')}
-                                  onClick={() => handleShare()}
-                                  color={theme.textColor}
+                              <TouchableOpacity
+                                style={{
+                                  display: 'flex',
+                                  flexDirection: 'row',
+                                  paddingHorizontal: 15,
+                                  paddingVertical: 10,
+                                  borderRadius: 10,
+                                  backgroundColor: '#006DF0',
+                                  alignSelf: 'center',
+                                  alignItems: 'center',
+                                  marginTop: 15,
+                                }}
+
+                                onPress={() => handlePayment()}
+                              >
+                                <Image
+                                  source={require('../../../assets/course-detail/buy-icon.png')}
+                                  style={{ width: 17, height: 17 }}
                                 />
-                                <ItemFunction name={lang.Download} icon={require('../../../assets/course-detail/download-icon.png')}color={theme.textColor} />
-                              </View>
+                                <Text style={{
+                                  fontSize: 15,
+                                  fontWeight: '500',
+                                  color: Colors.white,
+                                  marginLeft: 5,
+                                }}
+                                >
+                                  {lang.Buy}
+                                </Text>
+                              </TouchableOpacity>
                             </View>
-                            <View style={styles.description}>
-                              <CollapsableDescription description={courseDetailContext.state.courseInfo.description} />
-                            </View>
-
-                            <ButtonFunction
-                              name={lang.RelatedCourses}
-                              icon={require('../../../assets/course-detail/related-icon.png')}
-                              onClick={(f) => f}
-                            />
-                          </View>
-                          <View style={styles.progressBar}>
-                            <ProgressBar progress={courseDetailContext.state.process} />
-                          </View>
-                          <View style={{ paddingHorizontal: 15 }}>
-                            <Content
-                              modules={courseDetailContext.state.sections}
-                              playingLesson={courseDetailContext.state.currentLesson.id}
-                              onClickLesson={(sectionId, lessonId) => handleChangeLesson(sectionId, lessonId)}
-                            />
-                          </View>
-                        </ScrollView>
-                      </>
-                    )
-                    : (
-                      <AnimatedLoader
-                        visible={courseDetailContext.state.isLoading}
-                        overlayColor="rgba(0,0,0,0.65)"
-                        source={require('../../../assets/common/loader.json')}
-                        animationStyle={styles.loading}
-                        speed={2}
-                      />
-                    )
-                }
-                </View>
-              )
-
-          }
+                          )
+                      }
+                    </ScrollView>
+                  </>
+                )
+                : (
+                  <AnimatedLoader
+                    visible={courseDetailContext.state.isLoading}
+                    overlayColor="rgba(0,0,0,0.65)"
+                    source={require('../../../assets/common/loader.json')}
+                    animationStyle={styles.loading}
+                    speed={2}
+                  />
+                  // <Image
+                  //         source={{ uri: courseDetailContext.state.courseInfo.imageUrl }}
+                  //         style={{ height: 230 }}
+                  //         resizeMode="cover"
+                  //       />
+                  // <Text>sdfghjkl;mnbcfyuidef</Text>
+                )
+            }
+          </View>
+        )
+      }
           </ThemeContext.Consumer>
 
         )
@@ -328,6 +468,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightGray,
     height: '100%',
     width: '100%',
+  },
+  starStyle: {
+    width: 100,
+    height: 20,
+    marginTop: 3,
   },
 });
 

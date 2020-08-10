@@ -30,6 +30,7 @@ import SetLanguage from './src/components/Setting/languages';
 import Profile from './src/components/Profile/profile';
 import EditProfile from './src/components/Profile/edit-profile';
 import DetailCategory from './src/components/Main/browse/Categories/DetailCategory/detail-category';
+import RelatedCourse from './src/components/DetailCourse/RelatedCourses';
 import { AuthenProvider } from './src/components/providers/authen';
 import { ProfileProvider } from './src/components/providers/profile';
 import { HomeProvider } from './src/components/providers/home';
@@ -182,6 +183,19 @@ const DetailStackScreen = () => (
               component={DetailCourse}
               options={{ headerShown: false }}
             />
+
+            <DetailStack.Screen
+              name={ScreenKey.RelatedCourse}
+              component={RelatedCourse}
+              options={{ headerShown: true, title: '' }}
+            />
+
+            <DetailStack.Screen
+              name={ScreenKey.DetailAuthor}
+              component={DetailAuthor}
+              options={{ headerShown: true, title: '' }}
+            />
+
           </DetailStack.Navigator>
 
         </CourseDetailsProvider>

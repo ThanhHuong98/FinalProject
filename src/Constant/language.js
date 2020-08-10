@@ -81,6 +81,8 @@ const languages = {
     Download: 'Tải xuống',
     RelatedCourses: 'Các khóa học cùng chủ đề',
     Rate: 'Đánh giá',
+    Payment: 'Oops, đây là khóa học tính phí. Bạn cần thanh toán để có thể tham gia khóa học này!',
+    Buy: 'Mua ngay',
     // Course
     NoAuthorInfo: 'Không có thông tin giảng viên',
     Free: 'Miễn phí',
@@ -191,6 +193,8 @@ const languages = {
     Download: 'Download',
     RelatedCourses: 'Related courses',
     Rate: 'Rate',
+    Payment: 'Oops, this course is not free. You need to pay before joining this course!',
+    Buy: 'Buy now',
     // Course
     NoAuthorInfo: 'No author\'s info',
     Free: 'Free',

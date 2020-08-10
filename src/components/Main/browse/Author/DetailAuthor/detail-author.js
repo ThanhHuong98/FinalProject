@@ -5,22 +5,39 @@
 /* eslint-disable global-require */
 import React, { useContext, useEffect } from 'react';
 import {
-  View, Text, Image, ScrollView, StyleSheet,
+  View, Text, Image, ScrollView, StyleSheet, TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
 import CollapsableDescription from '../../../../Common/Pannel/collapsable-description';
 import ListCourses from '../../../../Courses/ListCourses/list-courses';
 import { ScreenKey, Colors } from '../../../../../Constant/Constant';
-import { ThemeContext } from '../../../../../../App';
+import { ThemeContext, LanguageContext } from '../../../../../../App';
 import { AuthorContext } from '../../../../providers/author';
 import ListSkills from '../../PopularSkill/ListSkills/list-skills';
 
 const DetailAuthor = ({
   route, navigation,
 }) => {
-  
   const authorId = route.params.id;
   const authorContext = useContext(AuthorContext);
+  const handleBack = () => {
+    navigation.pop();
+  };
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <LanguageContext>
+          {
+           ({ lang }) => (
+             <TouchableOpacity onPress={() => handleBack()}>
+               <Text style={{ ...styles.text, color: Colors.blue, marginLeft: 10, }}>{lang.Back}</Text>
+             </TouchableOpacity>
+           )
+         }
+        </LanguageContext>
+      ),
+    });
+  }, [navigation]);
   useEffect(() => {
     authorContext.getAuthorDetails(authorId);
   }, []);
@@ -29,10 +46,13 @@ const DetailAuthor = ({
   };
 
   return (
-    <ThemeContext.Consumer>
+    <LanguageContext.Consumer>
       {
+        ({ lang }) => (
+          <ThemeContext.Consumer>
+            {
         ({ theme }) => (
-          <ScrollView showsVerticalScrollIndicator={false} style={{ ...styles.container, backgroundColor: theme.background}}>
+          <ScrollView showsVerticalScrollIndicator={false} style={{ ...styles.container, backgroundColor: theme.background }}>
             <View style={{ ...styles.block, backgroundColor: theme.block }}>
               <View style={{ ...styles.infoBlock, backgroundColor: theme.block }}>
                 <Image source={{ uri: authorContext.state.authorDetails.avatar }} style={styles.avatar} resizeMode="cover" />
@@ -59,7 +79,7 @@ const DetailAuthor = ({
               <View style={styles.listCourses}>
                 <ListCourses
                   courses={authorContext.state.authorDetails.courses}
-                  title="Các khóa học"
+                  title={lang.Courses}
                   onItemClick={(item) => onItemClick(item)}
                 />
               </View>
@@ -67,7 +87,11 @@ const DetailAuthor = ({
           </ScrollView>
         )
       }
-    </ThemeContext.Consumer>
+          </ThemeContext.Consumer>
+
+        )
+      }
+    </LanguageContext.Consumer>
   );
 };
 

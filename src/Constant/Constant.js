@@ -73,6 +73,7 @@ export const ScreenKey = {
   DetailAuthor: 'Thông tin tác giả',
   DetailPopularSkill: 'Detail Popular Skill',
   DetailCategory: 'Chi tiết danh mục',
+  RelatedCourse: 'Khoá học liên quan',
 
   Setting: 'Cài đặt',
   SetTheme: 'Chế độ xem',
