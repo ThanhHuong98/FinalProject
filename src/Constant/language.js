@@ -95,6 +95,9 @@ const languages = {
     ChangeLang: 'Ngôn ngữ',
     Light: 'Sáng',
     Dark: 'Tối',
+    ContentRating: 'Nhập đánh giá',
+    Send: 'Gửi',
+    Rating: 'Đánh giá',
 
     // Messages
     EmailNotEmpty: 'Email không được để trống.',
@@ -110,6 +113,8 @@ const languages = {
     ForgotPassSucess: 'Email đã được gửi đi, bạn vui lòng mở email để tiến hành thay đổi mật khẩu.',
     SignUpSucess: 'Đăng ký thành công!',
     SignUpFail: 'Đăng ký thất bại, email hoặc số điện thoại đã được sử dụng.',
+    Lesson: 'Bài học',
+    RatingIntro: 'Hãy để lại đánh giá cho chúng tôi!'
   },
   eng: {
     status: 'eng',
@@ -222,6 +227,12 @@ const languages = {
     ForgotPassSucess: 'Email has been sent, please open your email to proceed to change your password.',
     SignUpSucess: 'Successful registration!',
     SignUpFail: 'Registration failed, email or phone number is already in use.',
+
+    ContentRating: 'Enter content',
+    Send: 'Send',
+    Rating: 'Rating',
+    Lesson: 'Lesson',
+    RatingIntro: 'Please leave us your review!'
 
   },
 };

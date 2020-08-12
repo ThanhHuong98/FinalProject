@@ -3,7 +3,7 @@
 import React, { useReducer } from 'react';
 import courseDetailsReducer from '../../reducers/courseDetail';
 import {
-  fetchCourseInfo, changeLikeStatus, getLessonWithVideo, updateLessonStatus, updateLearningTime
+  fetchCourseInfo, changeLikeStatus, getLessonWithVideo, updateLessonStatus, updateLearningTime, fetchUserRating, sendUserRating 
 } from '../../actions/courseDetails';
 import { CHANGE_CURRENT_LESSON, REQUEST_DATA, FINISH_REQUEST_DATA } from '../../Constant/actions/courseDetails';
 
@@ -38,6 +38,8 @@ const CourseDetailsProvider = (props) => {
     <CourseDetailsContext.Provider value={{
       state,
       getCourseInfo: fetchCourseInfo(dispatch),
+      getUserRating: fetchUserRating(dispatch),
+      sendRating: sendUserRating(dispatch),
       changeLikeStatus: changeLikeStatus(dispatch),
       getLessonVideo: getLessonWithVideo(dispatch),
       updateLessonStatus: updateLessonStatus(dispatch),

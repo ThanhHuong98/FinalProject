@@ -13,6 +13,8 @@ import {
   RECEIVE_COURSE_SECTION,
   RECEIVE_PROCESS,
   RECEIVE_OWN_COURSE_INFO,
+  RECEIVE_USER_RATING,
+  SEND_RATING_SUCCESS,
 } from '../Constant/actions/courseDetails';
 
 import api from '../api/api';
@@ -73,6 +75,10 @@ const receiveOwnCourseInfo = (data) => ({
   data,
 });
 
+const receiveUserRating = (data) => ({
+  type: RECEIVE_USER_RATING,
+  data,
+});
 
 export const fetchCourseInfo = (dispatch) => async (courseId) => {
   dispatch(requestData());
@@ -186,5 +192,33 @@ export const updateLearningTime = () => async (lessonId, currentTime) => {
       currentTime,
     };
     await api.put('/lesson/update-current-time-learn-video', data, { headers: { Authorization: AuthStr } });
+  }
+};
+
+export const fetchUserRating = (dispatch) => async (courseId) => {
+  const AuthStr = 'Bearer '.concat(await getToken());
+  const response = await api.get(`/course/get-rating/${courseId}`, { headers: { Authorization: AuthStr } });
+  if (response) {
+    dispatch(receiveUserRating(response.payload));
+  } else {
+    console.log('request failed');
+  }
+};
+
+export const sendUserRating = (dispatch) => async (courseId, ratingContent) => {
+  const AuthStr = 'Bearer '.concat(await getToken());
+  const data = {
+    courseId,
+    contentPoint: ratingContent.contentPoint,
+    content: ratingContent.content,
+  };
+
+  const response = await api.post('/course/rating-course', data, { headers: { Authorization: AuthStr } });
+  if (response) {
+    console.log('send rating success', response.payload);
+    dispatch({
+      type: SEND_RATING_SUCCESS,
+      data: response.payload,
+    });
   }
 };
