@@ -20,6 +20,7 @@ import {
 import PropTypes from 'prop-types';
 import AnimatedLoader from 'react-native-animated-loader';
 import Star from 'react-native-star-view';
+import * as FileSystem from 'expo-file-system';
 import { formatMonthYearType } from '../../utils/DateTimeUtils';
 import ItemAuthorHorizontal from './item-athor';
 import Content from './Content';
@@ -63,6 +64,7 @@ const DetailCourse = ({
   const { course } = route.params;
   const courseDetailContext = useContext(CourseDetailsContext);
   const [selectedTab, setSelectedTab] = useState(1);
+  const [downloadProgress, setDownloadProgress] = useState('Download');
   const youtubeRef = useRef();
   let expoRef;
   let seeked = false;
@@ -159,6 +161,31 @@ const DetailCourse = ({
     console.log('send rating: ', rating);
     if (rating) {
       courseDetailContext.sendRating(courseDetailContext.state.courseInfo.id, rating);
+    }
+  };
+  const updateProgress = (progress) => {
+    const progressPer = Math.round(progress.totalBytesWritten * 100 / progress.totalBytesExpectedToWrite);
+    setDownloadProgress(`${progressPer}%`);
+    console.log('progress: ', progressPer);
+  };
+
+  const handleDownloadCourse = async () => {
+    if (courseDetailContext.state.currentLesson
+      && courseDetailContext.state.isOwnCourse
+      && !checkYoutubeUrl(courseDetailContext.state.currentLesson.videoUrl)) {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        courseDetailContext.state.currentLesson.videoUrl,
+        `${FileSystem.documentDirectory}${new Date().toISOString()}.mp4`,
+        {},
+        updateProgress
+      );
+
+      try {
+        const { uri } = await downloadResumable.downloadAsync();
+        console.log('Finished downloading to ', uri);
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
   console.log('isOwnCourse: ', courseDetailContext.state.isOwnCourse);
@@ -263,7 +290,7 @@ const DetailCourse = ({
                               icon={require('../../../assets/course-detail/share-icon.png')}
                               onClick={() => handleShare()}
                             />
-                            <ItemFunction name={lang.Download} icon={require('../../../assets/course-detail/download-icon.png')} />
+                            <ItemFunction name={downloadProgress} icon={require('../../../assets/course-detail/download-icon.png')} onClick={() => handleDownloadCourse()} />
                           </View>
                         </View>
                         <View style={styles.description}>

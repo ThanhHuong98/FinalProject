@@ -19,6 +19,7 @@
     "axios": "^0.19.2",
     "expo": "~37.0.3",
     "expo-av": "^8.1.0",
+    "expo-file-system": "^9.1.0",
     "expo-image-picker": "^8.1.0",
     "lodash": "^4.17.15",
     "lottie-react-native": "^3.4.0",
