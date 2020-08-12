@@ -114,7 +114,10 @@ const languages = {
     SignUpSucess: 'Đăng ký thành công!',
     SignUpFail: 'Đăng ký thất bại, email hoặc số điện thoại đã được sử dụng.',
     Lesson: 'Bài học',
-    RatingIntro: 'Hãy để lại đánh giá cho chúng tôi!'
+    RatingIntro: 'Hãy để lại đánh giá cho chúng tôi!',
+    NoAuthors: 'Không có tác giả',
+    Course: 'Khoá học',
+    NoResult: 'Không có kết quả',
   },
   eng: {
     status: 'eng',
@@ -232,7 +235,10 @@ const languages = {
     Send: 'Send',
     Rating: 'Rating',
     Lesson: 'Lesson',
-    RatingIntro: 'Please leave us your review!'
+    RatingIntro: 'Please leave us your review!',
+    NoAuthors: 'No Authors',
+    Course: 'Course',
+    NoResult: 'No Result',
 
   },
 };

@@ -218,7 +218,7 @@ export const sendUserRating = (dispatch) => async (courseId, ratingContent) => {
     console.log('send rating success', response.payload);
     dispatch({
       type: SEND_RATING_SUCCESS,
-      data: response.payload,
+      data: response.data.payload,
     });
   }
 };

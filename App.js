@@ -396,7 +396,7 @@ function SearchStackScreen() {
               {
         ({ theme }) => (
           <SearchStack.Navigator
-            initialRouteName={ScreenKey.Favorite}
+            initialRouteName={ScreenKey.Search}
             screenOptions={
 {
   headerTitleStyle: {
