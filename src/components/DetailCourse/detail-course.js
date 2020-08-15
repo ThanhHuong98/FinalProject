@@ -155,7 +155,7 @@ const DetailCourse = ({
   };
 
   const handleRelatedCourses = () => {
-    navigation.replace(ScreenKey.RelatedCourse, { course: courseDetailContext.state.courseInfo });
+    navigation.navigate(ScreenKey.RelatedCourse, { course: courseDetailContext.state.courseInfo });
   };
   const handleSendRating = (rating) => {
     console.log('send rating: ', rating);
@@ -267,7 +267,7 @@ const DetailCourse = ({
                           name={courseDetailContext.state.courseInfo.instructor.name}
                           avatar={courseDetailContext.state.courseInfo.instructor.avatar}
                           onItemClick={() =>
-                            navigation.replace(ScreenKey.DetailAuthor, { id: courseDetailContext.state.courseInfo.instructor.id })}
+                            navigation.navigate(ScreenKey.DetailAuthor, { id: courseDetailContext.state.courseInfo.instructor.id })}
                         />
                         <View style={styles.infoBlock}>
                           <Text style={styles.info}>

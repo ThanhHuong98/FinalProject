@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "FinalProject",
-    "slug": "FinalProject",
+    "name": "ELearningHCMUS",
+    "slug": "ELearningHCMUS",
     "platforms": [
       "ios",
       "android",
@@ -13,7 +13,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,7 +22,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hcmus.elearning",
+      "buildNumber": "1.0.0"
     },
     "packagerOpts": {
       "config": "metro.config.js",
